@@ -13,4 +13,8 @@ router.get('/register', function(req, res, next) {
 router.get('/signin', function(req, res, next) {
   res.render('signin', { title: 'Express' });
 });
+
+router.get('/profile', function(req, res, next) {
+  res.render('profile', { title: 'Express' });
+});
 module.exports = router;
