@@ -8,7 +8,7 @@
     <<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="/javascripts/index.js"></script>
+<script src="/scripts/app.js"></script>
 <body id="signin-page" onload="checkForErrors( <%= login_is_correct %>)">
 <div class="container">
     <div class="row">
@@ -16,7 +16,7 @@
             <div class="card card-signin my-5">
                 <div class="card-body">
                     <h5 class="card-title text-center">Sign In</h5>
-                    <form class="form-signin" id="signin" onsubmit="onSubmit('/signin')", method="post">
+                    <form class="form-signin" id="signin" onsubmit="onSubmit('/signin')" method="post">
                         <div class="form-label-group">
                             <input type="email" id="inputEmail" name="eml" class="form-control" placeholder="Email address" required autofocus>
                             <label for="inputEmail">Email address</label>

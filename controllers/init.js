@@ -21,7 +21,6 @@ exports.init= function() {
      * TODO
      * 每两次跑，才不报错，不然就会报错。
      */
-/
     user.save(function (err, results) {
         console.log(results._id);
     });

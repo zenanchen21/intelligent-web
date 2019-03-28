@@ -18,9 +18,9 @@ function initWeatherForecasts() {
           .catch ( function(error) {
               console.log(error.message);
           });
-    }
 }
 
+}
 /**
  * given the list of cities created by the user, it will retrieve all teh data from
  * the server (or failing that) from the database
@@ -231,29 +231,28 @@ function sendLoginInfo(url, data) {
 }
 
 
+function onSubmit(url) {
+    // var eml = $("#eml").val();
+    // var psw = $("#psw").val();
+    // var loginData={'email': eml, 'password':psw};
+    event.preventDefault();
+    console.log('login info snet')
+    var loginData = $("form").serialize();
+    sendLoginInfo(url, loginData);
+    console.log('login info snet')
+
+}
+
 // function onSubmit(url) {
-//     // var eml = $("#eml").val();
-//     // var psw = $("#psw").val();
-//     // var loginData={'email': eml, 'password':psw};
-//     console.log('login info snet')
-//     var loginData = $("#signin").serialize();
-//     //now data has a form like
-//     //{name: "mickey", surname:"Mouse",...}
+//     var formArray= $("form").serializeArray();
+//     var data={};
+//     for (index in formArray){
+//         data[formArray[index].name]= formArray[index].value;
+//     }
+//     // const data = JSON.stringify($(this).serializeArray());
 //     sendLoginInfo(url, data);
-//     console.log('login info snet')
 //     event.preventDefault();
 // }
-
-function onSubmit(url) {
-    var formArray= $("form").serializeArray();
-    var data={};
-    for (index in formArray){
-        data[formArray[index].name]= formArray[index].value;
-    }
-    // const data = JSON.stringify($(this).serializeArray());
-    sendLoginInfo(url, data);
-    event.preventDefault();
-}
 
 
 function checkForErrors(isLoginCorrect){

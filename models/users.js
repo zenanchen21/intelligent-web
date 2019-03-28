@@ -6,7 +6,7 @@ var validateEmail = function(email) {
     var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return re.test(email)
 };
-var UserSchema = new Schema(
+var userSchema = new Schema(
     {
         unique_id: {type: Number},
         username: {type: String, required: true},
@@ -29,9 +29,9 @@ var UserSchema = new Schema(
 //         return result;
 //     });
 
-// User.set('toObject', {getters: true, virtuals: true});
+// User.set('toObjet', {getters: true, virtuals: true});
+userSchema.set('toObject', {getters: true, virtuals: true});
 
-
-var user = mongoose.model('User', UserSchema );
+var user = mongoose.model('User', userSchema );
 
 module.exports = user;
