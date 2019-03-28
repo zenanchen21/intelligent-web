@@ -1,477 +1,298 @@
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous">
 
-<!DOCTYPE html>
-<html lang='en' class=''>
-<head>
-    <script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script>
-    <script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script>
-    <script src='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script>
-    <meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/michaelsboost/pen/mmYxzP?limit=all&page=33&q=nav+tabs" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'>
-    <link rel='stylesheet prefetch' href='//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
-    <link rel='stylesheet prefetch' href='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
-    <link rel='stylesheet' href='/stylesheets/home.css' />
-</head><body>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+<link rel='stylesheet' href='/stylesheets/social.css' />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<div class="topbar">
-    <a class="logo" href="javascript:void(0)">
-        <img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QAOwBeAJXJ9VaZAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QUcFAwZEBLpsAAAAO5JREFUSMdj2Hrw+v+///79pzb4++/f/60Hr/9n/Pvv338mRkYGWoB///8zMP7///8/Aw0BCyWaL99+wXDk7D2Gdx+/M3CwszDw8bAziAvxMfg5aVFuQe+Cgwzr91/FKodsARM5hu89cQen4eiALAs27LtC2zi4+eA1Cr8q2YnBzVqNgYWZiTo++PbzNwrf2UIFq+FkW4AO2NlYqBsHpACiM5pN/DSiDFzRGcUgIyFAOx9IiPLRLoj4eTgwIpuqFkgK85IfB/ji48jCrIFLRaMWjAQL/tGwSv73/z8D047DNxloYcm///8Zdhy+yQAAwrOldG/7uKoAAAAASUVORK5CYII=" />
-    </a>
-    <div class="search-box">
+<nav class="navbar navbar-light bg-white">
+    <a href="#" class="navbar-brand">Bootsbook</a>
+    <form class="form-inline">
         <div class="input-group">
-            <input aria-describedby="basic-addon2" class="form-control" placeholder="Search Facebook" type="text" />
-            <button class="input-group-addon pointer" id="basic-addon2">
-                <i class="fa fa-search"></i>
-            </button>
-        </div>
-    </div>
-    <div class="right-group">
-        <div class="link-group">
-            <a href="javascript:void(0)">
-                <img src="//i.imgur.com/5jInimY.jpg">Michael
-            </a>
-        </div>
-        <div class="link-group">
-            <a href="javascript:void(0)">Home</a>
-        </div>
-        <div class="notification-group">
-            <div class="link-group">
-                <a class="freqnotif" href="javascript:void(0)">
-                    <i class="fa fa-group"></i>
-                </a>
-            </div>
-            <div class="link-group">
-                <a class="msgnotif" href="javascript:void(0)">
-                    <i class="fa fa-comment"></i>
-                </a>
-            </div>
-            <div class="link-group">
-                <a class="notif" href="javascript:void(0)">
-                    <i class="fa fa-globe"></i>
-                </a>
-            </div>
-            <div class="link-group">
-                <a class="helpguide" href="javascript:void(0)">
-                    <i class="fa fa-question-circle"></i>
-                </a>
+            <input type="text" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="button" id="button-addon2">
+                    <i class="fa fa-search"></i>
+                </button>
             </div>
         </div>
-    </div>
-</div>
-<div class="left-content">
-    <div class="global-links">
-        <a href="javascript:void(0)">
-            <img src="//i.imgur.com/5jInimY.jpg" /> First Last
-            <span class="counter">1</span>
-        </a>
-        <a class="activepage" href="javascript:void(0)">
-            <img src="http://brassnecktheatre.com/wp-content/uploads/2013/11/news-icon.png" /> News Feed
-            <span class="counter">
-        <i class="fa fa-ellipsis-h"></i>
-      </span>
-        </a>
-        <a href="javascript:void(0)">
-            <img src="http://icons.iconarchive.com/icons/wineass/ios7-redesign/512/Messages-icon.png" /> Messenger
-            <span class="counter">1</span>
-        </a>
-        <div class="group-content">
-            <h4>shortcuts</h4>
-            <a href="javascript:void(0)">
-                <img src="http://theieltscoach.com/wp-content/uploads/2015/03/IELTS-Speaking-Tips-Icon-2.png" /> Group name
-                <span class="counter">1</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="http://theieltscoach.com/wp-content/uploads/2015/03/IELTS-Speaking-Tips-Icon-2.png" /> Group name
-                <span class="counter">1</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="http://theieltscoach.com/wp-content/uploads/2015/03/IELTS-Speaking-Tips-Icon-2.png" /> Group name
-                <span class="counter">1</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="http://theieltscoach.com/wp-content/uploads/2015/03/IELTS-Speaking-Tips-Icon-2.png" /> Group name
-                <span class="counter">1</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="http://theieltscoach.com/wp-content/uploads/2015/03/IELTS-Speaking-Tips-Icon-2.png" /> Group name
-                <span class="counter">1</span>
-            </a>
-            <a href="javascript:void(0)">
-                <i class="fa fa-caret-down"></i>
-                <span>See More...</span>
-            </a>
-        </div>
-        <div class="group-content">
-            <h4>explore</h4>
-            <a href="javascript:void(0)">
-                <img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/calendar-icon.png" /> Events
-                <span class="counter">1</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="http://image.flaticon.com/icons/png/512/223/223120.png" /> Saved
-                <span class="counter">1</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-13/512/Webpage-icon.png" /> Pages
-                <span class="counter">1</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="https://www.iconfinder.com/data/icons/unique-round-blue/93/group-512.png" /> Groups
-                <span class="counter">1</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="http://www.thesuccesswriter.com/images/fundraising.png" /> Fundraisers
-                <span class="counter">1</span>
-            </a>
-            <a href="javascript:void(0)">
-                <i class="fa fa-caret-down"></i>
-                <span>See More...</span>
-            </a>
-        </div>
-        <div class="group-content">
-            <h4>create</h4>
-            <a href="javascript:void(0)">
-                <img src="http://1agb93314bcf1knhv22id9u9.wpengine.netdna-cdn.com/wp-content/uploads/2015/02/Marketing_Advertising_Icon.png" /> Ad
-            </a>
-            <a href="javascript:void(0)">
-                <img src="http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-13/512/Webpage-icon.png" /> Page
-            </a>
-            <a href="javascript:void(0)">
-                <img src="https://www.iconfinder.com/data/icons/unique-round-blue/93/group-512.png" /> Group
-            </a>
-            <a href="javascript:void(0)">
-                <img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/calendar-icon.png" /> Event
-            </a>
-            <a href="javascript:void(0)">
-                <img src="http://www.thesuccesswriter.com/images/fundraising.png" /> Fundraiser
-            </a>
-        </div>
-    </div>
-</div>
-<div class="feed-content">
-    <div class="recentcontainer">
-        <ul class="newpostheader nav nav-tabs nav-justified">
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-pencil"></i>
-                    <span>Create a Post</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-book"></i>
-                    <span>Media Album</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-video-camera"></i>
-                    <span>Live Video</span>
-                </a>
-            </li>
-        </ul>
-        <div class="newpost">
-            <textarea placeholder="Post Something..."></textarea>
-        </div>
-        <ul class="newpostfooter nav nav-tabs nav-justified">
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-picture-o"></i>
-                    <span>Photo/Video</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-smile-o"></i>
-                    <span>Feeling/Activity</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-ellipsis-h"></i>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="recentcontainer">
-        <div class="newpostheader">
-            <a href="javascript:void(0)">
-                <img src="//i.imgur.com/5jInimY.jpg" />
-                <span class="name">First Last</span>
-            </a>
-            <span>shared <a href="javascript:void(0)">Demyos's</a> <a href="javascript:void(0)">post</a>.</span>
-            <p>
-                <a class="date" href="javascript:void(0)">44 mins</a>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-globe"></i>
-                </a>
-            <div class="rightsideofpost">
-                <a class="follow" href="javascript:void(0)">
-                    <i class="fa fa-star"></i>
-                </a>
-                <a class="personpostmenu" href="javascript:void(0)">
-                    <i class="fa fa-caret-down"></i>
-                </a>
-            </div>
-            </p>
-        </div>
-        <div class="newpost">
-            <div class="postcontent">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate sunt quasi in quam asperiores! Optio voluptate impedit eos ex nisi, molestias facilis sint cupiditate, dolores veritatis cum? Enim vel, qui!
-            </div>
-        </div>
-        <ul class="newpostfooter nav nav-tabs nav-justified">
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-thumbs-up"></i>
-                    <span>Like</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" title="Leave a comment">
-                    <i class="fa fa-comment-o"></i>
-                    <span>Comment</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" title="Send this to friends or post it to your timeline">
-                    <i class="fa fa-share"></i>
-                    <span>Share</span>
-                </a>
-            </li>
-        </ul>
-        <ul class="community-counter nav nav-tabs nav-justified">
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-thumbs-up"></i>
-                    <span>1</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-comment-o"></i>
-                    <span>3</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-share"></i>
-                    <span>4</span>
-                </a>
-            </li>
-        </ul>
-        <div class="commentpost">
-            <div class="input-group">
-                <a href="javascript:void(0)">
-                    <img src="//i.imgur.com/5jInimY.jpg" />
-                </a>
+    </form>
+</nav>
 
-                <textarea class="form-control" placeholder="Write a comment..."></textarea>
-                <div class="input-group-btn">
-                    <a class="btn btn-default" href="javascript:void(0)">
-                        <i class="fa fa-smile-o"></i>
-                    </a>
-                    <a class="btn btn-default" href="javascript:void(0)">
-                        <i class="fa fa-picture-o"></i>
-                    </a>
-                    <a class="btn btn-default" href="javascript:void(0)">
-                        <i class="fa fa-gift"></i>
-                    </a>
+
+<div class="container-fluid gedf-wrapper">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="h5">@LeeCross</div>
+                    <div class="h7 text-muted">Fullname : Miracles Lee Cross</div>
+                    <div class="h7">Developer of web applications, JavaScript, PHP, Java, Python, Ruby, Java, Node.js,
+                        etc.
+                    </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="h6 text-muted">Followers</div>
+                        <div class="h5">5.2342</div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="h6 text-muted">Following</div>
+                        <div class="h5">6758</div>
+                    </li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6 gedf-main">
+
+            <!--- \\\\\\\Post-->
+            <div class="card gedf-card">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Make
+                                a publication</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images">Images</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                            <div class="form-group">
+                                <label class="sr-only" for="message">post</label>
+                                <textarea class="form-control" id="message" rows="3" placeholder="What are you thinking?"></textarea>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+                            <div class="form-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile">
+                                    <label class="custom-file-label" for="customFile">Upload image</label>
+                                </div>
+                            </div>
+                            <div class="py-4"></div>
+                        </div>
+                    </div>
+                    <div class="btn-toolbar justify-content-between">
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-primary">share</button>
+                        </div>
+                        <div class="btn-group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                <i class="fa fa-globe"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
+                                <a class="dropdown-item" href="#"><i class="fa fa-globe"></i> Public</a>
+                                <a class="dropdown-item" href="#"><i class="fa fa-users"></i> Friends</a>
+                                <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Just me</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="recentcontainer">
-        <div class="newpostheader">
-            <h4>
-                Suggested post
-            </h4>
-            <hr />
-            <a href="javascript:void(0)">
-                <img src="//i.imgur.com/5jInimY.jpg" />
-                <span class="name">First Last</span>
-            </a>
-            <p>
-                <a class="date" href="javascript:void(0)">Sponsored</a>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-globe"></i>
-                </a>
-            <div class="rightsideofpost">
-                <a class="follow" href="javascript:void(0)">
-                    <i class="fa fa-star"></i>
-                </a>
-                <a class="personpostmenu" href="javascript:void(0)">
-                    <i class="fa fa-caret-down"></i>
-                </a>
-            </div>
-            </p>
-        </div>
-        <div class="newpost">
-            <div class="postcontent">
-                We lose 48 football fields of forest every minute. :-(
-                By using "<a href="https://ecosia.org">Ecosia.org</a>" for your web searches you can help stop this trend.
-                Let's plant some trees together!
-                <div class="tc">
-                    <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fecosia%2Fvideos%2F10154359809121611%2F&show_text=0&width=400" width="400" height="400" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
+            <!-- Post /////-->
+
+            <!--- \\\\\\\Post-->
+            <div class="card gedf-card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="mr-2">
+                                <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                            </div>
+                            <div class="ml-2">
+                                <div class="h5 m-0">@LeeCross</div>
+                                <div class="h7 text-muted">Miracles Lee Cross</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="dropdown">
+                                <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-ellipsis-h"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                    <div class="h6 dropdown-header">Configuration</div>
+                                    <a class="dropdown-item" href="#">Save</a>
+                                    <a class="dropdown-item" href="#">Hide</a>
+                                    <a class="dropdown-item" href="#">Report</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>10 min ago</div>
+                    <a class="card-link" href="#">
+                        <h5 class="card-title">Lorem ipsum dolor sit amet, consectetur adip.</h5>
+                    </a>
+
+                    <p class="card-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo recusandae nulla rem eos ipsa praesentium esse magnam nemo dolor
+                        sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+                    <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+                    <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
                 </div>
             </div>
-        </div>
-        <ul class="newpostfooter nav nav-tabs nav-justified">
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-thumbs-up"></i>
-                    <span>Like</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" title="Leave a comment">
-                    <i class="fa fa-comment-o"></i>
-                    <span>Comment</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" title="Send this to friends or post it to your timeline">
-                    <i class="fa fa-share"></i>
-                    <span>Share</span>
-                </a>
-            </li>
-        </ul>
-        <ul class="community-counter nav nav-tabs nav-justified">
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-thumbs-up"></i>
-                    <span>1</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-comment-o"></i>
-                    <span>3</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-share"></i>
-                    <span>4</span>
-                </a>
-            </li>
-        </ul>
-        <div class="commentpost">
-            <div class="input-group">
-                <a href="javascript:void(0)">
-                    <img src="//i.imgur.com/5jInimY.jpg" />
-                </a>
+            <!-- Post /////-->
 
-                <textarea class="form-control" placeholder="Write a comment..."></textarea>
-                <div class="input-group-btn">
-                    <a class="btn btn-default" href="javascript:void(0)">
-                        <i class="fa fa-smile-o"></i>
+
+            <!--- \\\\\\\Post-->
+            <div class="card gedf-card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="mr-2">
+                                <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                            </div>
+                            <div class="ml-2">
+                                <div class="h5 m-0">@LeeCross</div>
+                                <div class="h7 text-muted">Miracles Lee Cross</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="dropdown">
+                                <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-ellipsis-h"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                    <div class="h6 dropdown-header">Configuration</div>
+                                    <a class="dropdown-item" href="#">Save</a>
+                                    <a class="dropdown-item" href="#">Hide</a>
+                                    <a class="dropdown-item" href="#">Report</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> 10 min ago</div>
+                    <a class="card-link" href="#">
+                        <h5 class="card-title"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit consectetur
+                            deserunt illo esse distinctio.</h5>
                     </a>
-                    <a class="btn btn-default" href="javascript:void(0)">
-                        <i class="fa fa-picture-o"></i>
-                    </a>
-                    <a class="btn btn-default" href="javascript:void(0)">
-                        <i class="fa fa-gift"></i>
-                    </a>
+
+                    <p class="card-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam omnis nihil, aliquam est, voluptates officiis iure soluta
+                        alias vel odit, placeat reiciendis ut libero! Quas aliquid natus cumque quae repellendus. Lorem
+                        ipsum dolor sit amet consectetur adipisicing elit. Ipsa, excepturi. Doloremque, reprehenderit!
+                        Quos in maiores, soluta doloremque molestiae reiciendis libero expedita assumenda fuga quae.
+                        Consectetur id molestias itaque facere? Hic!
+                    </p>
+                    <div>
+                        <span class="badge badge-primary">JavaScript</span>
+                        <span class="badge badge-primary">Android</span>
+                        <span class="badge badge-primary">PHP</span>
+                        <span class="badge badge-primary">Node.js</span>
+                        <span class="badge badge-primary">Ruby</span>
+                        <span class="badge badge-primary">Paython</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+                    <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+                    <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="recentcontainer">
-        <div class="newpostheader">
-            <a href="javascript:void(0)">
-                <img src="//i.imgur.com/5jInimY.jpg" />
-                <span class="name">First Last</span>
-            </a>
-            <p>
-                <a class="date" href="javascript:void(0)">44 mins</a>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-globe"></i>
-                </a>
-            <div class="rightsideofpost">
-                <a class="follow" href="javascript:void(0)">
-                    <i class="fa fa-star"></i>
-                </a>
-                <a class="personpostmenu" href="javascript:void(0)">
-                    <i class="fa fa-caret-down"></i>
-                </a>
-            </div>
-            </p>
-        </div>
-        <div class="newpost">
-            <div class="postcontent">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate sunt quasi in quam asperiores! Optio voluptate impedit eos ex nisi, molestias facilis sint cupiditate, dolores veritatis cum? Enim vel, qui!
-            </div>
-        </div>
-        <ul class="newpostfooter nav nav-tabs nav-justified">
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-thumbs-up"></i>
-                    <span>Like</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" title="Leave a comment">
-                    <i class="fa fa-comment-o"></i>
-                    <span>Comment</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" title="Send this to friends or post it to your timeline">
-                    <i class="fa fa-share"></i>
-                    <span>Share</span>
-                </a>
-            </li>
-        </ul>
-        <ul class="community-counter nav nav-tabs nav-justified">
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-thumbs-up"></i>
-                    <span>1</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-comment-o"></i>
-                    <span>3</span>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:void(0)">
-                    <i class="fa fa-share"></i>
-                    <span>4</span>
-                </a>
-            </li>
-        </ul>
-        <div class="commentpost">
-            <div class="input-group">
-                <a href="javascript:void(0)">
-                    <img src="//i.imgur.com/5jInimY.jpg" />
-                </a>
+            <!-- Post /////-->
 
-                <textarea class="form-control" placeholder="Write a comment..."></textarea>
-                <div class="input-group-btn">
-                    <a class="btn btn-default" href="javascript:void(0)">
-                        <i class="fa fa-smile-o"></i>
+
+            <!--- \\\\\\\Post-->
+            <div class="card gedf-card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="mr-2">
+                                <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                            </div>
+                            <div class="ml-2">
+                                <div class="h5 m-0">@LeeCross</div>
+                                <div class="h7 text-muted">Miracles Lee Cross</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="dropdown">
+                                <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-ellipsis-h"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                    <div class="h6 dropdown-header">Configuration</div>
+                                    <a class="dropdown-item" href="#">Save</a>
+                                    <a class="dropdown-item" href="#">Hide</a>
+                                    <a class="dropdown-item" href="#">Report</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> Hace 40 min</div>
+                    <a class="card-link" href="#">
+                        <h5 class="card-title">Totam non adipisci hic! Possimus ducimus amet, dolores illo ipsum quos
+                            cum.</h5>
                     </a>
-                    <a class="btn btn-default" href="javascript:void(0)">
-                        <i class="fa fa-picture-o"></i>
-                    </a>
-                    <a class="btn btn-default" href="javascript:void(0)">
-                        <i class="fa fa-gift"></i>
-                    </a>
+
+                    <p class="card-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam sunt fugit reprehenderit consectetur exercitationem odio,
+                        quam nobis? Officiis, similique, harum voluptate, facilis voluptas pariatur dolorum tempora sapiente
+                        eius maxime quaerat.
+                        <a href="https://mega.nz/#!1J01nRIb!lMZ4B_DR2UWi9SRQK5TTzU1PmQpDtbZkMZjAIbv97hU" target="_blank">https://mega.nz/#!1J01nRIb!lMZ4B_DR2UWi9SRQK5TTzU1PmQpDtbZkMZjAIbv97hU</a>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+                    <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+                    <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                </div>
+            </div>
+            <!-- Post /////-->
+
+
+
+        </div>
+        <div class="col-md-3">
+            <div class="card gedf-card">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
+            <div class="card gedf-card">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-</body>
-</html>
