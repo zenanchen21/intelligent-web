@@ -12,7 +12,12 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express', login_is_correct:true});
 });
 
-
+/*
+* TODO
+* can not save new user to database
+* also, has problem with
+* console.log(results._id);
+* */
 router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Express', login_is_correct:false});
 });

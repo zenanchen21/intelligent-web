@@ -55,6 +55,12 @@ exports.insert = function (req, res) {
     }
 }
 
+/*
+* TODO
+* it shows error onece it have been called,
+* but it works fine if we use the function in route/index directly
+* */
+
 exports.login = function (req, res) {
     var userData = req.body;
     console.log(userData.eml);
