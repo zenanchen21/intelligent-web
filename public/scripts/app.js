@@ -1,4 +1,4 @@
-const CLOUDY = 0;
+    const CLOUDY = 0;
 const CLEAR = 1;
 const RAINY = 2;
 const OVERCAST = 3;
@@ -204,4 +204,60 @@ function removeDuplicates(cityList) {
            if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
        });
        return uniqueNames;
+}
+
+
+function sendLoginInfo(url, data) {
+    $.ajax({
+        url: url ,
+        data: data,
+        dataType: 'json',
+        type: 'POST',
+        success: function (dataR) {
+            // no need to JSON parse the result, as we are using
+            // dataType:json, so JQuery knows it and unpacks the
+            // object for us before returning it
+            var ret = dataR;
+            // in order to have the object printed by alert
+            // we need to JSON stringify the object
+
+            // $('result').text('The page has been successfully loaded');
+            document.getElementById('results').innerHTML= JSON.stringify(ret);
+        },
+        error: function (xhr, status, error) {
+            alert('Error: ' + error.message);
+        }
+    });
+}
+
+
+// function onSubmit(url) {
+//     // var eml = $("#eml").val();
+//     // var psw = $("#psw").val();
+//     // var loginData={'email': eml, 'password':psw};
+//     console.log('login info snet')
+//     var loginData = $("#signin").serialize();
+//     //now data has a form like
+//     //{name: "mickey", surname:"Mouse",...}
+//     sendLoginInfo(url, data);
+//     console.log('login info snet')
+//     event.preventDefault();
+// }
+
+function onSubmit(url) {
+    var formArray= $("form").serializeArray();
+    var data={};
+    for (index in formArray){
+        data[formArray[index].name]= formArray[index].value;
+    }
+    // const data = JSON.stringify($(this).serializeArray());
+    sendLoginInfo(url, data);
+    event.preventDefault();
+}
+
+
+function checkForErrors(isLoginCorrect){
+    if (!isLoginCorrect){
+        alert('login or password is incorrect');
+    }
 }
