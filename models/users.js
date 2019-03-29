@@ -13,7 +13,7 @@ var userSchema = new Schema(
         email:    {type: String, Required:  'Email address cannot be left blank.',
             validate: [validateEmail, 'Please fill a valid email address'],
             match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
-            index: {unique: true, dropDups: true}
+            index: {unique: false, dropDups: true}
 
         },
         password: {type: String, required:[true, 'password can not left blank'],  min:6},
