@@ -17,14 +17,12 @@ var cacheName = 'socialPWA-step-8-1';
 var filesToCache = [
     '/',
     '/scripts/app.js',
-    '/styles/inline.css',
-    '/styles/bootstrap.min.css',
+    '/stylesheets/inline.css',
+    '/stylesheets/bootstrap.min.css',
+    '/stylesheets/style.css',
     '/scripts/bootstrap.min.js',
     '/scripts/jquery.min.js',
-    '/scripts/database.js',
-    '/fonts/glyphicons-halflings-regular.woff2',
-    '/fonts/glyphicons-halflings-regular.woff',
-    '/fonts/glyphicons-halflings-regular.ttf',
+    '/scripts/database.js'
 ];
 
 
@@ -81,47 +79,38 @@ self.addEventListener('activate', function (e) {
  * all the other pages are searched for in the cache. If not found, they are returned
  */
 self.addEventListener('fetch', function (e) {
-    console.log('[Service Worker] Fetch', e.request.url);
-    /*
-    * TODO: change dataUrl
-    * */
-    var dataUrl = '/weather_data';
-    //if the request is '/weather_data', post to the server
-    if (e.request.url.indexOf(dataUrl) > -1) {
-        /*
-         * When the request URL contains dataUrl, the app is asking for fresh
-         * weather data. In this case, the service worker always goes to the
-         * network and then caches the response. This is called the "Cache then
-         * network" strategy:
-         * https://jakearchibald.com/2014/offline-cookbook/#cache-then-network
-         */
-        return fetch(e.request).then(function (response) {
-            // note: it the network is down, response will contain the error
-            // that will be passed to Ajax
-            return response;
-        })
-    } else {
-        /*
-         * The app is asking for app shell files. In this scenario the app uses the
-         * "Cache, falling back to the network" offline strategy:
-         * https://jakearchibald.com/2014/offline-cookbook/#cache-falling-back-to-network
-         */
-        e.respondWith(
-            caches.match(e.request).then(function (response) {
-                return response
-                    || fetch(e.request)
-                        .then(function (response) {
-                            // note if network error happens, fetch does not return
-                            // an error. it just returns response not ok
-                            // https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
-                            if (!response.ok) {
-                                console.log("error: " + err);
-                            }
-                        })
-                        .catch(function (e) {
-                            console.log("error: " + err);
-                        })
-            })
-        );
-    }
+  console.log('[Service Worker] Fetch', e.request.url);
+  if(e.request.method != "POST"){
+    e.respondWith(caches.match(e.request).then(function (response) {
+      if (response)
+        return response;
+      var fetchRequest = e.request.clone();
+      return fetch(fetchRequest).then(function (response) {
+        // Check if we received a valid response. A basic response is one that
+        // is made when we fetch from our own site. Do not cache responses to
+        // requests made to other sites
+        // if the file does not exist, do not cache - just return to the browser
+        if (!response || response.status !== 200 ) {
+          return response;
+        }
+        // response is valid. Cache the fetched file
+        // IMPORTANT: as mentioned we must clone the response.
+        // A response is a stream
+        // and because we want the browser to consume the response
+        // as well as the cache consuming the response, we need
+        // to clone it so we have two streams.
+        var responseToCache = response.clone();
+        caches.open(cacheName).then(function (cache) {
+          cache.put(e.request, responseToCache); // here we use the clone
+        });
+        return response; // here we use the original response
+      });
+    }));
+  }
+  else
+    fetch(e.request).then(function (response) {
+      // note: it the network is down, response will contain the error
+      // that will be passed to Ajax
+      return response;
+    });
 });

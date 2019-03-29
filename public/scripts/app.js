@@ -1,8 +1,34 @@
-    const CLOUDY = 0;
-const CLEAR = 1;
-const RAINY = 2;
-const OVERCAST = 3;
-const SNOWY = 4;
+function adEvent(){
+    var formArray= $("form").serializeArray();
+    var data={};
+    for (index in formArray){
+        data[formArray[index].name]= formArray[index].value;
+    }
+    // const data = JSON.stringify($(this).serializeArray());
+    sendAjaxQuery("/", data);
+    event.preventDefault();
+}
+
+function sendAjaxQuery(url, data) {
+    $.ajax({
+        url: url ,
+        data: data,
+        dataType: 'json',
+        type: 'POST',
+        success: function (dataR) {
+            // no need to JSON parse the result, as we are using
+            // dataType:json, so JQuery knows it and unpacks the
+            // object for us before returning it
+            addToResults(dataR);
+            storeCachedData(dataR.location, dataR);
+            if (document.getElementById('offline_div')!=null)
+                document.getElementById('offline_div').style.display='none';
+        },
+        error: function (xhr, status, error) {
+            alert('Error: ' + error.message);
+        }
+    });
+}
 
 
 /**
@@ -12,23 +38,31 @@ const SNOWY = 4;
 function initWeatherForecasts() {
     loadData();
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker
-               .register('./service-worker.js')
-               .then(function() { console.log('Service Worker Registered'); })
+        navigator.serviceWorker
+          .register('./service-worker.js')
+          .then(function() { console.log('Service Worker Registered'); })
           .catch ( function(error) {
               console.log(error.message);
           });
+    }
+    //check for support
+    if ('indexedDB' in window) {
+        initDatabase();
+    }
+    else {
+        console.log('This browser doesn\'t support IndexedDB');
+    }
 }
 
-}
 /**
  * given the list of cities created by the user, it will retrieve all teh data from
  * the server (or failing that) from the database
  */
 function loadData(){
-    var cityList=JSON.parse(localStorage.getItem('cities'));
-    cityList=removeDuplicates(cityList);
-    retrieveAllCitiesData(cityList, new Date().getTime());
+    var eventList=JSON.parse(localStorage.getItem('events'));
+    eventList=removeDuplicates(eventList);
+    // retrieveAllCitiesData(eventList, new Date().getTime());
+    retrieveAllCitiesData(eventList)
 }
 
 /**
@@ -37,10 +71,11 @@ function loadData(){
  * @param cityList the list of the cities the user has requested
  * @param date the date for the forecasts (not in use)
  */
-function retrieveAllCitiesData(cityList, date){
+// function retrieveAllCitiesData(cityList, date){
+function retrieveAllCitiesData(cityList){
     refreshCityList();
     for (index in cityList)
-        loadCityData(cityList[index], date);
+        loadCityData(cityList[index]);
 }
 
 /**
@@ -50,11 +85,11 @@ function retrieveAllCitiesData(cityList, date){
  * @param city
  * @param date
  */
-function loadCityData(city, date){
-    getCachedData(city, date);
-    const input = JSON.stringify({location: city, date: date});
+// function loadCityData(city, date){
+function loadCityData(event){
+    const input = JSON.stringify({name:event1,location:loc1,date:new Date().getDate()});
     $.ajax({
-        url: '/weather_data',
+        url: '/',
         data: input,
         contentType: 'application/json',
         type: 'POST',
@@ -114,11 +149,11 @@ function addToResults(dataR) {
         row.innerHTML = "<div class='card-block'>" +
             "<div class='row'>" +
             "<div class='col-xs-2'><h4 class='card-title'>" + dataR.location + "</h4></div>" +
-            "<div class='col-xs-2'>" + getForecast(dataR.forecast) + "</div>" +
-            "<div class='col-xs-2'>" + getTemperature(dataR) + "</div>" +
-            "<div class='col-xs-2'>" + getPrecipitations(dataR) + "</div>" +
-            "<div class='col-xs-2'>" + getWind(dataR) + "</div>" +
-            "<div class='col-xs-2'>" + getHumidity(dataR) + "</div>" +
+            // "<div class='col-xs-2'>" + getForecast(dataR.forecast) + "</div>" +
+            // "<div class='col-xs-2'>" + getTemperature(dataR) + "</div>" +
+            // "<div class='col-xs-2'>" + getPrecipitations(dataR) + "</div>" +
+            // "<div class='col-xs-2'>" + getWind(dataR) + "</div>" +
+            // "<div class='col-xs-2'>" + getHumidity(dataR) + "</div>" +
             "<div class='col-xs-2'></div></div></div>";
     }
 }
@@ -179,15 +214,6 @@ function showOfflineWarning(){
 function hideOfflineWarning(){
     if (document.getElementById('offline_div')!=null)
         document.getElementById('offline_div').style.display='none';
-}
-
-
-/**
- * it shows the city list in the browser
- */
-function showCityList() {
-    if (document.getElementById('city_list')!=null)
-        document.getElementById('city_list').style.display = 'block';
 }
 
 
@@ -253,7 +279,6 @@ function onSubmit(url) {
 //     sendLoginInfo(url, data);
 //     event.preventDefault();
 // }
-
 
 function checkForErrors(isLoginCorrect){
     if (!isLoginCorrect){

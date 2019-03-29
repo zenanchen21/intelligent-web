@@ -18,6 +18,26 @@ router.get('/', function(req, res, next) {
 * also, has problem with
 * console.log(results._id);
 * */
+router.post('/', function (req,res, next) {
+  const event = new Event(req.body.location,req.body.date,req.body.name);
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(event));
+})
+
+/**
+ * @param name
+ * @param location
+ * @param date
+ * @constructor
+ */
+class Event{
+  constructor (location, date, name) {
+    this.location= location;
+    this.date = date;
+    this.name = name
+  }
+}
+
 router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Express', login_is_correct:false});
 });
