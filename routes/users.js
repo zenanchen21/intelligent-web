@@ -19,6 +19,7 @@ router.get('/register', function(req, res, next) {
 });
 
 router.post('/register', function(req, res, next) {
+  var errors = [];
   var userData = req.body;
   console.log(userData);
   if (userData == null) {
@@ -36,7 +37,6 @@ router.post('/register', function(req, res, next) {
           var count;
           User.findOne({},function (err,data) {
             if(data){
-              console.log("if");
               count = data.unique_id +1;
             }else{
               count = 1;
@@ -61,6 +61,7 @@ router.post('/register', function(req, res, next) {
                     res.status(500).send('Invalid data!');
                     console.log(err);
                   }else{
+                    req.flash('success_msg', 'U can log in now');
                     res.redirect('/users/login');
                   }
 
@@ -74,11 +75,15 @@ router.post('/register', function(req, res, next) {
           }).sort({_id:-1}).limit(1);
           console.log("u can log now")
         }else{
-          res.send(JSON.stringify({"Wrong":"Email is already used."}));
+          req.flash('error_msg', 'Email is already used');
+          res.send(JSON.stringify({"Error":"Email is already used."}));
+
         }
       });
     }else{
-      res.send(JSON.stringify({"Success":"password is not matched"}));
+
+      req.flash('success_msg', 'password is not matched');
+      res.send(JSON.stringify({"Error":"password is not matched"}));
     }
   }catch(e){
     console.log('error', e)
@@ -152,5 +157,6 @@ router.get('/profile', isLoggedin,function(req, res, next) {
 router.get('/logout',function(req, res, next) {
   req.logout()
   console.log('logout');
+  req.flash('success_msg', 'You are logged out');
   res.redirect('/users/login')
 });
