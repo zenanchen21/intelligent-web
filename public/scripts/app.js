@@ -4,8 +4,10 @@ function addEvent(){
     for (index in formArray){
         data[formArray[index].name]= formArray[index].value;
     }
+    console.log("onsubmit");
     // const data = JSON.stringify($(this).serializeArray());
     sendAjaxQuery("/", data);
+    event.preventDefault();
 }
 
 function sendAjaxQuery(url, data) {
@@ -59,7 +61,6 @@ function initMSocial() {
  */
 function loadData(){
     var eventList=JSON.parse(localStorage.getItem('events'));
-    eventList=removeDuplicates(eventList);
     retrieveAllEventsData(eventList)
 }
 
@@ -81,7 +82,7 @@ function retrieveAllEventsData(eventList){
  * @param date
  */
 function loadEventData(event){
-    const input = JSON.stringify({name:event1,location:loc1,date:new Date().getDate()});
+    const input = JSON.stringify(event);
     $.ajax({
         url: '/',
         data: input,
@@ -92,14 +93,14 @@ function loadEventData(event){
             // dataType:json, so JQuery knows it and unpacks the
             // object for us before returning it
             addToResults(dataR);
-            storeCachedData(dataR.location, dataR);
+            storeCachedData(dataR.name, dataR);
             if (document.getElementById('offline_div')!=null)
                     document.getElementById('offline_div').style.display='none';
         },
         // the request to the server has failed. Let's show the cached data
         error: function (xhr, status, error) {
             showOfflineWarning();
-            addToResults(getCachedData(event, date));
+            addToResults(getCachedData(event));
             const dvv= document.getElementById('offline_div');
             if (dvv!=null)
                     dvv.style.display='block';
@@ -173,22 +174,6 @@ function showOfflineWarning(){
 function hideOfflineWarning(){
     if (document.getElementById('offline_div')!=null)
         document.getElementById('offline_div').style.display='none';
-}
-
-
-
-/**
- * Given a list of events, it removes any duplicates
- * @param eventList
- * @returns {Array}
- */
-function removeDuplicates(eventList) {
-    // remove any duplicate
-       var uniqueNames=[];
-       $.each(eventList, function(i, el){
-           if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
-       });
-       return uniqueNames;
 }
 
 
