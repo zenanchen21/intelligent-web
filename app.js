@@ -4,7 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var flash = require('connect-flash');
+var session = require('express-session');
+var passport = require('passport');
 
+//controller route
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -13,7 +17,8 @@ var app = express();
 //call mongodb
 var dbconncetion = require('./databases/users');
 
-
+// Passport controller
+require('./controllers/users')(passport);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -24,6 +29,26 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Express session
+/*
+* NOTICE:use express session before passport session
+* */
+app.use(
+    session({
+      secret: 'secret',
+      resave: true,
+      saveUninitialized: true
+    })
+);
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Connect flash
+app.use(flash());
+
+//conbine with controller route
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 

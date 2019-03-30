@@ -13,7 +13,7 @@ exports.init= function() {
         unique_id:'0',
         username: 'admin',
         email: 'test@gmail.com',
-        password: 'test'
+        password: '$2a$10$Mxg7Rbz.Q1du7/BMenlaFObP.O9UJ2cS9fvtMB0PdMDaKmNV4/CJG'
     });
     console.log('please, test the web with test@gmail.com, test.');
 
