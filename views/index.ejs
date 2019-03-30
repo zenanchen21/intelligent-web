@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang='en' class=''>
 <head>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" crossorigin="anonymous">>
+    <link rel="manifest" href="/manifest.json">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" crossorigin="anonymous">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
     <!------ Include the above in your HEAD tag ---------->
@@ -24,7 +25,7 @@
     <script src="/scripts/database.js"></script>
     <script src="/scripts/idb.js"></script>
 </head>
-<body onload="initWeatherForecasts()">
+<body onload="initMSocial()">
 <nav class="navbar navbar-light bg-white">
     <a href="#" class="navbar-brand">Bootsbook</a>
     <form class="form-inline">
@@ -280,60 +281,41 @@
             <!-- Post /////-->
         </div>
 
-        <!--<div class="col-md-3">-->
-            <!--<div class="card gedf-card">-->
-                <!--<div class="card-body">-->
-                    <!--<h5 class="card-title">Card title</h5>-->
-                    <!--<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>-->
-                    <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the-->
-                        <!--card's content.</p>-->
-                    <!--<a href="#" class="card-link">Card link</a>-->
-                    <!--<a href="#" class="card-link">Another link</a>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="card gedf-card">-->
-                <!--<div class="card-body">-->
-                    <!--<h5 class="card-title">Card title</h5>-->
-                    <!--<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>-->
-                    <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the-->
-                        <!--card's content.</p>-->
-                    <!--<a href="#" class="card-link">Card link</a>-->
-                    <!--<a href="#" class="card-link">Another link</a>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <div>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">+ Create Event</button>
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">New event</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="xform" onsubmit="adEvent()">
-                                <div class="form-group">
-                                    <label for="name" class="col-form-label">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">Location</label>
-                                    <input type="text" class="form-control" id="location" name="location">
-                                    <!--<textarea class="form-control" id="message-text"></textarea>-->
-                                </div>
-                                <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Date</label>
-                                    <input type="text" class="form-control" id="n-date" name="date">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <p><input type="submit" name="g" value="Submit"></p>
-                                    <button type="button" class="btn btn-primary" >Create</button>
-                                </div>
-                            </form>
+        <div class="col-md-3">
+            <div id="events">
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">+ Create Event</button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">New event</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="xform" onsubmit="addEvent()">
+                                    <div class="form-group">
+                                        <label for="name" class="col-form-label">Name</label>
+                                        <input type="text" class="form-control" id="name" name="name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Location</label>
+                                        <input type="text" class="form-control" id="location" name="location">
+                                        <!--<textarea class="form-control" id="message-text"></textarea>-->
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">Date</label>
+                                        <input type="text" class="form-control" id="n-date" name="date">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button class="btn btn-primary" data-dismiss="modal">Create</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -341,8 +323,6 @@
         </div>
     </div>
 </div>
-<div id="results" style="text-align: center">
-
 </div>
 </body>
 </html>

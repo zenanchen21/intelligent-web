@@ -1,4 +1,4 @@
-function adEvent(){
+function addEvent(){
     var formArray= $("form").serializeArray();
     var data={};
     for (index in formArray){
@@ -6,7 +6,6 @@ function adEvent(){
     }
     // const data = JSON.stringify($(this).serializeArray());
     sendAjaxQuery("/", data);
-    event.preventDefault();
 }
 
 function sendAjaxQuery(url, data) {
@@ -35,7 +34,7 @@ function sendAjaxQuery(url, data) {
  * called by the HTML onload
  * showing any cached forecast data and declaring the service worker
  */
-function initWeatherForecasts() {
+function initMSocial() {
     loadData();
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker
@@ -55,38 +54,33 @@ function initWeatherForecasts() {
 }
 
 /**
- * given the list of cities created by the user, it will retrieve all teh data from
+ * given the list of events created by the user, it will retrieve all teh data from
  * the server (or failing that) from the database
  */
 function loadData(){
     var eventList=JSON.parse(localStorage.getItem('events'));
     eventList=removeDuplicates(eventList);
-    // retrieveAllCitiesData(eventList, new Date().getTime());
-    retrieveAllCitiesData(eventList)
+    retrieveAllEventsData(eventList)
 }
 
 /**
- * it cycles through the list of cities and requests the data from the server for each
- * city
- * @param cityList the list of the cities the user has requested
- * @param date the date for the forecasts (not in use)
+ * it cycles through the list of events and requests the data from the server for each
+ * event
+ * @param eventList the list of the evnents the user has requested
  */
-// function retrieveAllCitiesData(cityList, date){
-function retrieveAllCitiesData(cityList){
-    refreshCityList();
-    for (index in cityList)
-        loadCityData(cityList[index]);
+function retrieveAllEventsData(eventList){
+    for (index in eventList)
+        loadEventData(eventList[index]);
 }
 
 /**
- * given one city and a date, it queries the server via Ajax to get the latest
- * weather forecast for that city
+ * given one event and a date, it queries the server via Ajax to get the latest
+ * weather forecast for that event
  * if the request to the server fails, it shows the data stored in the database
- * @param city
+ * @param event
  * @param date
  */
-// function loadCityData(city, date){
-function loadCityData(event){
+function loadEventData(event){
     const input = JSON.stringify({name:event1,location:loc1,date:new Date().getDate()});
     $.ajax({
         url: '/',
@@ -105,15 +99,12 @@ function loadCityData(event){
         // the request to the server has failed. Let's show the cached data
         error: function (xhr, status, error) {
             showOfflineWarning();
-            addToResults(getCachedData(city, date));
+            addToResults(getCachedData(event, date));
             const dvv= document.getElementById('offline_div');
             if (dvv!=null)
                     dvv.style.display='block';
         }
     });
-    // hide the list of cities if currently shown
-    if (document.getElementById('city_list')!=null)
-        document.getElementById('city_list').style.display = 'none';
 }
 
 
@@ -136,54 +127,22 @@ function loadCityData(event){
   *}
  */
 function addToResults(dataR) {
-    if (document.getElementById('results') != null) {
+    if (document.getElementById('events') != null) {
         const row = document.createElement('div');
         // appending a new row
-        document.getElementById('results').appendChild(row);
+        document.getElementById('events').appendChild(row);
         // formatting the row by applying css classes
-        row.classList.add('card');
-        row.classList.add('my_card');
-        row.classList.add('bg-faded');
+        // row.classList.add('card');
+        // row.classList.add('my_card');
+        // row.classList.add('bg-faded');
         // the following is far from ideal. we should really create divs using javascript
         // rather than assigning innerHTML
-        row.innerHTML = "<div class='card-block'>" +
-            "<div class='row'>" +
-            "<div class='col-xs-2'><h4 class='card-title'>" + dataR.location + "</h4></div>" +
-            // "<div class='col-xs-2'>" + getForecast(dataR.forecast) + "</div>" +
-            // "<div class='col-xs-2'>" + getTemperature(dataR) + "</div>" +
-            // "<div class='col-xs-2'>" + getPrecipitations(dataR) + "</div>" +
-            // "<div class='col-xs-2'>" + getWind(dataR) + "</div>" +
-            // "<div class='col-xs-2'>" + getHumidity(dataR) + "</div>" +
-            "<div class='col-xs-2'></div></div></div>";
+        row.innerHTML = "<div class=\"card gedf-card\">" +
+          "<div class=\"card-body\">" +
+          "<h5 class=\"card-title\">" + dataR.name + "</h5>" +
+          "<h6 class=\"card-subtitle mb-2 text-muted\">" + dataR.location + "      " + dataR.data +"</h6></div></div>";
     }
 }
-
-
-/**
- * it removes all forecasts from the result div
- */
-function refreshCityList(){
-    if (document.getElementById('results')!=null)
-        document.getElementById('results').innerHTML='';
-}
-
-
-/**
- * it enables selecting the city from the drop down menu
- * it saves the selected city in the database so that it can be retrieved next time
- * @param city
- * @param date
- */
-function selectCity(city, date) {
-    var cityList=JSON.parse(localStorage.getItem('cities'));
-    if (cityList==null) cityList=[];
-    cityList.push(city);
-    cityList = removeDuplicates(cityList);
-    localStorage.setItem('cities', JSON.stringify(cityList));
-    retrieveAllCitiesData(cityList, date);
-}
-
-
 
 /**
  * When the client gets off-line, it shows an off line warning to the user
@@ -219,14 +178,14 @@ function hideOfflineWarning(){
 
 
 /**
- * Given a list of cities, it removes any duplicates
- * @param cityList
+ * Given a list of events, it removes any duplicates
+ * @param eventList
  * @returns {Array}
  */
-function removeDuplicates(cityList) {
+function removeDuplicates(eventList) {
     // remove any duplicate
        var uniqueNames=[];
-       $.each(cityList, function(i, el){
+       $.each(eventList, function(i, el){
            if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
        });
        return uniqueNames;
