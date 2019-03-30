@@ -34,24 +34,30 @@ function initDatabase(){
 }
 /**
  * it saves the forecasts for a city in localStorage
- * @param name
+ * @param type
  * @param eventObject
  */
-function storeCachedData(name, eventObject) {
+function storeCachedData(type, eventObject) {
     console.log('inserting: '+JSON.stringify(eventObject));
     if (dbPromise) {
         dbPromise.then(async db => {
-            var tx = db.transaction(EVENT_STORE_NAME, 'readwrite');
-            var store = tx.objectStore(EVENT_STORE_NAME);
+            var tx, store;
+            if(type=="events") {
+                tx = db.transaction(EVENT_STORE_NAME, 'readwrite');
+                store = tx.objectStore(EVENT_STORE_NAME);
+            }else{
+                tx = db.transaction(STORY_STORE_NAME, 'readwrite');
+                store = tx.objectStore(STORY_STORE_NAME);
+            }
             await store.put(eventObject);
             return tx.complete;
         }).then(function () {
-            console.log('added item to the store! '+ JSON.stringify(eventObject));
+            console.log('added item to the store! '+store.toString()+ JSON.stringify(eventObject));
         }).catch(function (error) {
-            localStorage.setItem(city, JSON.stringify(eventObject));
+            localStorage.setItem(type, JSON.stringify(eventObject));
         });
     }
-    else localStorage.setItem(city, JSON.stringify(eventObject));
+    else localStorage.setItem(type, JSON.stringify(eventObject));
 }
 
 
@@ -61,7 +67,7 @@ function storeCachedData(name, eventObject) {
  * @param date
  * @returns {*}
  */
-function getCachedData(eventName, date) {
+function getCachedData(eventName) {
     if (dbPromise) {
         dbPromise.then(function (db) {
             console.log('fetching: '+name);
@@ -71,22 +77,19 @@ function getCachedData(eventName, date) {
             return index.getAll(IDBKeyRange.only(eventName));
         }).then(function (readingsList) {
             if (readingsList && readingsList.length>0){
-                var max;
                 for (var elem of readingsList)
-                    if (!max || elem.date>max.date)
-                        max= elem;
-                if (max) addToResults(max);
+                    addToResults(elem);
             } else {
                 const value = localStorage.getItem(eventName);
                 if (value == null)
-                    addToResults({name: eventName, date: date});
+                    addToResults({name:eventName});
                 else addToResults(value);
             }
         });
     } else {
         const value = localStorage.getItem(eventName);
         if (value == null)
-            addToResults( {name: eventName, date: date});
+            addToResults( {name: eventName});
         else addToResults(value);
     }
 }

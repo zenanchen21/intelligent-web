@@ -1,12 +1,24 @@
 function addEvent(){
-    var formArray= $("form").serializeArray();
+    var formArray= $("#xform").serializeArray();
     var data={};
     for (index in formArray){
         data[formArray[index].name]= formArray[index].value;
     }
-    console.log("onsubmit");
     // const data = JSON.stringify($(this).serializeArray());
-    sendAjaxQuery("/", data);
+    data.type = "events";
+    sendAjaxQuery("/events", data);
+    event.preventDefault();
+}
+
+function postStory () {
+    var formArray= $("#stories").serializeArray();
+    var data={};
+    for (index in formArray){
+        data[formArray[index].name]= formArray[index].value;
+    }
+    data.type = "posts";
+    data.author = "LeeCross";
+    sendAjaxQuery("/posts",data);
     event.preventDefault();
 }
 
@@ -20,8 +32,8 @@ function sendAjaxQuery(url, data) {
             // no need to JSON parse the result, as we are using
             // dataType:json, so JQuery knows it and unpacks the
             // object for us before returning it
-            addToResults(dataR);
-            storeCachedData(dataR.location, dataR);
+            addToResults(data.type, dataR);
+            storeCachedData(data.type, dataR);
             if (document.getElementById('offline_div')!=null)
                 document.getElementById('offline_div').style.display='none';
         },
@@ -60,7 +72,7 @@ function initMSocial() {
  * the server (or failing that) from the database
  */
 function loadData(){
-    var eventList=JSON.parse(localStorage.getItem('events'));
+    var eventList=JSON.parse(localStorage.getItem('name'));
     retrieveAllEventsData(eventList)
 }
 
@@ -127,21 +139,66 @@ function loadEventData(event){
   *  }
   *}
  */
-function addToResults(dataR) {
-    if (document.getElementById('events') != null) {
-        const row = document.createElement('div');
-        // appending a new row
-        document.getElementById('events').appendChild(row);
-        // formatting the row by applying css classes
-        // row.classList.add('card');
-        // row.classList.add('my_card');
-        // row.classList.add('bg-faded');
-        // the following is far from ideal. we should really create divs using javascript
-        // rather than assigning innerHTML
-        row.innerHTML = "<div class=\"card gedf-card\">" +
-          "<div class=\"card-body\">" +
-          "<h5 class=\"card-title\">" + dataR.name + "</h5>" +
-          "<h6 class=\"card-subtitle mb-2 text-muted\">" + dataR.location + "      " + dataR.data +"</h6></div></div>";
+function addToResults(type, dataR) {
+    if(type == "events") {
+        if (document.getElementById("events") != null) {
+            const row = document.createElement('div');
+            // appending a new row
+            document.getElementById("events").appendChild(row);
+            // formatting the row by applying css classes
+            row.classList.add('card');
+            row.classList.add('gedf-card');
+            // the following is far from ideal. we should really create divs using javascript
+            // rather than assigning innerHTML
+            row.innerHTML = "<div class=\"card-body\">" +
+              "<h5 class=\"card-title\">" + dataR.name + "</h5>" +
+              "<h6 class=\"card-subtitle mb-2 text-muted\">" + dataR.location + "      " + dataR.data + "</h6></div>";
+        }
+    } else{
+        if (document.getElementById("posts") != null) {
+            const row = document.createElement("div");
+            const header = document.createElement("div");
+            const body = document.createElement("div");
+            const footer = document.createElement("div");
+
+            row.appendChild(header);
+            row.appendChild(body);
+            row.appendChild(footer);
+            document.getElementById("posts").appendChild(row);
+
+            row.classList.add('card','gedf-card');
+            header.classList.add('card-header');
+            body.classList.add('card-body');
+            footer.classList.add('card-footer');
+
+
+            header.innerHTML = '<div class="d-flex justify-content-between align-items-center">' +
+              '<div class="d-flex justify-content-between align-items-center">' +
+              '<div class="mr-2">' +
+              '<img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="" crossorigin="anonymous"></div>' +
+              '<div class="ml-2">' +
+              '<div class="h5 m-0">'+dataR.author+'</div>' +
+              '</div></div><div>' +
+              '<div class="dropdown">' +
+              '<button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+              '<i class="fa fa-ellipsis-h"></i>' +
+              '</button>' +
+              '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">'+
+              '<div class="h6 dropdown-header">Configuration</div>' +
+              '<a class="dropdown-item" href="#">Save</a>' +
+              '<a class="dropdown-item" href="#">Hide</a>' +
+              '<a class="dropdown-item" href="#">Report</a>' +
+              '</div> </div> </div> </div>';
+
+            body.innerHTML = '<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>10 min ago</div>' +
+            '<a class="card-link" href="#">' +
+              '<h5 class="card-title">'+dataR.title+'</h5></a>' +
+            '<p class="card-text">'+ dataR.content+'</p> </div>';
+
+            footer.innerHTML = '<a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>' +
+            '<a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>' +
+            '<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>';
+        }
     }
 }
 

@@ -64,7 +64,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col-md-6 gedf-main">
+        <div id="posts" class="col-md-6 gedf-main">
 
             <!--- \\\\\\\Post-->
             <div class="card gedf-card">
@@ -80,28 +80,28 @@
                     </ul>
                 </div>
                 <div class="card-body">
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
-                            <div class="form-group">
-                                <label class="sr-only" for="message">post</label>
-                                <textarea class="form-control" id="message" rows="3" placeholder="What are you thinking?"></textarea>
-                            </div>
-
-                        </div>
-                        <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
-                            <div class="form-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="customFile">
-                                    <label class="custom-file-label" for="customFile">Upload image</label>
+                    <form id="stories" onsubmit="postStory()">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                                <div class="form-group">
+                                    <label class="sr-only" for="message">post</label>
+                                    <textarea class="form-control" id="message" rows="3" placeholder="What are you thinking?" name="content"></textarea>
                                 </div>
                             </div>
-                            <div class="py-4"></div>
+                            <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+                                <div class="form-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="customFile">
+                                        <label class="custom-file-label" for="customFile">Upload image</label>
+                                    </div>
+                                </div>
+                                <div class="py-4"></div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" form="stories">share</button>
                         </div>
-                    </div>
+                    </form>
                     <div class="btn-toolbar justify-content-between">
-                        <div class="btn-group">
-                            <button type="submit" class="btn btn-primary">share</button>
-                        </div>
+
                         <div class="btn-group">
                             <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
@@ -124,7 +124,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="mr-2">
-                                <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt=""  crossorigin="anonymous">>
+                                <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt=""  crossorigin="anonymous">
                             </div>
                             <div class="ml-2">
                                 <div class="h5 m-0">@LeeCross</div>
@@ -311,7 +311,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button class="btn btn-primary">Create</button>
+                                        <button class="btn btn-primary" form="xform">Create</button>
                                     </div>
                                 </form>
                             </div>
