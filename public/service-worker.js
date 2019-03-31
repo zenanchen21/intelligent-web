@@ -21,7 +21,7 @@ var filesToCache = [
     '/stylesheets/bootstrap.min.css',
     '/stylesheets/style.css',
     '/stylesheets/create.css',
-    '/stylesheets/soical.css',
+    '/stylesheets/social.css',
     '/scripts/bootstrap.min.js',
     '/scripts/jquery.min.js',
     '/scripts/database.js'
