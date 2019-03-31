@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 /**
  * sigin in form onsubmit
  * lead to home page
@@ -13,7 +12,6 @@ function submitForm(url){
         data.type = "events";
     else {
         data.type = "posts";
-
     }
     sendAjaxQuery(url, data);
     event.preventDefault();
