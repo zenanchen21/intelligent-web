@@ -1,7 +1,6 @@
 function submitForm(url){
     var formArray= $("form").serializeArray();
     var data={};
-    console.log("sdss");
     for (index in formArray){
         data[formArray[index].name]= formArray[index].value;
     }
@@ -32,7 +31,8 @@ function sendAjaxQuery(url, data) {
                 document.getElementById('offline_div').style.display='none';
         },
         error: function (xhr, status, error) {
-            alert('Error: ' + error.message);
+            addToResults(data.type, data);
+            storeCachedData(data.type,data);
         }
     });
 }
@@ -69,7 +69,6 @@ function initMSocial() {
 function loadData(){
     // var eventList=JSON.parse(localStorage.getItem('events'));
     // var storyList=JSON.parse(localStorage.getItem('posts'));
-    console.log("load data");
     getAllData();
     // retrieveAllPostsData(storyList);
     // retrieveAllEventsData(eventList);
@@ -168,7 +167,7 @@ function addToResults(type, dataR) {
             row.appendChild(header);
             row.appendChild(body);
             row.appendChild(footer);
-            document.getElementById("posts").appendChild(row);
+            document.getElementById("postsForm").after(row);
 
             row.classList.add('card','gedf-card');
             header.classList.add('card-header');
