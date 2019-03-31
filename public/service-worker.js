@@ -78,39 +78,10 @@ self.addEventListener('activate', function (e) {
  *      from there (e.g. showing the cached data)
  * all the other pages are searched for in the cache. If not found, they are returned
  */
-self.addEventListener('fetch', function (e) {
-  console.log('[Service Worker] Fetch', e.request.url);
-  if(e.request.method != "POST"){
-    e.respondWith(caches.match(e.request).then(function (response) {
-      if (response)
-        return response;
-      var fetchRequest = e.request.clone();
-      return fetch(fetchRequest).then(function (response) {
-        // Check if we received a valid response. A basic response is one that
-        // is made when we fetch from our own site. Do not cache responses to
-        // requests made to other sites
-        // if the file does not exist, do not cache - just return to the browser
-        if (!response || response.status !== 200 ) {
-          return response;
-        }
-        // response is valid. Cache the fetched file
-        // IMPORTANT: as mentioned we must clone the response.
-        // A response is a stream
-        // and because we want the browser to consume the response
-        // as well as the cache consuming the response, we need
-        // to clone it so we have two streams.
-        var responseToCache = response.clone();
-        caches.open(cacheName).then(function (cache) {
-          cache.put(e.request, responseToCache); // here we use the clone
-        });
-        return response; // here we use the original response
-      });
-    }));
-  }
-  else
-    fetch(e.request).then(function (response) {
-      // note: it the network is down, response will contain the error
-      // that will be passed to Ajax
-      return response;
-    });
+self.addEventListener('fetch', function(event) {
+    event.respondWith(
+        fetch(event.request).catch(function() {
+            return caches.match(event.request);
+        })
+    );
 });

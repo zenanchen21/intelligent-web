@@ -42,13 +42,11 @@
         <a href="/users/logout">Logout</a>
         <%}else{%><li class="nav-item active">
             <a href="/users/register">Sign up</a>
+            <a href="/users/login">Sign in</a>
         </li>
         <li class="nav-item">
-            <a href="/users/login">Sign in</a>
         </li><%
-
         }%>
-
     </ul>
 </nav>
 
@@ -114,11 +112,14 @@
                                 </div>
                                 <div class="py-4"></div>
                             </div>
-                            <button type="submit" class="btn btn-primary" form="stories">share</button>
+                            <!--<button type="submit" class="btn btn-primary" form="stories">share</button>-->
                         </div>
                     </form>
                     <div class="btn-toolbar justify-content-between">
-
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-primary">share</button>
+                        </div>
+                        </form>
                         <div class="btn-group">
                             <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
