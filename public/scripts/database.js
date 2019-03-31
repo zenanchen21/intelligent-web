@@ -27,6 +27,45 @@ function initDatabase(){
         }
         if(!upgradeDb.objectStoreNames.contains(EVENT_STORE_NAME)) {
             var eventOS = upgradeDb.createObjectStore(EVENT_STORE_NAME, {keyPath: 'id', autoIncrement: true});
+            eventOS.createIndex('location', 'location', {unique: false, multiEntry: true});
+        }
+
+    });
+}
+/**
+ * it saves the forecasts for a city in localStorage
+ * @param city
+ * @param forecastObject
+ */
+function storeCachedData(city, forecastObject) {
+    console.log('inserting: '+JSON.stringify(forecastObject));
+    if (dbPromise) {
+        dbPromise.then(async db => {
+            var tx = db.transaction(EVENT_STORE_NAME, 'readwrite');
+            var store = tx.objectStore(EVENT_STORE_NAME);
+            await store.put(forecastObject);
+            return tx.complete;
+        }).then(function () {
+            console.log('added item to the store! '+ JSON.stringify(forecastObject));
+        }).catch(function (error) {
+            localStorage.setItem(city, JSON.stringify(forecastObject));
+        });
+    }
+    else localStorage.setItem(city, JSON.stringify(forecastObject));
+}
+
+
+/**
+ * it inits the database
+ */
+function initDatabase(){
+    dbPromise = idb.openDb(APP_DB_NAME, 1, function (upgradeDb) {
+        if (!upgradeDb.objectStoreNames.contains(STORY_STORE_NAME)) {
+            var storyOS = upgradeDb.createObjectStore(STORY_STORE_NAME, {keyPath: 'id', autoIncrement: true});
+            storyOS.createIndex('author', 'author', {unique: false, multiEntry: true});
+        }
+        if(!upgradeDb.objectStoreNames.contains(EVENT_STORE_NAME)) {
+            var eventOS = upgradeDb.createObjectStore(EVENT_STORE_NAME, {keyPath: 'id', autoIncrement: true});
             eventOS.createIndex('name', 'name', {unique: false, multiEntry: true});
         }
 

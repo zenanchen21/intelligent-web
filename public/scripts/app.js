@@ -1,10 +1,14 @@
+<<<<<<< Updated upstream
+/**
+ * sigin in form onsubmit
+ * lead to home page
+ */
 function submitForm(url){
     var formArray= $("form").serializeArray();
     var data={};
     for (index in formArray){
         data[formArray[index].name]= formArray[index].value;
     }
-
     if(url == "/events")
         data.type = "events";
     else {
