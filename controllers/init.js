@@ -4,11 +4,8 @@ var User = require('../models/users');
 
 exports.init= function() {
     // uncomment if you need to drop the database
-    //
-    User.deleteMany({}, function(err) {
-       console.log('collection removed')
-    });
-
+    User.collection.drop();
+    //create a tempplte user for testing
     var user = new User({
         unique_id:'0',
         username: 'admin',

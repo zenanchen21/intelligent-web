@@ -4,7 +4,7 @@ var bodyParser= require("body-parser");
 
 var UserController = require('../controllers/users');
 var initDB= require('../controllers/init');
-var User = require('../models/users')
+var User = require('../models/users');
 initDB.init();
 
 /* GET home page. */
