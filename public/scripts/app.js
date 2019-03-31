@@ -10,7 +10,7 @@ function submitForm(url){
         data.type = "events";
     else {
         data.type = "posts";
-        data.author = "LeeCross";
+
     }
     sendAjaxQuery(url, data);
     event.preventDefault();

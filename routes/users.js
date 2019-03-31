@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-module.exports = router;
+
 
 
 
@@ -19,16 +19,15 @@ router.get('/register', function(req, res, next) {
 });
 
 router.post('/register', function(req, res, next) {
-  var errors = [];
   var userData = req.body;
   console.log(userData);
   if (userData == null) {
-    console.log('no data')
+    console.log('no data');
     res.status(403).send('No data sent!')
   }
   try{
     console.log(userData);
-    console.log('no input')
+    console.log('no input');
     console.log('im here');
     if (userData.psw == userData.psw2) {
 
@@ -133,10 +132,10 @@ router.get('/login', function(req, res, next) {
   res.render('login', { title: 'Express', login_is_correct:true});
 });
 
-// Login
+// Login with lib passport
 router.post('/login', function(req, res, next){
   passport.authenticate('local', {
-    successRedirect: '/',
+    successRedirect: '/users/profile',
     failureRedirect: '/users/login',
     failureFlash: true
   })(req, res, next);
@@ -149,14 +148,17 @@ var isLoggedin = function (req, res, next) {
   } else {
     res.redirect('/users/login')
   }
-}
+};
+
 router.get('/profile', isLoggedin,function(req, res, next) {
   res.render('profile', { user: req.user });
 });
 
 router.get('/logout',function(req, res, next) {
-  req.logout()
+  req.logout();
   console.log('logout');
   req.flash('success_msg', 'You are logged out');
   res.redirect('/users/login')
 });
+
+module.exports = router;

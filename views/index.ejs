@@ -114,6 +114,11 @@
                                 </div>
                                 <div class="py-4"></div>
                             </div>
+                            <input hidden="hidden" name="author"  value="<%if(locals.user){
+                            %><%=user.username%><%
+                            }else{
+                            %><p>Fake User</p><%
+                            }%>">
                             <button type="submit" class="btn btn-primary" form="stories">share</button>
                         </div>
                     </form>
