@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
 * console.log(results._id);
 * */
 router.post('/events', function (req,res, next) {
-  const event = new Event(req.body.location,req.body.date,req.body.name);
+  const event = new Event(req.body.location,req.body.date,req.body.name,req.body.description);
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify(event));
 });
@@ -38,10 +38,11 @@ router.post("/posts", function (req,res, next) {
  * @constructor
  */
 class Event{
-  constructor (location, date, name) {
+  constructor (location, date, name, description) {
     this.location= location;
     this.date = date;
-    this.name = name
+    this.name = name;
+    this.description = description;
   }
 }
 
@@ -51,7 +52,7 @@ class Event{
  * @returns {boolean}
  */
 class Post {
-  constructor (author, content) {
+  constructor (author, content, id) {
     this.author = author;
     this.content = content;
   }

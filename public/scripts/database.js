@@ -52,10 +52,11 @@ function storeCachedData(type, eventObject) {
             await store.put(eventObject);
             return tx.complete;
         }).then(function () {
-            console.log('added item to the store! '+store.toString()+ JSON.stringify(eventObject));
+            console.log('added item to the store! ' + JSON.stringify(eventObject));
         }).catch(function (error) {
             localStorage.setItem(type, JSON.stringify(eventObject));
         });
+
     }
     else localStorage.setItem(type, JSON.stringify(eventObject));
 }
@@ -91,5 +92,22 @@ function getCachedData(eventName) {
         if (value == null)
             addToResults( {name: eventName});
         else addToResults(value);
+    }
+}
+
+function getAllPost () {
+    if (dbPromise) {
+        dbPromise.then(function (db) {
+            var tx = db.transaction(STORY_STORE_NAME, 'readonly');
+            var store = tx.objectStore(STORY_STORE_NAME);
+            console.log("get");
+            return store.getAll();
+        }).then(function(items){
+            for(post in items)
+                addToResults('post',post);
+        })
+    }
+    else{
+        console.log("fail");
     }
 }

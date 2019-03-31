@@ -1,24 +1,18 @@
-function addEvent(){
-    var formArray= $("#xform").serializeArray();
+function submitForm(url){
+    var formArray= $("form").serializeArray();
     var data={};
+    console.log("sdss");
     for (index in formArray){
         data[formArray[index].name]= formArray[index].value;
     }
-    // const data = JSON.stringify($(this).serializeArray());
-    data.type = "events";
-    sendAjaxQuery("/events", data);
-    event.preventDefault();
-}
 
-function postStory () {
-    var formArray= $("#stories").serializeArray();
-    var data={};
-    for (index in formArray){
-        data[formArray[index].name]= formArray[index].value;
+    if(url == "/events")
+        data.type = "events";
+    else {
+        data.type = "posts";
+        data.author = "LeeCross";
     }
-    data.type = "posts";
-    data.author = "LeeCross";
-    sendAjaxQuery("/posts",data);
+    sendAjaxQuery(url, data);
     event.preventDefault();
 }
 
@@ -49,7 +43,7 @@ function sendAjaxQuery(url, data) {
  * showing any cached forecast data and declaring the service worker
  */
 function initMSocial() {
-    loadData();
+    // loadData();
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker
           .register('./service-worker.js')
@@ -65,6 +59,7 @@ function initMSocial() {
     else {
         console.log('This browser doesn\'t support IndexedDB');
     }
+    loadData();
 }
 
 /**
@@ -72,8 +67,12 @@ function initMSocial() {
  * the server (or failing that) from the database
  */
 function loadData(){
-    var eventList=JSON.parse(localStorage.getItem('name'));
-    retrieveAllEventsData(eventList)
+    // var eventList=JSON.parse(localStorage.getItem('events'));
+    // var storyList=JSON.parse(localStorage.getItem('posts'));
+    console.log("load data");
+    getAllPost();
+    // retrieveAllPostsData(storyList);
+    // retrieveAllEventsData(eventList);
 }
 
 /**
@@ -83,7 +82,12 @@ function loadData(){
  */
 function retrieveAllEventsData(eventList){
     for (index in eventList)
-        loadEventData(eventList[index]);
+        loadEventData('events', eventList[index]);
+}
+
+function retrieveAllPostsData(eventList){
+    for (index in eventList)
+        loadEventData('posts', eventList[index]);
 }
 
 /**
@@ -93,10 +97,10 @@ function retrieveAllEventsData(eventList){
  * @param event
  * @param date
  */
-function loadEventData(event){
+function loadEventData(url, event){
     const input = JSON.stringify(event);
     $.ajax({
-        url: '/',
+        url: "/"+url,
         data: input,
         contentType: 'application/json',
         type: 'POST',
@@ -104,8 +108,8 @@ function loadEventData(event){
             // no need to JSON parse the result, as we are using
             // dataType:json, so JQuery knows it and unpacks the
             // object for us before returning it
-            addToResults(dataR);
-            storeCachedData(dataR.name, dataR);
+            addToResults(url, dataR);
+            storeCachedData(url, dataR);
             if (document.getElementById('offline_div')!=null)
                     document.getElementById('offline_div').style.display='none';
         },
@@ -152,7 +156,7 @@ function addToResults(type, dataR) {
             // rather than assigning innerHTML
             row.innerHTML = "<div class=\"card-body\">" +
               "<h5 class=\"card-title\">" + dataR.name + "</h5>" +
-              "<h6 class=\"card-subtitle mb-2 text-muted\">" + dataR.location + "      " + dataR.data + "</h6></div>";
+              "<h6 class=\"card-subtitle mb-2 text-muted\">" + dataR.location + "      " + dataR.date + "</h6></div>";
         }
     } else{
         if (document.getElementById("posts") != null) {
