@@ -9,7 +9,15 @@ initDB.init();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express', login_is_correct:true});
+  res.render('index', { user: req.user});
+});
+
+router.get('/index2', function(req, res, next) {
+  res.render('index2',{title:'hha'});
+});
+
+router.get('/index3', function(req, res, next) {
+  res.render('index3',{title:'hha'});
 });
 
 /*
