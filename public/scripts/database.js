@@ -95,16 +95,25 @@ function getCachedData(eventName) {
     }
 }
 
-function getAllPost () {
+function getAllData () {
     if (dbPromise) {
         dbPromise.then(function (db) {
-            var tx = db.transaction(STORY_STORE_NAME, 'readonly');
-            var store = tx.objectStore(STORY_STORE_NAME);
-            console.log("get");
-            return store.getAll();
-        }).then(function(items){
-            for(post in items)
-                addToResults('post',post);
+            var tx = db.transaction([STORY_STORE_NAME, EVENT_STORE_NAME], 'readonly');
+            var postStore = tx.objectStore(STORY_STORE_NAME);
+            var eventStore = tx.objectStore(EVENT_STORE_NAME);
+            var data = {};
+            data.posts = postStore.getAll();
+            data.events = eventStore.getAll();
+            return data;
+        }).then(function(data){
+            data.posts.then(function (posts) {
+                for(index in posts)
+                    addToResults('posts', posts[index]);
+            })
+            data.events.then(function (events) {
+                for(index in events)
+                    addToResults('events', events[index]);
+            })
         })
     }
     else{

@@ -70,7 +70,7 @@ function loadData(){
     // var eventList=JSON.parse(localStorage.getItem('events'));
     // var storyList=JSON.parse(localStorage.getItem('posts'));
     console.log("load data");
-    getAllPost();
+    getAllData();
     // retrieveAllPostsData(storyList);
     // retrieveAllEventsData(eventList);
 }
