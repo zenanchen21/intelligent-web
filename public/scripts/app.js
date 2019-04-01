@@ -17,6 +17,12 @@ function submitForm(url){
     event.preventDefault();
 }
 
+function searchForm(){
+    var keyWord = document.getElementById("keyWord").value;
+    searchIndexDB(keyWord);
+    event.preventDefault();
+}
+
 function sendAjaxQuery(url, data) {
     $.ajax({
         url: url ,
@@ -169,7 +175,7 @@ function addToResults(type, dataR) {
             row.appendChild(header);
             row.appendChild(body);
             row.appendChild(footer);
-            document.getElementById("postsForm").after(row);
+            document.getElementById("posts").appendChild(row);
 
             row.classList.add('card','gedf-card');
             header.classList.add('card-header');
