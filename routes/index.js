@@ -12,14 +12,6 @@ router.get('/', function(req, res, next) {
   res.render('index', { user: req.user});
 });
 
-router.get('/index2', function(req, res, next) {
-  res.render('index2',{title:'hha'});
-});
-
-router.get('/index3', function(req, res, next) {
-  res.render('index3',{title:'hha'});
-});
-
 router.get('/maps', function(req, res, next) {
   res.render('maps',{title:'Map Finder'});
 });
