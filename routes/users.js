@@ -135,7 +135,7 @@ router.get('/login', function(req, res, next) {
 // Login with lib passport
 router.post('/login', function(req, res, next){
   passport.authenticate('local', {
-    successRedirect: '/users/profile',
+    successRedirect: '/',
     failureRedirect: '/users/login',
     failureFlash: true
   })(req, res, next);
