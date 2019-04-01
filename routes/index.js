@@ -20,6 +20,10 @@ router.get('/index3', function(req, res, next) {
   res.render('index3',{title:'hha'});
 });
 
+router.get('/maps', function(req, res, next) {
+  res.render('maps',{title:'Map Finder'});
+});
+
 /*
 * TODO
 * can not save new user to database
