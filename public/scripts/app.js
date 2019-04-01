@@ -1,11 +1,26 @@
-function addEvent(){
+/**
+ * sigin in form onsubmit
+ * lead to home page
+ */
+function submitForm(url){
     var formArray= $("form").serializeArray();
     var data={};
     for (index in formArray){
         data[formArray[index].name]= formArray[index].value;
     }
-    // const data = JSON.stringify($(this).serializeArray());
-    sendAjaxQuery("/", data);
+    if(url == "/events")
+        data.type = "events";
+    else {
+        data.type = "posts";
+    }
+    sendAjaxQuery(url, data);
+    event.preventDefault();
+}
+
+function searchForm(){
+    var keyWord = document.getElementById("keyWord").value;
+    searchIndexDB(keyWord);
+    event.preventDefault();
 }
 
 function sendAjaxQuery(url, data) {
@@ -18,13 +33,14 @@ function sendAjaxQuery(url, data) {
             // no need to JSON parse the result, as we are using
             // dataType:json, so JQuery knows it and unpacks the
             // object for us before returning it
-            addToResults(dataR);
-            storeCachedData(dataR.location, dataR);
+            addToResults(data.type, dataR);
+            storeCachedData(data.type, dataR);
             if (document.getElementById('offline_div')!=null)
                 document.getElementById('offline_div').style.display='none';
         },
         error: function (xhr, status, error) {
-            alert('Error: ' + error.message);
+            addToResults(data.type, data);
+            storeCachedData(data.type,data);
         }
     });
 }
@@ -35,7 +51,7 @@ function sendAjaxQuery(url, data) {
  * showing any cached forecast data and declaring the service worker
  */
 function initMSocial() {
-    loadData();
+    // loadData();
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker
           .register('./service-worker.js')
@@ -51,6 +67,7 @@ function initMSocial() {
     else {
         console.log('This browser doesn\'t support IndexedDB');
     }
+    loadData();
 }
 
 /**
@@ -58,9 +75,11 @@ function initMSocial() {
  * the server (or failing that) from the database
  */
 function loadData(){
-    var eventList=JSON.parse(localStorage.getItem('events'));
-    eventList=removeDuplicates(eventList);
-    retrieveAllEventsData(eventList)
+    // var eventList=JSON.parse(localStorage.getItem('events'));
+    // var storyList=JSON.parse(localStorage.getItem('posts'));
+    getAllData();
+    // retrieveAllPostsData(storyList);
+    // retrieveAllEventsData(eventList);
 }
 
 /**
@@ -70,7 +89,12 @@ function loadData(){
  */
 function retrieveAllEventsData(eventList){
     for (index in eventList)
-        loadEventData(eventList[index]);
+        loadEventData('events', eventList[index]);
+}
+
+function retrieveAllPostsData(eventList){
+    for (index in eventList)
+        loadEventData('posts', eventList[index]);
 }
 
 /**
@@ -80,10 +104,10 @@ function retrieveAllEventsData(eventList){
  * @param event
  * @param date
  */
-function loadEventData(event){
-    const input = JSON.stringify({name:event1,location:loc1,date:new Date().getDate()});
+function loadEventData(url, event){
+    const input = JSON.stringify(event);
     $.ajax({
-        url: '/',
+        url: "/"+url,
         data: input,
         contentType: 'application/json',
         type: 'POST',
@@ -91,15 +115,15 @@ function loadEventData(event){
             // no need to JSON parse the result, as we are using
             // dataType:json, so JQuery knows it and unpacks the
             // object for us before returning it
-            addToResults(dataR);
-            storeCachedData(dataR.location, dataR);
+            addToResults(url, dataR);
+            storeCachedData(url, dataR);
             if (document.getElementById('offline_div')!=null)
                     document.getElementById('offline_div').style.display='none';
         },
         // the request to the server has failed. Let's show the cached data
         error: function (xhr, status, error) {
             showOfflineWarning();
-            addToResults(getCachedData(event, date));
+            addToResults(getCachedData(event));
             const dvv= document.getElementById('offline_div');
             if (dvv!=null)
                     dvv.style.display='block';
@@ -126,21 +150,66 @@ function loadEventData(event){
   *  }
   *}
  */
-function addToResults(dataR) {
-    if (document.getElementById('events') != null) {
-        const row = document.createElement('div');
-        // appending a new row
-        document.getElementById('events').appendChild(row);
-        // formatting the row by applying css classes
-        // row.classList.add('card');
-        // row.classList.add('my_card');
-        // row.classList.add('bg-faded');
-        // the following is far from ideal. we should really create divs using javascript
-        // rather than assigning innerHTML
-        row.innerHTML = "<div class=\"card gedf-card\">" +
-          "<div class=\"card-body\">" +
-          "<h5 class=\"card-title\">" + dataR.name + "</h5>" +
-          "<h6 class=\"card-subtitle mb-2 text-muted\">" + dataR.location + "      " + dataR.data +"</h6></div></div>";
+function addToResults(type, dataR) {
+    if(type == "events") {
+        if (document.getElementById("events") != null) {
+            const row = document.createElement('div');
+            // appending a new row
+            document.getElementById("events").appendChild(row);
+            // formatting the row by applying css classes
+            row.classList.add('card');
+            row.classList.add('gedf-card');
+            // the following is far from ideal. we should really create divs using javascript
+            // rather than assigning innerHTML
+            row.innerHTML = "<div class=\"card-body\">" +
+              "<h5 class=\"card-title\">" + dataR.name + "</h5>" +
+              "<h6 class=\"card-subtitle mb-2 text-muted\">" + dataR.location + "      " + dataR.date + "</h6></div>";
+        }
+    } else{
+        if (document.getElementById("posts") != null) {
+            const row = document.createElement("div");
+            const header = document.createElement("div");
+            const body = document.createElement("div");
+            const footer = document.createElement("div");
+
+            row.appendChild(header);
+            row.appendChild(body);
+            row.appendChild(footer);
+            document.getElementById("posts").appendChild(row);
+
+            row.classList.add('card','gedf-card');
+            header.classList.add('card-header');
+            body.classList.add('card-body');
+            footer.classList.add('card-footer');
+
+
+            header.innerHTML = '<div class="d-flex justify-content-between align-items-center">' +
+              '<div class="d-flex justify-content-between align-items-center">' +
+              '<div class="mr-2">' +
+              '<img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="" crossorigin="anonymous"></div>' +
+              '<div class="ml-2">' +
+              '<div class="h5 m-0">'+dataR.author+'</div>' +
+              '</div></div><div>' +
+              '<div class="dropdown">' +
+              '<button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+              '<i class="fa fa-ellipsis-h"></i>' +
+              '</button>' +
+              '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">'+
+              '<div class="h6 dropdown-header">Configuration</div>' +
+              '<a class="dropdown-item" href="#">Save</a>' +
+              '<a class="dropdown-item" href="#">Hide</a>' +
+              '<a class="dropdown-item" href="#">Report</a>' +
+              '</div> </div> </div> </div>';
+
+            body.innerHTML = '<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>10 min ago</div>' +
+            '<a class="card-link" href="#">' +
+              '<h5 class="card-title">'+dataR.title+'</h5></a>' +
+            '<p class="card-text">'+ dataR.content+'</p> </div>';
+
+            footer.innerHTML = '<a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>' +
+            '<a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>' +
+            '<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>';
+        }
     }
 }
 
@@ -173,22 +242,6 @@ function showOfflineWarning(){
 function hideOfflineWarning(){
     if (document.getElementById('offline_div')!=null)
         document.getElementById('offline_div').style.display='none';
-}
-
-
-
-/**
- * Given a list of events, it removes any duplicates
- * @param eventList
- * @returns {Array}
- */
-function removeDuplicates(eventList) {
-    // remove any duplicate
-       var uniqueNames=[];
-       $.each(eventList, function(i, el){
-           if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
-       });
-       return uniqueNames;
 }
 
 

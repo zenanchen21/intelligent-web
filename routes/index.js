@@ -4,12 +4,24 @@ var bodyParser= require("body-parser");
 
 var UserController = require('../controllers/users');
 var initDB= require('../controllers/init');
-var User = require('../models/users')
+var User = require('../models/users');
 initDB.init();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express', login_is_correct:true});
+  res.render('index', { user: req.user});
+});
+
+router.get('/index2', function(req, res, next) {
+  res.render('index2',{title:'hha'});
+});
+
+router.get('/index3', function(req, res, next) {
+  res.render('index3',{title:'hha'});
+});
+
+router.get('/maps', function(req, res, next) {
+  res.render('maps',{title:'Map Finder'});
 });
 
 /*
@@ -18,11 +30,18 @@ router.get('/', function(req, res, next) {
 * also, has problem with
 * console.log(results._id);
 * */
-router.post('/', function (req,res, next) {
-  const event = new Event(req.body.location,req.body.date,req.body.name);
+router.post('/events', function (req,res, next) {
+  const event = new Event(req.body.location,req.body.date,req.body.name,req.body.description);
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify(event));
-})
+});
+
+router.post("/posts", function (req,res, next) {
+  const post = new Post(req.body.author,req.body.content);
+  console.log(req.body.content);
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(post));
+});
 
 /**
  * @param name
@@ -31,112 +50,25 @@ router.post('/', function (req,res, next) {
  * @constructor
  */
 class Event{
-  constructor (location, date, name) {
+  constructor (location, date, name, description) {
     this.location= location;
     this.date = date;
-    this.name = name
+    this.name = name;
+    this.description = description;
   }
 }
 
-router.get('/register', function(req, res, next) {
-  res.render('register', { title: 'Express', login_is_correct:false});
-});
-
-router.post('/register', function(req, res, next) {
-  var userData = req.body;
-  console.log(userData);
-  if (userData == null) {
-    console.log('no data')
-    res.status(403).send('No data sent!')
+/**
+ *
+ * @param n
+ * @returns {boolean}
+ */
+class Post {
+  constructor (author, content, id) {
+    this.author = author;
+    this.content = content;
   }
-  try{
-    console.log(userData);
-    console.log('no input')
-    console.log('im here');
-    if (userData.psw == userData.psw2) {
-
-      User.findOne({email:userData.eml},function(err,data){
-        if(!data){
-          var count;
-          User.findOne({},function (err,data) {
-            if(data){
-              console.log("if");
-              count = data.unique_id +1;
-            }else{
-              count = 1;
-            }
-            var newuser = new User({
-              unique_id:count,
-              username: userData.usn,
-              email: userData.eml,
-              password: userData.psw
-            });
-            console.log('received: ' + newuser);
-
-            newuser.save(function (err, person) {
-              // console.log(results._id);
-              if (err)
-                res.status(500).send('Invalid data!');
-
-              // res.send(JSON.stringify(newuser));
-            });
-          }).sort({_id:-1}).limit(1);
-          console.log("u can log now")
-        }else{
-          res.send(JSON.stringify({"Wrong":"Email is already used."}));
-         }
-        });
-      }else{
-        res.send(JSON.stringify({"Success":"password is not matched"}));
-      }
-  }catch(e){
-    console.log('error', e)
-  }
-});
-
-
-
-
-router.get('/signin', function(req, res, next) {
-  res.render('signin', { title: 'Express', login_is_correct:true});
-});
-
-router.post('/signin', function(req, res, next) {
-  var userData = req.body;
-  console.log(userData.eml);
-  console.log(userData.psw);
-  console.log(userData);
-  if (userData == null) {
-    res.status(403).send('No data sent!')
-  }
-  try {
-    User.findOne({email:userData.eml},function(err,data){
-      if(data){
-        if(data.password ==userData.psw){
-          res.render('index', { title: 'Express', login_is_correct:true});
-          console.log('password correct');
-        }else{
-          res.render('signin', { title: 'Express', login_is_correct:false});
-          console.log('wrong pssword');
-        }
-      }else{
-        res.render('signin', { title: 'Express', login_is_correct:false});
-        console.log("user is not exit");
-      }
-    })
-  } catch(e){
-      res.status(500).send('error ' + e);
-  }
-});
-
-// router.post('/signin', function(req, res, next) {
-//   res.render('/signin',UserController.login);
-//
-// });
-
-router.get('/profile', function(req, res, next) {
-  res.render('profile', { title: 'Express' });
-});
+}
 
 
 function isNumeric(n) {
