@@ -155,7 +155,7 @@ function addToResults(type, dataR) {
         if (document.getElementById("events") != null) {
             const row = document.createElement('div');
             // appending a new row
-            document.getElementById("events").appendChild(row);
+            document.getElementById("events").prepend(row);
             // formatting the row by applying css classes
             row.classList.add('card');
             row.classList.add('gedf-card');
@@ -175,7 +175,7 @@ function addToResults(type, dataR) {
             row.appendChild(header);
             row.appendChild(body);
             row.appendChild(footer);
-            document.getElementById("posts").appendChild(row);
+            document.getElementById("posts").prepend(row);
 
             row.classList.add('card','gedf-card');
             header.classList.add('card-header');
