@@ -17,17 +17,12 @@ var userSchema = new Schema(
 
         },
         password: {type: String, required:[true, 'password can not left blank'],  min:6},
+        event: [{type: Schema.Types.ObjectId, ref: 'Event'}],
+        post:[{type: Schema.Types.ObjectId, ref: 'Post'}],
         whatever: {type: String} //any other field
     }
 );
 
-// Virtual for a character's age
-// User.virtual('age')
-//     .get(function () {
-//         const currentDate = new Date().getFullYear();
-//         const result= currentDate - this.dob;
-//         return result;
-//     });
 
 // User.set('toObjet', {getters: true, virtuals: true});
 userSchema.set('toObject', {getters: true, virtuals: true});

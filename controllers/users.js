@@ -73,18 +73,17 @@ module.exports = function (req, res){
             if(user){
                 bcrypt.compare(psw, user.password,function(err, isMatch){
                     if(isMatch){
-                        console.log('caonima');
+                        console.log('correct password!');
                         return done(null, user);
                     }else{
-                        console.log('caonima2');
+                        console.log('wrong password');
                         return done (null, false,{message:'wrong password'});
                     }
                 });
             }else{
                 // res.render('signin', { title: 'Express', login_is_correct:false});
-                // console.log("user is not exit");
-                console.log('caonima3');
-                return done(null, false,{message: 'no user'})
+                console.log("user is not exit");
+                return done(null, false,{message: 'user is not exit'});
 
             }
         })
