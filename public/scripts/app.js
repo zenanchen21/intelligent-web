@@ -5,6 +5,7 @@
 function submitForm(url){
     var formArray= $("form").serializeArray();
     var data={};
+    console.log(formArray);
     for (index in formArray){
         data[formArray[index].name]= formArray[index].value;
     }
@@ -207,7 +208,10 @@ function addToResults(type, dataR) {
             '<p class="card-text">'+ dataR.content+'</p> </div>';
 
             footer.innerHTML = '<a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>' +
-            '<a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>' +
+            '<a href="#com" data-toggle="collapse" class="card-link" aria-expanded="false"><i class="fa fa-comment"></i> Comment</a>' +
+              '<div class="collapse input-group mb-3" id="com">\n' +
+              '  <input type="text" class="form-control" placeholder="Write a comment..." aria-label="Write a comment">\n' +
+              '</div>'
             '<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>';
         }
     }
