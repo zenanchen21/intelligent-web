@@ -3,9 +3,13 @@ var router = express.Router();
 var bodyParser= require("body-parser");
 
 var UserController = require('../controllers/users');
+var PostController = require('../controllers/posts');
 var initDB= require('../controllers/init');
 var User = require('../models/users');
+
+
 initDB.init();
+initDB.initEvent();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -22,11 +26,12 @@ router.get('/maps', function(req, res, next) {
 * also, has problem with
 * console.log(results._id);
 * */
-router.post('/events', function (req,res, next) {
-  const event = new Event(req.body.location,req.body.date,req.body.name,req.body.description);
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(event));
-});
+// router.post('/events', function (req,res, next) {
+//   // const event = new Event(req.body.location,req.body.date,req.body.name,req.body.description);
+//   // res.setHeader('Content-Type', 'application/json');
+//   // res.send(JSON.stringify(event));
+// });
+router.post('/events', PostController.newEvent);
 
 router.post("/posts", function (req,res, next) {
   const post = new Post(req.body.author,req.body.content);
@@ -41,26 +46,26 @@ router.post("/posts", function (req,res, next) {
  * @param date
  * @constructor
  */
-class Event{
-  constructor (location, date, name, description) {
-    this.location= location;
-    this.date = date;
-    this.name = name;
-    this.description = description;
-  }
-}
+// class Event{
+//   constructor (location, date, name, description) {
+//     this.location= location;
+//     this.date = date;
+//     this.name = name;
+//     this.description = description;
+//   }
+// }
 
 /**
  *
  * @param n
  * @returns {boolean}
  */
-class Post {
-  constructor (author, content, id) {
-    this.author = author;
-    this.content = content;
-  }
-}
+// class Post {
+//   constructor (author, content, id) {
+//     this.author = author;
+//     this.content = content;
+//   }
+// }
 
 
 function isNumeric(n) {

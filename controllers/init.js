@@ -1,10 +1,12 @@
 var mongoose = require('mongoose');
 var User = require('../models/users');
-
+var Event = require('../models/events');
+// var Post = require('../models/posts');
+// var Comment = require('../models/comments');
 
 exports.init= function() {
     // uncomment if you need to drop the database
-    User.collection.drop();
+    // User.collection.drop();
     //create a tempplte user for testing
     var user = new User({
         unique_id:'0',
@@ -14,12 +16,26 @@ exports.init= function() {
     });
     console.log('please, test the web with test@gmail.com, test.');
 
-    /**
-     * TODO
-     * 每两次跑，才不报错，不然就会报错。
-     */
     user.save(function (err, results) {
         console.log(results);
         console.log(err);
     });
-}
+};
+
+exports.initEvent= function() {
+    // uncomment if you need to drop the database
+    // Event.collection.drop();
+    //create a tempplte user for testing
+    var event = new Event({
+        title: 'hahahahah1',
+        address: 'xixixiixix 1',
+        description: 'Im a event'
+    });
+    console.log('please, test the web with test@gmail.com, test.');
+
+
+    event.save(function (err, results) {
+        console.log(results);
+        console.log(err);
+    });
+};

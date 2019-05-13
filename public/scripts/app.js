@@ -2,20 +2,29 @@
  * sigin in form onsubmit
  * lead to home page
  */
-function submitForm(url){
-    var formArray= $("form").serializeArray();
-    var data={};
+function submitForm(url) {
+    var formArray = $("form").serializeArray();
+    var data = {};
     console.log(formArray);
-    for (index in formArray){
-        data[formArray[index].name]= formArray[index].value;
+    for (index in formArray) {
+        data[formArray[index].name] = formArray[index].value;
     }
-    if(url == "/events")
+    if (url == "/events")
         data.type = "events";
     else {
         data.type = "posts";
     }
     sendAjaxQuery(url, data);
     event.preventDefault();
+    hideModal();
+}
+
+function hideModal() {
+    $("#exampleModal").removeClass("in");
+    $(".modal-backdrop").remove();
+    $('body').removeClass('modal-open');
+    $('body').css('padding-right', '');
+    $('#exampleModal').hide();
 }
 
 function searchForm(){
@@ -163,8 +172,9 @@ function addToResults(type, dataR) {
             // the following is far from ideal. we should really create divs using javascript
             // rather than assigning innerHTML
             row.innerHTML = "<div class=\"card-body\">" +
-              "<h5 class=\"card-title\">" + dataR.name + "</h5>" +
-              "<h6 class=\"card-subtitle mb-2 text-muted\">" + dataR.location + "      " + dataR.date + "</h6></div>";
+              "<h5 class=\"card-title\">" + dataR.title + "</h5>" +
+              "<h6 class=\"card-subtitle mb-2 text-muted\">" + dataR.address + "      " + dataR.date + "</h6></div>"+
+              "<p class=\"card-body\">" + dataR.description + "</p>" ;
         }
     } else{
         if (document.getElementById("posts") != null) {
@@ -301,3 +311,18 @@ function checkForErrors(isLoginCorrect){
         alert('login or password is incorrect');
     }
 }
+
+
+// $(function(){
+//     $('#xform').click(function(e){
+//         e.preventDefault();
+//         $('#event_modal').modal('hide');
+//         /*
+//         $.post('http://path/to/post',
+//            $('#myForm').serialize(),
+//            function(data, status, xhr){
+//              // do something here with response;
+//            });
+//         */
+//     });
+// });
