@@ -2,12 +2,20 @@
  * sigin in form onsubmit
  * lead to home page
  */
-function submitForm(url) {
-    var formArray = $("form").serializeArray();
-    var data = {};
-    console.log(formArray);
-    for (index in formArray) {
-        data[formArray[index].name] = formArray[index].value;
+
+function submitForm(formID){
+    var url;
+    switch(formID){
+        case 'eform' : url = '/events';
+        break;
+        case 'pform' : url = '/posts';
+        break;
+        default: console.log("wrong form "+ formID);
+    }
+    var formArray= $('#'+formID).serializeArray();
+    var data={};
+    for (index in formArray){
+        data[formArray[index].name]= formArray[index].value;
     }
     if (url == "/events")
         data.type = "events";
@@ -213,16 +221,14 @@ function addToResults(type, dataR) {
               '</div> </div> </div> </div>';
 
             body.innerHTML = '<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>10 min ago</div>' +
-            '<a class="card-link" href="#">' +
-              '<h5 class="card-title">'+dataR.title+'</h5></a>' +
             '<p class="card-text">'+ dataR.content+'</p> </div>';
 
             footer.innerHTML = '<a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>' +
             '<a href="#com" data-toggle="collapse" class="card-link" aria-expanded="false"><i class="fa fa-comment"></i> Comment</a>' +
-              '<div class="collapse input-group mb-3" id="com">\n' +
+              '<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>'+
+            '<div class="collapse input-group mb-3" id="com">\n' +
               '  <input type="text" class="form-control" placeholder="Write a comment..." aria-label="Write a comment">\n' +
-              '</div>'
-            '<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>';
+              '</div>';
         }
     }
 }
