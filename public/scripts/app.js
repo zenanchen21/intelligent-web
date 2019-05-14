@@ -2,7 +2,6 @@
  * sigin in form onsubmit
  * lead to home page
  */
-
 function submitForm(formID){
     var url;
     switch(formID){
@@ -22,6 +21,7 @@ function submitForm(formID){
     else {
         data.type = "posts";
     }
+    console.log(formArray)
     sendAjaxQuery(url, data);
     event.preventDefault();
     hideModal();
@@ -57,8 +57,9 @@ function sendAjaxQuery(url, data) {
                 document.getElementById('offline_div').style.display='none';
         },
         error: function (xhr, status, error) {
-            addToResults(data.type, data);
-            storeCachedData(data.type,data);
+            console.log("no response")
+            // addToResults(data.type, data);
+            // storeCachedData(data.type,data);
         }
     });
 }
@@ -152,21 +153,10 @@ function loadEventData(url, event){
 
 ///////////////////////// INTERFACE MANAGEMENT ////////////
 
-
 /**
- * given the forecast data returned by the server,
- * it adds a row of weather forecasts to the results div
- * @param dataR the data returned by the server:
- * class WeatherForecast{
-  *  constructor (location, date, forecast, temperature, wind, precipitations) {
-  *    this.location= location;
-  *    this.date= date,
-  *    this.forecast=forecast;
-  *    this.temperature= temperature;
-  *    this.wind= wind;
-  *    this.precipitations= precipitations;
-  *  }
-  *}
+ * add post and event to index page
+ * @param type
+ * @param dataR
  */
 function addToResults(type, dataR) {
     if(type == "events") {
@@ -190,6 +180,8 @@ function addToResults(type, dataR) {
             const header = document.createElement("div");
             const body = document.createElement("div");
             const footer = document.createElement("div");
+            // const postID = '#'+dataR._id;
+
 
             row.appendChild(header);
             row.appendChild(body);
@@ -210,7 +202,7 @@ function addToResults(type, dataR) {
               '<div class="h5 m-0">'+dataR.author+'</div>' +
               '</div></div><div>' +
               '<div class="dropdown">' +
-              '<button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+              '<button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
               '<i class="fa fa-ellipsis-h"></i>' +
               '</button>' +
               '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">'+
@@ -332,3 +324,25 @@ function checkForErrors(isLoginCorrect){
 //         */
 //     });
 // });
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        const imagesDiv = document.getElementById('postIm');
+        const ima = document.createElement('img');
+        ima.style.marginLeft = '1rem';
+        ima.style.marginBottom ='1rem';
+        reader.onload = function (e) {
+            console.log(typeof reader.result)
+            ima.src = e.target.result;
+            ima.width = 100;
+            ima.height = 100;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+        imagesDiv.appendChild(ima);
+        $('#postIm').collapse('show')
+    }
+}
+

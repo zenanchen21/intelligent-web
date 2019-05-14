@@ -7,12 +7,24 @@ var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 var session = require('express-session');
 var passport = require('passport');
+var multer = require('multer');
 
 //controller route
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+//multer for file upload
+var storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './uploads');
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname + '-' + Date.now());
+  }
+});
+var upload = multer({ storage : storage}).single('userPhoto');
 
 //call mongodb
 var dbconncetion = require('./databases/users');

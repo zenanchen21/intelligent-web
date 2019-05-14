@@ -94,4 +94,32 @@ exports.newEvent = function (req, res) {
 //     }
 // }
 
+exports.newPost = function (req, res) {
+  var postData = req.body;
+  if (postData == null) {
+    res.status(403).send('No data sent!')
+  }
+  try {
+    var post = new Post({
+      content: postData.content,
+      img: postData.img,
+      date: postData.date,
+      address: postData.address,
+      location: postData.location,
+      comment: postData.comment
+    });
+    post.save(function (err, result) {
+      if(err)
+        console.log(err);
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(post));
+    });
+
+  } catch (e) {
+    res.status(500).send('error ' + e);
+  }
+}
+
+
+
 

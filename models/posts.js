@@ -8,7 +8,7 @@ var postSchema = new Schema(
         content: {type: String, required: true, min:3},
         img: {data: Buffer, contentType: String},
         date:{type: Date, required:true},
-        address: {type: String, required: true},
+        address: {type: String},
         location: {
             lat: {type: Number},
             lng: {type: Number},

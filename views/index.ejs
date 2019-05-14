@@ -3,23 +3,25 @@
 <head>
     <link rel="manifest" href="/manifest.json">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" crossorigin="anonymous">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
           crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/social.css' />
+    <link rel='stylesheet' href='/stylesheets/create.css' />
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="/scripts/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
             crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
-    <link rel='stylesheet' href='/stylesheets/social.css' />
-    <link rel='stylesheet' href='/stylesheets/create.css' />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="/scripts/app.js"></script>
-    <script src="/scripts/jquery.min.js"></script>
     <script src="/scripts/database.js"></script>
     <script src="/scripts/idb.js"></script>
 </head>
@@ -85,24 +87,28 @@
                     <h6>Make a publication</h6>
                 </div>
                 <div class="card-body">
-                    <form id="pform" onsubmit="submitForm('pform')">
+                    <form id="pform" enctype="multipart/form-data" onsubmit="submitForm('pform')">
                         <div class="form-group">
                             <label class="sr-only" for="message">post</label>
                             <textarea class="form-control" id="message" rows="3" placeholder="What are you thinking?" name="content"></textarea>
                         </div>
 
                         <div class="form-group">
+                            <div class="collapse" id="postIm">
+                            </div>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="customFile">
                                 <label class="custom-file-label" for="customFile">Upload image</label>
+                                <input type="file" class="custom-file-input" id="customFile" name="contentImage" onchange="readURL(this)">
                             </div>
                         </div>
-                        <div class="py-4"></div>
-                        <input hidden="hidden" name="author"  value="<%if(locals.user){
-                        %><%=user.username%><%
-                        }else{
-                        %><p>Fake User</p><%
-                        }%>">
+                        <div hidden="hidden">
+                            <input name="date" value="<%=new Date().getTime()%>">
+                            <input name="author"  value="<%if(locals.user){
+                            %><%=user.username%><%
+                            }else{
+                            %><p>Fake User</p><%
+                            }%>">
+                        </div>
                         <button type="submit" class="btn btn-primary" form="pform">share</button>
                         <div class="btn-group">
                             <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
@@ -150,7 +156,6 @@
                                     <div class="form-group">
                                         <label for="date" class="col-form-label">Date</label>
                                         <input type="datetime-local" name="date">
-
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
