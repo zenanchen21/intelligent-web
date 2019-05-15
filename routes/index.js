@@ -6,6 +6,8 @@ var UserController = require('../controllers/users');
 var PostController = require('../controllers/posts');
 var initDB= require('../controllers/init');
 var User = require('../models/users');
+var multer = require('multer');
+var upload = multer({ dest: 'uploads/'})
 
 
 initDB.init();
@@ -21,9 +23,23 @@ router.get('/maps', function(req, res, next) {
 });
 
 
-router.post('/events', PostController.newEvent);
+router.post('/events', upload.none(), PostController.newEvent);
 
-router.post("/posts", PostController.newPost);
+
+router.post("/posts", upload.array("contentImage[]",3), PostController.newPost);
+//   function (req, res, next) {
+//   console.log(req)
+//   // console.log(req.headers['content-type']);
+//   // console.log(req.body)
+//   // req.headers['content-type'] = "multipart/form-data"
+//   // var form = new multiparty.Form();
+//   // form.parse(req);
+//   // form.on('error', function(err) {
+//   //   console.log('Error parsing form: ' + err.stack);
+//   //   console.log(req.headers['content-type'])
+//   // });
+// });
+
 
 
 function isNumeric(n) {

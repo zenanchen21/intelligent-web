@@ -11,17 +11,26 @@ function submitForm(formID){
         break;
         default: console.log("wrong form "+ formID);
     }
+    var data = new FormData();
+
     var formArray= $('#'+formID).serializeArray();
-    var data={};
     for (index in formArray){
-        data[formArray[index].name]= formArray[index].value;
+        data.append(formArray[index].name, formArray[index].value);
     }
+
+
+    var file_data = $('input[name="contentImage"]')[0].files;
+    for (var i = 0; i < file_data.length; i++) {
+        data.append("contentImage[]", file_data[i]);
+    }
+
+
     if (url == "/events")
-        data.type = "events";
+        data.append("type", "events");
     else {
-        data.type = "posts";
+        data.append("type", "posts");
     }
-    console.log(formArray)
+
     sendAjaxQuery(url, data);
     event.preventDefault();
     hideModal();
@@ -45,14 +54,18 @@ function sendAjaxQuery(url, data) {
     $.ajax({
         url: url ,
         data: data,
-        dataType: 'json',
-        type: 'POST',
+        enctype: 'multipart/form-data',
+        dataType: false,
+        contentType: false,
+        processData: false,
+        method: 'POST',
+        type: 'POST', // For jQuery < 1.9
         success: function (dataR) {
             // no need to JSON parse the result, as we are using
             // dataType:json, so JQuery knows it and unpacks the
             // object for us before returning it
-            addToResults(data.type, dataR);
-            storeCachedData(data.type, dataR);
+            addToResults(data.get("type"), dataR);
+            storeCachedData(data.get("type"), dataR);
             if (document.getElementById('offline_div')!=null)
                 document.getElementById('offline_div').style.display='none';
         },
@@ -159,6 +172,8 @@ function loadEventData(url, event){
  * @param dataR
  */
 function addToResults(type, dataR) {
+    console.log("type "+type)
+    console.log(dataR)
     if(type == "events") {
         if (document.getElementById("events") != null) {
             const row = document.createElement('div');
@@ -175,6 +190,7 @@ function addToResults(type, dataR) {
               "<p class=\"card-body\">" + dataR.description + "</p>" ;
         }
     } else{
+        console.log("adding post to page " + (Date.now()-Date.parse(dataR.date)))
         if (document.getElementById("posts") != null) {
             const row = document.createElement("div");
             const header = document.createElement("div");
@@ -212,7 +228,7 @@ function addToResults(type, dataR) {
               '<a class="dropdown-item" href="#">Report</a>' +
               '</div> </div> </div> </div>';
 
-            body.innerHTML = '<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>10 min ago</div>' +
+            body.innerHTML = '<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>Date.now()-dataR.date</div>' +
             '<p class="card-text">'+ dataR.content+'</p> </div>';
 
             footer.innerHTML = '<a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>' +

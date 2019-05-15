@@ -6,15 +6,16 @@ var Schema = mongoose.Schema;
 var postSchema = new Schema(
     {
         content: {type: String, required: true, min:3},
-        img: {data: Buffer, contentType: String},
+        img: [{data: Buffer, contentType: String}],
         date:{type: Date, required:true},
         address: {type: String},
         location: {
             lat: {type: Number},
             lng: {type: Number},
         },
-        comment: [{type: Schema.Types.ObjectId, ref: 'Comment'}]
-        //    likes: [],
+        comment: [{type: Schema.Types.ObjectId, ref: 'Comment'}],
+        // author: {type: Schema.Types.ObjectId, ref: 'User'},
+      //    likes: [],
     }
 );
 
