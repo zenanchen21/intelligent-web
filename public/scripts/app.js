@@ -2,7 +2,6 @@
  * sigin in form onsubmit
  * lead to home page
  */
-
 function submitForm(formID){
     var url;
     switch(formID){
@@ -12,16 +11,26 @@ function submitForm(formID){
         break;
         default: console.log("wrong form "+ formID);
     }
+    var data = new FormData();
+
     var formArray= $('#'+formID).serializeArray();
-    var data={};
     for (index in formArray){
-        data[formArray[index].name]= formArray[index].value;
+        data.append(formArray[index].name, formArray[index].value);
     }
+
+
+    var file_data = $('input[name="contentImage"]')[0].files;
+    for (var i = 0; i < file_data.length; i++) {
+        data.append("contentImage[]", file_data[i]);
+    }
+
+
     if (url == "/events")
-        data.type = "events";
+        data.append("type", "events");
     else {
-        data.type = "posts";
+        data.append("type", "posts");
     }
+
     sendAjaxQuery(url, data);
     event.preventDefault();
     hideModal();
@@ -45,20 +54,25 @@ function sendAjaxQuery(url, data) {
     $.ajax({
         url: url ,
         data: data,
-        dataType: 'json',
-        type: 'POST',
+        enctype: 'multipart/form-data',
+        dataType: false,
+        contentType: false,
+        processData: false,
+        method: 'POST',
+        type: 'POST', // For jQuery < 1.9
         success: function (dataR) {
             // no need to JSON parse the result, as we are using
             // dataType:json, so JQuery knows it and unpacks the
             // object for us before returning it
-            addToResults(data.type, dataR);
-            storeCachedData(data.type, dataR);
+            addToResults(data.get("type"), dataR);
+            storeCachedData(data.get("type"), dataR);
             if (document.getElementById('offline_div')!=null)
                 document.getElementById('offline_div').style.display='none';
         },
         error: function (xhr, status, error) {
-            addToResults(data.type, data);
-            storeCachedData(data.type,data);
+            console.log("no response")
+            // addToResults(data.type, data);
+            // storeCachedData(data.type,data);
         }
     });
 }
@@ -152,23 +166,14 @@ function loadEventData(url, event){
 
 ///////////////////////// INTERFACE MANAGEMENT ////////////
 
-
 /**
- * given the forecast data returned by the server,
- * it adds a row of weather forecasts to the results div
- * @param dataR the data returned by the server:
- * class WeatherForecast{
-  *  constructor (location, date, forecast, temperature, wind, precipitations) {
-  *    this.location= location;
-  *    this.date= date,
-  *    this.forecast=forecast;
-  *    this.temperature= temperature;
-  *    this.wind= wind;
-  *    this.precipitations= precipitations;
-  *  }
-  *}
+ * add post and event to index page
+ * @param type
+ * @param dataR
  */
 function addToResults(type, dataR) {
+    console.log("type "+type)
+    console.log(dataR)
     if(type == "events") {
         if (document.getElementById("events") != null) {
             const row = document.createElement('div');
@@ -185,11 +190,14 @@ function addToResults(type, dataR) {
               "<p class=\"card-body\">" + dataR.description + "</p>" ;
         }
     } else{
+        console.log("adding post to page " + (Date.now()-Date.parse(dataR.date)))
         if (document.getElementById("posts") != null) {
             const row = document.createElement("div");
             const header = document.createElement("div");
             const body = document.createElement("div");
             const footer = document.createElement("div");
+            // const postID = '#'+dataR._id;
+
 
             row.appendChild(header);
             row.appendChild(body);
@@ -210,7 +218,7 @@ function addToResults(type, dataR) {
               '<div class="h5 m-0">'+dataR.author+'</div>' +
               '</div></div><div>' +
               '<div class="dropdown">' +
-              '<button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+              '<button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
               '<i class="fa fa-ellipsis-h"></i>' +
               '</button>' +
               '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">'+
@@ -220,7 +228,7 @@ function addToResults(type, dataR) {
               '<a class="dropdown-item" href="#">Report</a>' +
               '</div> </div> </div> </div>';
 
-            body.innerHTML = '<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>10 min ago</div>' +
+            body.innerHTML = '<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>Date.now()-dataR.date</div>' +
             '<p class="card-text">'+ dataR.content+'</p> </div>';
 
             footer.innerHTML = '<a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>' +
@@ -332,3 +340,25 @@ function checkForErrors(isLoginCorrect){
 //         */
 //     });
 // });
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        const imagesDiv = document.getElementById('postIm');
+        const ima = document.createElement('img');
+        ima.style.marginLeft = '1rem';
+        ima.style.marginBottom ='1rem';
+        reader.onload = function (e) {
+            console.log(typeof reader.result)
+            ima.src = e.target.result;
+            ima.width = 100;
+            ima.height = 100;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+        imagesDiv.appendChild(ima);
+        $('#postIm').collapse('show')
+    }
+}
+

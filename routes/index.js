@@ -6,7 +6,12 @@ var UserController = require('../controllers/users');
 var PostController = require('../controllers/posts');
 var initDB= require('../controllers/init');
 var User = require('../models/users');
+
 var Post = require('../models/posts');
+
+var multer = require('multer');
+var upload = multer({ dest: 'uploads/'})
+
 
 
 initDB.init();
@@ -40,52 +45,24 @@ router.get('/',
 
 
 
-/*
-* TODO
-* can not save new user to database
-* also, has problem with
-* console.log(results._id);
-* */
-// router.post('/events', function (req,res, next) {
-//   // const event = new Event(req.body.location,req.body.date,req.body.name,req.body.description);
-//   // res.setHeader('Content-Type', 'application/json');
-//   // res.send(JSON.stringify(event));
+
+router.post('/events', upload.none(), PostController.newEvent);
+
+
+router.post("/posts", upload.array("contentImage[]",3), PostController.newPost);
+//   function (req, res, next) {
+//   console.log(req)
+//   // console.log(req.headers['content-type']);
+//   // console.log(req.body)
+//   // req.headers['content-type'] = "multipart/form-data"
+//   // var form = new multiparty.Form();
+//   // form.parse(req);
+//   // form.on('error', function(err) {
+//   //   console.log('Error parsing form: ' + err.stack);
+//   //   console.log(req.headers['content-type'])
+//   // });
 // });
-router.post('/events', PostController.newEvent);
 
-router.post("/posts", function (req,res, next) {
-  const post = new Post(req.body.author,req.body.content);
-  console.log(req.body.content);
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(post));
-});
-
-/**
- * @param name
- * @param location
- * @param date
- * @constructor
- */
-// class Event{
-//   constructor (location, date, name, description) {
-//     this.location= location;
-//     this.date = date;
-//     this.name = name;
-//     this.description = description;
-//   }
-// }
-
-/**
- *
- * @param n
- * @returns {boolean}
- */
-// class Post {
-//   constructor (author, content, id) {
-//     this.author = author;
-//     this.content = content;
-//   }
-// }
 
 
 function isNumeric(n) {
