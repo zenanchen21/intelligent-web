@@ -46,25 +46,15 @@ router.post('/',PostController.onloadEvent);
 
 
 
+router.get('/maps', function(req, res, next) {
+  res.render('maps',{title:'Map Finder'});
+});
 
 
 router.post('/events', upload.none(), PostController.newEvent);
 
 
 router.post("/posts", upload.array("contentImage[]",3), PostController.newPost);
-//   function (req, res, next) {
-//   console.log(req)
-//   // console.log(req.headers['content-type']);
-//   // console.log(req.body)
-//   // req.headers['content-type'] = "multipart/form-data"
-//   // var form = new multiparty.Form();
-//   // form.parse(req);
-//   // form.on('error', function(err) {
-//   //   console.log('Error parsing form: ' + err.stack);
-//   //   console.log(req.headers['content-type'])
-//   // });
-// });
-
 
 
 function isNumeric(n) {

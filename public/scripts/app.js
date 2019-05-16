@@ -192,6 +192,8 @@ function addToResults(type, dataR) {
             const header = document.createElement("div");
             const body = document.createElement("div");
             const footer = document.createElement("div");
+            const tim = timeDiff(Date.now(),Date.parse(dataR.date))
+            console.log(tim);
             // const postID = '#'+dataR._id;
 
 
@@ -224,8 +226,17 @@ function addToResults(type, dataR) {
               '<a class="dropdown-item" href="#">Report</a>' +
               '</div> </div> </div> </div>';
 
-            body.innerHTML = '<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>Date.now()-dataR.date</div>' +
+            body.innerHTML = '<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>'+tim+'</div>' +
             '<p class="card-text">'+ dataR.content+'</p> </div>';
+            for(var img of dataR.img){
+                console.log(img.data);
+                // var buf =
+                // console.log(buf)
+                // var imsrc = img.data.data.toString("base64");
+                // 'data:image/jpeg;base64,' +
+                // console.log(imsrc)
+                // body.innerHTML += '<img src='+imsrc+'width="100" height="100" style="margin-left: 1rem; margin-bottom: 1rem;">';
+            }
 
             footer.innerHTML = '<a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>' +
             '<a href="#com" data-toggle="collapse" class="card-link" aria-expanded="false"><i class="fa fa-comment"></i> Comment</a>' +
@@ -338,23 +349,44 @@ function checkForErrors(isLoginCorrect){
 // });
 
 function readURL(input) {
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-
+    if (input.files.length > 0) {
         const imagesDiv = document.getElementById('postIm');
-        const ima = document.createElement('img');
-        ima.style.marginLeft = '1rem';
-        ima.style.marginBottom ='1rem';
-        reader.onload = function (e) {
-            console.log(typeof reader.result)
-            ima.src = e.target.result;
-            ima.width = 100;
-            ima.height = 100;
-        };
+        imagesDiv.innerHTML = '';
+        for(var file of input.files) {
+            const reader = new FileReader();
+            const ima = document.createElement('img');
 
-        reader.readAsDataURL(input.files[0]);
-        imagesDiv.appendChild(ima);
-        $('#postIm').collapse('show')
+            ima.style.marginLeft = '1rem';
+            ima.style.marginBottom = '1rem';
+            reader.onload = function (e) {
+                ima.src = e.target.result;
+                ima.width = 100;
+                ima.height = 100;
+                imagesDiv.appendChild(ima);
+            };
+
+            reader.readAsDataURL(file);
+        }
+        $('#postIm').collapse('show');
     }
 }
 
+function timeDiff(date1, date2) {
+    var timdiff = '';
+    var diffMs = (date1 - date2); // milliseconds diff
+    var diffDays = Math.floor(diffMs / 86400000); // days
+    var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+    var diffMins = Math.floor(((diffMs % 86400000) % 3600000) / 60000); // minutes
+    var diffSecs = Math.floor((((diffMs % 86400000) % 3600000) % 60000) /1000);
+    if (diffDays != 0) {
+        timdiff += diffDays + " days ";
+    }
+    if(diffHrs != 0) {
+        timdiff += diffHrs + " hours ";
+    }
+    if(diffMins !=0) {
+        timdiff += diffMins + " minutes ";
+    }
+    timdiff +=  diffSecs+" seconds ago";
+    return timdiff;
+}
