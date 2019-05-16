@@ -93,14 +93,8 @@
                             <textarea class="form-control" id="message" rows="3" placeholder="What are you thinking?" name="content"></textarea>
                         </div>
 
-                        <div class="form-group">
-                            <div class="collapse" id="postIm">
-                            </div>
-                            <div class="custom-file">
-                                <label class="custom-file-label" for="customFile">Upload image</label>
-                                <input type="file" class="custom-file-input" id="customFile" name="contentImage" multiple onchange="readURL(this)">
-                            </div>
-                        </div>
+                        <div class="collapse" id="postIm"></div>
+
                         <div hidden="hidden">
                             <input name="date" value="<%=new Date().getTime()%>">
                             <input name="author"  value="<%if(locals.user){
@@ -109,7 +103,11 @@
                             %><p>Fake User</p><%
                             }%>">
                         </div>
-                        <button type="submit" class="btn btn-primary" form="pform">share</button>
+
+                        <div class="btn">
+                            <label class="fa fa-upload btn-link" for="customFile"></label>
+                            <input type="file" hidden class="custom-file-input" id="customFile" name="contentImage" multiple onchange="readURL(this)">
+                        </div>
                         <div class="btn-group">
                             <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
@@ -121,6 +119,7 @@
                                 <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Just me</a>
                             </div>
                         </div>
+                        <button type="submit" class="btn btn-primary" form="pform">share</button>
                     </form>
                 </div>
             </div>

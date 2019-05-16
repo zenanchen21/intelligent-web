@@ -2,7 +2,7 @@ var Event = require('../models/events');
 var Post = require('../models/posts');
 var Comment = require('../models/comments');
 var bodyParser= require("body-parser");
-var fs = require("fs-extra")
+var fs = require("fs-extra");
 
 // exports.newEvent = function (req, res) {
 //     var eventData = req.body;
@@ -94,6 +94,13 @@ exports.newEvent = function (req, res) {
 //     }
 // }
 
+exports.loadData = function (req, res) {
+  Event.find({}, function (err, events) {
+    if(err) console.log(err);
+    res.send(events);
+  })
+}
+
 exports.newPost = function (req, res) {
   console.log(req.body);
   console.log(req.files);
@@ -117,17 +124,20 @@ exports.newPost = function (req, res) {
     //images
     for(var file of postImages){
       var imgData = {
-        data: fs.readFileSync(file.path),
+        data: fs.readFileSync(file.path, 'base64'),
         contentType: 'image/png'
       };
       post.img.push(imgData);
+      // console.log(imgData.data)
     }
 
     post.save(function (err, result) {
       if(err)
         console.log(err);
       res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify(post));
+      console.log("---------------")
+      // console.log(result.img[0].data.toString('base64'))
+      res.send(JSON.stringify(result));
     });
 
   } catch (e) {
