@@ -14,7 +14,7 @@ var dbPromise;
 
 const APP_DB_NAME= 'db_app_1';
 const STORY_STORE_NAME= 'store_stories';
-const EVENT_STORE_NAME= 'store_events'
+const EVENT_STORE_NAME= 'store_events';
 
 /**
  * it inits the database
@@ -109,7 +109,7 @@ function getAllData () {
             data.posts.then(function (posts) {
                 for(index in posts)
                     addToResults('posts', posts[index]);
-            })
+            });
             data.events.then(function (events) {
                 for(index in events)
                     addToResults('events', events[index]);

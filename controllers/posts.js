@@ -4,39 +4,6 @@ var Comment = require('../models/comments');
 var bodyParser= require("body-parser");
 
 
-// exports.newEvent = function (req, res) {
-//     var eventData = req.body;
-//     if (eventData == null) {
-//         res.status(403).send('No data sent!')
-//     }
-//     try {
-//         console.log('im here 1');
-//         var event;
-//         new Promise((resolve) =>{
-//             event = new Event({
-//                 title: eventData.title,
-//                 address: eventData.address,
-//                 description: eventData.description,
-//                 date:eventData.date,
-//                 time:eventData.time,
-//             });
-//             event.save() //promise
-//             console.log('im here 2');
-//         }).then(function(success){
-//             console.log('recerived:' + event);
-//             event.save() //promise
-//                 .then(function (results){
-//                     console.log(results._id);
-//                     res.redirect('/index');
-//                 })
-//                 .catch(err => {
-//                     res.status(500).send('Invalid data');
-//                 });
-//         });
-//     } catch (e) {
-//         res.status(500).send('error ' + e);
-//     }
-// };
 
 exports.newEvent = function (req, res) {
     var eventData = req.body;
@@ -54,6 +21,59 @@ exports.newEvent = function (req, res) {
             event.save();
             res.setHeader('Content-Type', 'application/json');
             res.send(JSON.stringify(event));
+    } catch (e) {
+        res.status(500).send('error ' + e);
+    }
+};
+
+exports.onloadEvent = function (req, res) {
+    var eventArray  = [];
+    try {
+        Event.find({},function(err,events){
+        console.log('im here', events);
+        if(events != null){
+            events.forEach(function(event){
+                eventArray.push(event);
+                console.log(event);
+
+            });
+            // for(var i = 0, imax = events.length; i<imax; i++) {
+            //     eventArray += events
+            //     console.log('you are here ', eventArray);
+            // }
+        }else{
+            console.log('post is ', err);
+        }
+    });
+
+        res.render('index', {items: eventArray, user: req.user});
+    } catch (e) {
+        res.status(500).send('error ' + e);
+    }
+};
+
+
+exports.onloadPost = function (req, res) {
+    var postArray  = [];
+    try {
+        Post.find({},function(err,posts){
+            console.log('im here', posts);
+            if(posts != null){
+                events.forEach(function(post){
+                    eventArray.push(post);
+                    console.log(post);
+
+                });
+                // for(var i = 0, imax = events.length; i<imax; i++) {
+                //     eventArray += events
+                //     console.log('you are here ', eventArray);
+                // }
+            }else{
+                console.log('post is ', err);
+            }
+        });
+
+        res.render('index', {items: postArray, user: req.user});
     } catch (e) {
         res.status(500).send('error ' + e);
     }
@@ -93,5 +113,7 @@ exports.newEvent = function (req, res) {
 //         res.status(500).send('error ' + e);
 //     }
 // }
+
+
 
 
