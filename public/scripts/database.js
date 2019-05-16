@@ -27,7 +27,7 @@ function initDatabase(){
         }
         if(!upgradeDb.objectStoreNames.contains(EVENT_STORE_NAME)) {
             var eventOS = upgradeDb.createObjectStore(EVENT_STORE_NAME, {keyPath: 'id', autoIncrement: true});
-            eventOS.createIndex('name', 'name', {unique: false, multiEntry: true});
+            eventOS.createIndex('title', 'title', {unique: false, multiEntry: true});
         }
 
     });

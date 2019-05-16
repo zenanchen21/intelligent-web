@@ -148,7 +148,7 @@ function loadEventData(){
             // object for us before returning it
             dataR.forEach(function(event){
                 addToResults('events', event);
-                // storeCachedData('events', event);
+                storeCachedData('events', event);
             });
 
         },
