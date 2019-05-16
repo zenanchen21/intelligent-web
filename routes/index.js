@@ -18,9 +18,11 @@ initDB.init();
 initDB.initEvent();
 
 /* GET home page. */
-router.get('/',
-  PostController.onloadEvent
-);
+router.get('/',function(req, res, next){
+  res.render('index', {user: req.user});
+});
+
+router.post('/',PostController.onloadEvent);
 
 // router.get('/', function(req, res, next) {
 //   var resultArray = [];

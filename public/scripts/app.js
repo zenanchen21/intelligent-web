@@ -110,6 +110,7 @@ function loadData(){
     // var eventList=JSON.parse(localStorage.getItem('events'));
     // var storyList=JSON.parse(localStorage.getItem('posts'));
     getAllData();
+    loadEventData();
     // retrieveAllPostsData(storyList);
     // retrieveAllEventsData(eventList);
 }
@@ -136,29 +137,24 @@ function retrieveAllPostsData(eventList){
  * @param event
  * @param date
  */
-function loadEventData(url, event){
-    const input = JSON.stringify(event);
+function loadEventData(){
     $.ajax({
-        url: "/"+url,
-        data: input,
+        url: "/",
         contentType: 'application/json',
         type: 'POST',
         success: function (dataR) {
             // no need to JSON parse the result, as we are using
             // dataType:json, so JQuery knows it and unpacks the
             // object for us before returning it
-            addToResults(url, dataR);
-            storeCachedData(url, dataR);
-            if (document.getElementById('offline_div')!=null)
-                    document.getElementById('offline_div').style.display='none';
+            dataR.forEach(function(event){
+                addToResults('events', event);
+                // storeCachedData('events', event);
+            });
+
         },
         // the request to the server has failed. Let's show the cached data
         error: function (xhr, status, error) {
-            showOfflineWarning();
-            addToResults(getCachedData(event));
-            const dvv= document.getElementById('offline_div');
-            if (dvv!=null)
-                    dvv.style.display='block';
+            console.log('fuck', error);
         }
     });
 }

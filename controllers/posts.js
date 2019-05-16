@@ -30,13 +30,16 @@ exports.onloadEvent = function (req, res) {
     var eventArray  = [];
     try {
         Event.find({},function(err,events){
-        console.log('im here', events);
         if(events != null){
             events.forEach(function(event){
                 eventArray.push(event);
                 console.log(event);
 
             });
+
+            console.log('im here', eventArray);
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(eventArray));
             // for(var i = 0, imax = events.length; i<imax; i++) {
             //     eventArray += events
             //     console.log('you are here ', eventArray);
@@ -46,7 +49,6 @@ exports.onloadEvent = function (req, res) {
         }
     });
 
-        res.render('index', {items: eventArray, user: req.user});
     } catch (e) {
         res.status(500).send('error ' + e);
     }
