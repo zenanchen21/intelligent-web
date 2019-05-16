@@ -123,7 +123,15 @@
                     </form>
                 </div>
             </div>
-            <div id="posts"></div>
+            <div>
+                <%items.forEach(function(item){%>
+                    <h5 class=\"card-title\"><%item[i].title%></h5>
+                    <h6 class=\"card-subtitle"><%item[i].date%></h6>
+                    <h5 class=\"card-body\"><%item[i].description%></h5>
+                <% }) %>
+            </div>
+
+
         </div>
 
         <div class="col-md-3">
@@ -168,6 +176,7 @@
             </div>
             <div id="events">
             </div>
+
         </div>
     </div>
 </div>

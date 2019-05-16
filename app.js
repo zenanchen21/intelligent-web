@@ -14,9 +14,6 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
-//call mongodb
-var dbconncetion = require('./databases/users');
-
 // Passport controller
 require('./controllers/users')(passport);
 // view engine setup

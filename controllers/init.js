@@ -17,8 +17,8 @@ exports.init= function() {
     console.log('please, test the web with test@gmail.com, test.');
 
     user.save(function (err, results) {
-        console.log(results);
-        console.log(err);
+        // console.log(results);
+        // console.log(err);
     });
 };
 
@@ -31,11 +31,22 @@ exports.initEvent= function() {
         address: 'xixixiixix 1',
         description: 'Im a event'
     });
-    console.log('please, test the web with test@gmail.com, test.');
 
 
     event.save(function (err, results) {
-        console.log(results);
-        console.log(err);
+        // console.log(results);
+        // console.log(err);
+    });
+
+    var event2 = new Event({
+        title: 'nihao',
+        address: 'nihaoma',
+        description: 'Im a event'
+    });
+
+
+    event2.save(function (err, results) {
+        // console.log(results);
+        // console.log(err);
     });
 };
