@@ -168,7 +168,7 @@ function loadEventData(){
  * @param dataR
  */
 function addToResults(type, dataR) {
-    console.log("type "+type)
+    // console.log("type "+type)
     console.log(dataR)
     if(type == "events") {
         if (document.getElementById("events") != null) {
@@ -229,13 +229,12 @@ function addToResults(type, dataR) {
             body.innerHTML = '<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>'+tim+'</div>' +
             '<p class="card-text">'+ dataR.content+'</p> </div>';
             for(var img of dataR.img){
-                console.log(img.data);
-                // var buf =
-                // console.log(buf)
-                // var imsrc = img.data.data.toString("base64");
-                // 'data:image/jpeg;base64,' +
-                // console.log(imsrc)
-                // body.innerHTML += '<img src='+imsrc+'width="100" height="100" style="margin-left: 1rem; margin-bottom: 1rem;">';
+                console.log(img);
+                var imsrc = '';
+                var bytes = new Uint8Array(img.data.data);
+                bytes.forEach((b) => imsrc += String.fromCharCode(b));
+                imsrc = 'data:image/jpeg;base64,' + imsrc;
+                body.innerHTML += '<img src='+imsrc+' width="100" height="100" style="margin-left: 1rem; margin-bottom: 1rem;">';
             }
 
             footer.innerHTML = '<a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>' +
