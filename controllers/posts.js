@@ -116,12 +116,12 @@ exports.onloadPost = function (req, res) {
 //     }
 // }
 
-exports.loadData = function (req, res) {
-  Event.find({}, function (err, events) {
-    if(err) console.log(err);
-    res.send(events);
-  })
-}
+// exports.loadData = function (req, res) {
+//   Event.find({}, function (err, events) {
+//     if(err) console.log(err);
+//     res.send(events);
+//   })
+// }
 
 exports.newPost = function (req, res) {
   console.log(req.body);

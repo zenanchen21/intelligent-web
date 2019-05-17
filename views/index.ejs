@@ -39,7 +39,7 @@
         </div>
     </form>
     <ul class="nav navbar-nav navbar-right">
-        <%if(locals.user){%>Welcome <%=user.username%>
+        Welcome <a href="/users/profile"> <%if(locals.user){%><%=user.username%> </a>
         <a href="/users/logout">Logout</a>
         <%}else{%><li class="nav-item active">
             <a href="/users/register">Sign up</a>
@@ -124,7 +124,7 @@
                 </div>
             </div>
             <div id="posts">
--->
+
             </div>
 
 

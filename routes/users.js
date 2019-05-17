@@ -22,7 +22,7 @@ router.post('/register', userController.register);
 
 
 router.get('/login', function(req, res, next) {
-  res.render('login', { title: 'Express', login_is_correct:true});
+  res.render('login', { user: req.user, title: 'login'});
 });
 
 // Login with lib passport
@@ -45,6 +45,14 @@ var isLoggedin = function (req, res, next) {
 
 router.get('/profile', isLoggedin,function(req, res, next) {
   res.render('profile', { user: req.user });
+});
+
+router.get('/edit',function(req, res, next){
+  res.render('edit', { user: req.user });
+});
+
+router.post('/edit',function(req, res, next){
+
 });
 
 router.get('/logout',function(req, res, next) {

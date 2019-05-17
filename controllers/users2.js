@@ -2,6 +2,11 @@ var User = require('../models/users');
 var bcrypt = require('bcryptjs');
 
 exports.register = function(req,res){
+
+};
+
+
+exports.register = function(req,res){
     var userData = req.body;
     console.log(userData);
     if (userData == null) {

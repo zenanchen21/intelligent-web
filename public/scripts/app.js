@@ -109,7 +109,7 @@ function initMSocial() {
 function loadData(){
     // var eventList=JSON.parse(localStorage.getItem('events'));
     // var storyList=JSON.parse(localStorage.getItem('posts'));
-    getAllData();
+    // getAllData();
     loadEventData();
     // retrieveAllPostsData(storyList);
     // retrieveAllEventsData(eventList);
@@ -180,10 +180,10 @@ function addToResults(type, dataR) {
             row.classList.add('gedf-card');
             // the following is far from ideal. we should really create divs using javascript
             // rather than assigning innerHTML
-            row.innerHTML = "<div class=\"card-body\">" +
+            row.innerHTML = "<a href='/events/" +dataR._id + "\'><div class=\"card-body\">" +
               "<h5 class=\"card-title\">" + dataR.title + "</h5>" +
               "<h6 class=\"card-subtitle mb-2 text-muted\">" + dataR.address + "      " + dataR.date + "</h6></div>"+
-              "<p class=\"card-body\">" + dataR.description + "</p>" ;
+              "<p class=\"card-body\">" + dataR.description + "</p></a>" ;
         }
     } else{
         console.log("adding post to page " + (Date.now()-Date.parse(dataR.date)))
