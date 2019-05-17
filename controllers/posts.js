@@ -150,15 +150,12 @@ exports.newPost = function (req, res) {
         contentType: 'image/png'
       };
       post.img.push(imgData);
-      // console.log(imgData.data)
     }
 
     post.save(function (err, result) {
       if(err)
         console.log(err);
       res.setHeader('Content-Type', 'application/json');
-      console.log("---------------")
-      // console.log(result.img[0].data.toString('base64'))
       res.send(JSON.stringify(result));
     });
 

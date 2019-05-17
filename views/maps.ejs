@@ -1,22 +1,44 @@
 <html>
 <head>
-    <script
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFkFzLAzdX9dRinyyWNeoePm65HjHqp94&sensor=false">
-    </script>
+    <link rel='stylesheet' href='/stylesheets/map.css' />
+    <script src="/scripts/map.js"></script>
+    <div class="pac-card" id="pac-card">
+        <div>
+            <div id="title">
+                Autocomplete search
+            </div>
+            <div id="type-selector" class="pac-controls">
+                <input type="radio" name="type" id="changetype-all" checked="checked">
+                <label for="changetype-all">All</label>
 
-    <script>
-        function initialize()
-        {
-            var mapProp = {
-                center:new google.maps.LatLng(51.508742,-0.120850),
-                zoom:5,
-                mapTypeId:google.maps.MapTypeId.ROADMAP
-            };
-            var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-        }
+                <input type="radio" name="type" id="changetype-establishment">
+                <label for="changetype-establishment">Establishments</label>
 
-        google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
+                <input type="radio" name="type" id="changetype-address">
+                <label for="changetype-address">Addresses</label>
+
+                <input type="radio" name="type" id="changetype-geocode">
+                <label for="changetype-geocode">Geocodes</label>
+            </div>
+            <div id="strict-bounds-selector" class="pac-controls">
+                <input type="checkbox" id="use-strict-bounds" value="">
+                <label for="use-strict-bounds">Strict Bounds</label>
+            </div>
+        </div>
+        <div id="pac-container">
+            <input id="pac-input" type="text"
+                   placeholder="Enter a location">
+        </div>
+    </div>
+    <div id="map"></div>
+    <div id="infowindow-content">
+        <img src="" width="16" height="16" id="place-icon">
+        <span id="place-name"  class="title"></span><br>
+        <span id="place-address"></span>
+    </div>
+    <!-- Replace the value of the key parameter with your own API key. -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFkFzLAzdX9dRinyyWNeoePm65HjHqp94&libraries=places&callback=initMap"
+            async defer></script>
 </head>
 
 <body>
