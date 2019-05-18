@@ -28,7 +28,7 @@ exports.newEvent = function (req, res) {
                 }else{
                     User.findOne({_id:currentUser},function(err,user){
                         var event1 = user.event;
-                        event1.push(event._id);
+                        event1.push(result._id);
                         user.save();
                         console.log('gg', user);
                     });
@@ -179,13 +179,14 @@ exports.newPost = function (req, res) {
       if(err){
           console.log(err);
       }else{
+          // Find  related user ,and add post ObjectID to
           User.findOne({_id:currentUser.id},function(err,user){
               var post1 = user.post;
-              post1.push(post._id);
+              post1.push(result._id);
               user.save();
               console.log('gg', user);
           });
-          Post.findOne({_id:post._id}).populate('author').exec(function(err,reslt){
+          Post.findOne({_id:result._id}).populate('author').exec(function(err,reslt){
              console.log('username = ', reslt);
               res.setHeader('Content-Type', 'application/json');
               res.send(JSON.stringify(reslt));
