@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var User = require('../models/users');
 var Event = require('../models/events');
-// var Post = require('../models/posts');
+var Post = require('../models/posts');
 // var Comment = require('../models/comments');
 
 exports.init= function() {
@@ -46,6 +46,23 @@ exports.initEvent= function() {
 
 
     event2.save(function (err, results) {
+        // console.log(results);
+        // console.log(err);
+    });
+};
+
+
+exports.initPost= function() {
+    // uncomment if you need to drop the database
+    // Event.collection.drop();
+    //create a tempplte user for testing
+    var post = new Post({
+        content: 'Im a post',
+        date: Date.now(),
+    });
+
+
+    post.save(function (err, results) {
         // console.log(results);
         // console.log(err);
     });

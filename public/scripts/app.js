@@ -70,7 +70,8 @@ function sendAjaxQuery(url, data) {
                 document.getElementById('offline_div').style.display='none';
         },
         error: function (xhr, status, error) {
-            console.log("no response")
+            console.log("no response");
+            alert('log in before posting');
             // addToResults(data.type, data);
             // storeCachedData(data.type,data);
         }
@@ -111,6 +112,7 @@ function loadData(){
     // var storyList=JSON.parse(localStorage.getItem('posts'));
     // getAllData();
     loadEventData();
+    loadPostData();
     // retrieveAllPostsData(storyList);
     // retrieveAllEventsData(eventList);
 }
@@ -139,7 +141,7 @@ function retrieveAllPostsData(eventList){
  */
 function loadEventData(){
     $.ajax({
-        url: "/",
+        url: "/loadevent",
         contentType: 'application/json',
         type: 'POST',
         success: function (dataR) {
@@ -149,6 +151,29 @@ function loadEventData(){
             dataR.forEach(function(event){
                 addToResults('events', event);
                 storeCachedData('events', event);
+            });
+
+        },
+        // the request to the server has failed. Let's show the cached data
+        error: function (xhr, status, error) {
+            console.log('fuck', error);
+        }
+    });
+}
+
+
+function loadPostData(){
+    $.ajax({
+        url: "/",
+        contentType: 'application/json',
+        type: 'POST',
+        success: function (dataR) {
+            // no need to JSON parse the result, as we are using
+            // dataType:json, so JQuery knows it and unpacks the
+            // object for us before returning it
+            dataR.forEach(function(post){
+                addToResults('posts', post);
+                storeCachedData('posts', post);
             });
 
         },

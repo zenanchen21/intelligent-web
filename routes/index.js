@@ -16,13 +16,16 @@ var upload = multer({ dest: 'uploads/'})
 
 initDB.init();
 initDB.initEvent();
+initDB.initPost();
 
 /* GET home page. */
 router.get('/',function(req, res, next){
   res.render('index', {user: req.user});
 });
 
-router.post('/',PostController.onloadEvent);
+router.post('/',PostController.onloadPost);
+
+router.post('/loadevent',PostController.onloadEvent);
 
 
 
