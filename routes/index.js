@@ -28,12 +28,12 @@ router.post('/',PostController.onloadPost);
 router.post('/loadevent',PostController.onloadEvent);
 
 
-
-
-
-
 router.get('/maps', function(req, res, next) {
   res.render('maps',{title:'Map Finder'});
+});
+
+router.get('/create', function(req, res, next) {
+  res.render('create',{title:'Create Event'});
 });
 
 
