@@ -1,3 +1,4 @@
+var User = require('../models/users');
 var Event = require('../models/events');
 var Post = require('../models/posts');
 var Comment = require('../models/comments');
@@ -7,6 +8,8 @@ var fs = require("fs-extra");
 
 exports.newEvent = function (req, res) {
     var eventData = req.body;
+    var currentUser = req.user.id;
+    console.log('This is ', currentUser);
     if (eventData == null) {
         res.status(403).send('No data sent!')
     }
@@ -18,9 +21,25 @@ exports.newEvent = function (req, res) {
                 date:eventData.date,
                 time:eventData.time,
             });
-            event.save();
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify(event));
+            event.save(function(err, result){
+                if(err){
+                    console.log(err);
+                    req.flash('error_msg', 'you log in before posting');
+                }else{
+                    User.findOne({_id:currentUser},function(err,user){
+                        var event1 = user.event;
+                        event1.push(result._id);
+                        user.save();
+                        console.log('gg', user);
+                    });
+
+                    res.setHeader('Content-Type', 'application/json');
+                    res.send(JSON.stringify(result));
+                }
+
+            });
+
+
     } catch (e) {
         res.status(500).send('error ' + e);
     }
@@ -37,7 +56,7 @@ exports.onloadEvent = function (req, res) {
 
             });
 
-            console.log('im here', eventArray);
+            // console.log('im here', eventArray);
             res.setHeader('Content-Type', 'application/json');
             res.send(JSON.stringify(eventArray));
             // for(var i = 0, imax = events.length; i<imax; i++) {
@@ -58,24 +77,26 @@ exports.onloadEvent = function (req, res) {
 exports.onloadPost = function (req, res) {
     var postArray  = [];
     try {
-        Post.find({},function(err,posts){
+        Post.find({},).populate('author').exec(function(err,posts){
             console.log('im here', posts);
-            if(posts != null){
-                events.forEach(function(post){
-                    eventArray.push(post);
-                    console.log(post);
 
+            if(posts != null){
+                posts.forEach(function(post){
+                    postArray.push(post);
+                    console.log(post);
                 });
                 // for(var i = 0, imax = events.length; i<imax; i++) {
                 //     eventArray += events
                 //     console.log('you are here ', eventArray);
                 // }
+                // console.log('you are here', postArray);
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify(postArray));
             }else{
+
                 console.log('post is ', err);
             }
         });
-
-        res.render('index', {items: postArray, user: req.user});
     } catch (e) {
         res.status(500).send('error ' + e);
     }
@@ -124,10 +145,9 @@ exports.onloadPost = function (req, res) {
 // }
 
 exports.newPost = function (req, res) {
-  console.log(req.body);
-  console.log(req.files);
   var postData = req.body;
   var postImages = req.files;
+  var currentUser = req.user;
 
   if (postData == null) {
     res.status(403).send('No data sent!')
@@ -140,6 +160,7 @@ exports.newPost = function (req, res) {
       address: postData.address,
       location: postData.location,
       comment: postData.comment,
+        author:currentUser._id
       // author: postData.author
     });
 
@@ -149,18 +170,65 @@ exports.newPost = function (req, res) {
         data: fs.readFileSync(file.path, 'base64'),
         contentType: 'image/png'
       };
+      fs.remove(file.path, err => {
+        if (err) return console.error(err);
+
+        console.log('success remove ' + file.path);
+      })
       post.img.push(imgData);
     }
 
     post.save(function (err, result) {
-      if(err)
-        console.log(err);
-      res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify(result));
+      if(err){
+          console.log(err);
+      }else{
+          // Find  related user ,and add post ObjectID to
+          User.findOne({_id:currentUser.id},function(err,user){
+              var post1 = user.post;
+              post1.push(result._id);
+              user.save();
+              console.log('gg', user);
+          });
+          Post.findOne({_id:result._id}).populate('author').exec(function(err,reslt){
+             console.log('username = ', reslt);
+              res.setHeader('Content-Type', 'application/json');
+              res.send(JSON.stringify(reslt));
+          });
+      }
+
+
     });
 
   } catch (e) {
     res.status(500).send('error ' + e);
+  }
+}
+
+
+exports.newComment = function (req, socket) {
+  var data = JSON.parse(req);
+
+  // if (data == null) {
+  //   console.log("no data sent")
+  //   socketIO.emit
+  //   // res.status(403).send('No data sent!')
+  // }
+
+  try {
+    var comment = new Comment({
+      content: data.content,
+      date: data.date,
+      author: data.author,
+      post: data.postID
+    });
+
+    comment.save(function (err, result) {
+      if(err) console.log(err);
+      socket.broadcast.emit("new comment", JSON.stringify(result));
+    })
+  } catch (e) {
+    console.log("fail to create new comment")
+    // res.status(500).send("error " + e);
   }
 }
 

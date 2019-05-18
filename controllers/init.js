@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var User = require('../models/users');
 var Event = require('../models/events');
-// var Post = require('../models/posts');
+var Post = require('../models/posts');
 // var Comment = require('../models/comments');
 
 exports.init= function() {
@@ -12,17 +12,19 @@ exports.init= function() {
         unique_id:'0',
         username: 'admin',
         email: 'test@gmail.com',
-        password: '$2a$10$Mxg7Rbz.Q1du7/BMenlaFObP.O9UJ2cS9fvtMB0PdMDaKmNV4/CJG'
+        password: '$2a$10$Mxg7Rbz.Q1du7/BMenlaFObP.O9UJ2cS9fvtMB0PdMDaKmNV4/CJG',
     });
     console.log('please, test the web with test@gmail.com, test.');
+
 
     user.save(function (err, results) {
         // console.log(results);
         // console.log(err);
+        console.log('_id', results._id);
     });
-};
 
-exports.initEvent= function() {
+
+
     // uncomment if you need to drop the database
     // Event.collection.drop();
     //create a tempplte user for testing
@@ -49,4 +51,24 @@ exports.initEvent= function() {
         // console.log(results);
         // console.log(err);
     });
+
+
+
+
+    // uncomment if you need to drop the database
+    // Event.collection.drop();
+    //create a tempplte user for testing
+    var post = new Post({
+        author: user._id,
+        content: 'Im a post',
+        date: Date.now(),
+    });
+
+
+    post.save(function (err, results) {
+        // console.log(results);
+        // console.log(err);
+    });
+
+
 };

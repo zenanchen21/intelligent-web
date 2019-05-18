@@ -3,6 +3,7 @@ var router = express.Router();
 const passport = require('passport');
 // Load User model
 var userController = require('../controllers/users2');
+var postController = require('../controllers/posts');
 
 
 

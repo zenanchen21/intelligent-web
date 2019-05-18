@@ -26,6 +26,8 @@
     <script src="/scripts/app.js"></script>
     <script src="/scripts/database.js"></script>
     <script src="/scripts/idb.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/scripts/socket.js"></script>
 </head>
 <body onload="initMSocial()">
 <nav class="navbar navbar-light bg-white sticky-top">
@@ -98,7 +100,6 @@
                         <div class="collapse" id="postIm"></div>
 
                         <div hidden="hidden">
-                            <input name="date" value="<%=new Date().getTime()%>">
                             <input name="author"  value="<%if(locals.user){
                             %><%=user.username%><%
                             }else{
@@ -107,7 +108,7 @@
                         </div>
 
                         <div class="btn">
-                            <label class="fa fa-upload btn-link" for="customFile"></label>
+                            <label class="btn-link" for="customFile"><i class="fa fa-picture-o"></i></label>
                             <input type="file" hidden class="custom-file-input" id="customFile" name="contentImage" multiple onchange="readURL(this)">
                         </div>
                         <div class="btn-group">
