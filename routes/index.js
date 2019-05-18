@@ -15,8 +15,8 @@ var upload = multer({ dest: 'uploads/'})
 
 
 initDB.init();
-initDB.initEvent();
-initDB.initPost();
+// initDB.initEvent();
+// initDB.initPost();
 
 /* GET home page. */
 router.get('/',function(req, res, next){

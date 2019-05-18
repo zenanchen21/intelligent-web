@@ -77,8 +77,9 @@ exports.onloadEvent = function (req, res) {
 exports.onloadPost = function (req, res) {
     var postArray  = [];
     try {
-        Post.find({},function(err,posts){
+        Post.find({},).populate('author').exec(function(err,posts){
             console.log('im here', posts);
+
             if(posts != null){
                 posts.forEach(function(post){
                     postArray.push(post);
@@ -184,8 +185,12 @@ exports.newPost = function (req, res) {
               user.save();
               console.log('gg', user);
           });
-          res.setHeader('Content-Type', 'application/json');
-          res.send(JSON.stringify(result));
+          Post.findOne({_id:post._id}).populate('author').exec(function(err,reslt){
+             console.log('username = ', reslt);
+              res.setHeader('Content-Type', 'application/json');
+              res.send(JSON.stringify(reslt));
+          });
+
       }
 
 
