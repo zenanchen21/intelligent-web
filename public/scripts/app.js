@@ -232,7 +232,7 @@ function addToResults(type, dataR) {
               '<div class="mr-2">' +
               '<img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="" crossorigin="anonymous"></div>' +
               '<div class="ml-2">' +
-              '<div class="h5 m-0">'+dataR.author+'</div>' +
+              '<div class="h5 m-0">'+dataR.author.username+'</div>' +
               '</div></div><div>' +
               '<div class="dropdown">' +
               '<button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +

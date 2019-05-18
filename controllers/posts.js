@@ -181,14 +181,20 @@ exports.newPost = function (req, res) {
       if(err){
           console.log(err);
       }else{
-          User.findOne({_id:currentUser.id},function(err,user){
-              var post1 = user.post;
-              post1.push(post._id);
-              user.save();
-              console.log('gg', user);
-          });
-          res.setHeader('Content-Type', 'application/json');
-          res.send(JSON.stringify(result));
+          // User.findOne({_id:currentUser.id},function(err,user){
+          //     var post1 = user.post;
+          //     post1.push(post._id);
+          //     user.save();
+          //     console.log('gg', user);
+          // });
+        Post
+          .findOne(result._id)
+          .populate('author')
+          .exec(function (err, result) {
+            console.log(result)
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(result));
+          })
       }
 
 
