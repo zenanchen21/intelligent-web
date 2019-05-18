@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var commentSchema = new Schema(
     {
         author: {type: Schema.Types.ObjectId, ref: 'User'},
+        post: {type: Schema.Types.ObjectId, ref: 'Post'},
         content: {type: String, required: true, min:3},
         date:{type: Date, required:true}
     }
