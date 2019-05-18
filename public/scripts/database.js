@@ -61,39 +61,6 @@ function storeCachedData(type, eventObject) {
 }
 
 
-/**
- * it retrieves the forecasts data for a city from localStorage
- * @param eventName
- * @param date
- * @returns {*}
- */
-function getCachedData(eventName) {
-    if (dbPromise) {
-        dbPromise.then(function (db) {
-            console.log('fetching: '+name);
-            var tx = db.transaction(EVENT_STORE_NAME, 'readonly');
-            var store = tx.objectStore(EVENT_STORE_NAME);
-            var index = store.index('name');
-            return index.getAll(IDBKeyRange.only(eventName));
-        }).then(function (readingsList) {
-            if (readingsList && readingsList.length>0){
-                for (var elem of readingsList)
-                    addToResults(elem);
-            } else {
-                const value = localStorage.getItem(eventName);
-                if (value == null)
-                    addToResults({name:eventName});
-                else addToResults(value);
-            }
-        });
-    } else {
-        const value = localStorage.getItem(eventName);
-        if (value == null)
-            addToResults( {name: eventName});
-        else addToResults(value);
-    }
-}
-
 function getAllData () {
     if (dbPromise) {
         dbPromise.then(function (db) {
@@ -112,8 +79,8 @@ function getAllData () {
             data.events.then(function (events) {
                 for(index in events)
                     addToResults('events', events[index]);
-            })
-        })
+            });
+        });
     }
     else{
         console.log("fail");

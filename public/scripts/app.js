@@ -1,6 +1,6 @@
 /**
- * sigin in form onsubmit
- * lead to home page
+ * post and event form on submit function
+ * @param formID
  */
 function submitForm(formID){
     var url;
@@ -24,18 +24,22 @@ function submitForm(formID){
         data.append("contentImage[]", file_data[i]);
     }
 
-
     if (url == "/events")
         data.append("type", "events");
     else {
         data.append("type", "posts");
     }
 
+    data.append("date", Date.now().toString());
+
     sendAjaxQuery(url, data);
     event.preventDefault();
     hideModal();
 }
 
+/**
+ * close the create event modal
+ */
 function hideModal() {
     $("#exampleModal").removeClass("in");
     $(".modal-backdrop").remove();
@@ -44,12 +48,20 @@ function hideModal() {
     $('#exampleModal').hide();
 }
 
+/**
+ * handle search form
+ */
 function searchForm(){
     var keyWord = document.getElementById("keyWord").value;
     searchIndexDB(keyWord);
     event.preventDefault();
 }
 
+/**
+ * ajax sending multipart
+ * @param url
+ * @param data
+ */
 function sendAjaxQuery(url, data) {
     $.ajax({
         url: url ,
@@ -81,10 +93,9 @@ function sendAjaxQuery(url, data) {
 
 /**
  * called by the HTML onload
- * showing any cached forecast data and declaring the service worker
+ * showing any cached data and declaring the service worker
  */
 function initMSocial() {
-    // loadData();
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker
           .register('./service-worker.js')
@@ -117,20 +128,6 @@ function loadData(){
     // retrieveAllEventsData(eventList);
 }
 
-/**
- * it cycles through the list of events and requests the data from the server for each
- * event
- * @param eventList the list of the evnents the user has requested
- */
-function retrieveAllEventsData(eventList){
-    for (index in eventList)
-        loadEventData('events', eventList[index]);
-}
-
-function retrieveAllPostsData(eventList){
-    for (index in eventList)
-        loadEventData('posts', eventList[index]);
-}
 
 /**
  * given one event and a date, it queries the server via Ajax to get the latest
@@ -193,8 +190,6 @@ function loadPostData(){
  * @param dataR
  */
 function addToResults(type, dataR) {
-    // console.log("type "+type)
-    console.log(dataR)
     if(type == "events") {
         if (document.getElementById("events") != null) {
             const row = document.createElement('div');
@@ -218,8 +213,7 @@ function addToResults(type, dataR) {
             const body = document.createElement("div");
             const footer = document.createElement("div");
             const tim = timeDiff(Date.now(),Date.parse(dataR.date))
-            console.log(tim);
-            // const postID = '#'+dataR._id;
+            const postID = dataR._id;
 
 
             row.appendChild(header);
@@ -253,6 +247,8 @@ function addToResults(type, dataR) {
 
             body.innerHTML = '<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>'+tim+'</div>' +
             '<p class="card-text">'+ dataR.content+'</p> </div>';
+
+
             for(var img of dataR.img){
                 console.log(img);
                 var imsrc = '';
@@ -262,12 +258,13 @@ function addToResults(type, dataR) {
                 body.innerHTML += '<img src='+imsrc+' width="100" height="100" style="margin-left: 1rem; margin-bottom: 1rem;">';
             }
 
-            footer.innerHTML = '<a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>' +
-            '<a href="#com" data-toggle="collapse" class="card-link" aria-expanded="false"><i class="fa fa-comment"></i> Comment</a>' +
+            footer.id = "footer"+postID;
+            footer.innerHTML = '<a href="#'+postID+'\" class="card-link"><i class="fa fa-gittip"></i> Like</a>' +
+            '<a href="#com'+postID+'\" data-toggle="collapse" class="card-link" aria-expanded="false"><i class="fa fa-comment"></i> Comment</a>' +
               '<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>'+
-            '<div class="collapse input-group mb-3" id="com">\n' +
-              '  <input type="text" class="form-control" placeholder="Write a comment..." aria-label="Write a comment">\n' +
-              '</div>';
+            '<form class="collapse" id="com'+postID+'\">\n' +
+              '  <input type="text" name="comment" class="form-control com" placeholder="Write a comment..." aria-label="Write a comment">\n' +
+              '</form>';
         }
     }
 }
@@ -340,37 +337,12 @@ function onSubmit(url) {
 
 }
 
-// function onSubmit(url) {
-//     var formArray= $("form").serializeArray();
-//     var data={};
-//     for (index in formArray){
-//         data[formArray[index].name]= formArray[index].value;
-//     }
-//     // const data = JSON.stringify($(this).serializeArray());
-//     sendLoginInfo(url, data);
-//     event.preventDefault();
-// }
 
 function checkForErrors(isLoginCorrect){
     if (!isLoginCorrect){
         alert('login or password is incorrect');
     }
 }
-
-
-// $(function(){
-//     $('#xform').click(function(e){
-//         e.preventDefault();
-//         $('#event_modal').modal('hide');
-//         /*
-//         $.post('http://path/to/post',
-//            $('#myForm').serialize(),
-//            function(data, status, xhr){
-//              // do something here with response;
-//            });
-//         */
-//     });
-// });
 
 function readURL(input) {
     if (input.files.length > 0) {

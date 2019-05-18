@@ -144,8 +144,6 @@ exports.onloadPost = function (req, res) {
 // }
 
 exports.newPost = function (req, res) {
-  // console.log(req.body);
-  // console.log(req.files);
   var postData = req.body;
   var postImages = req.files;
   var currentUser = req.user;
@@ -171,6 +169,11 @@ exports.newPost = function (req, res) {
         data: fs.readFileSync(file.path, 'base64'),
         contentType: 'image/png'
       };
+      fs.remove(file.path, err => {
+        if (err) return console.error(err);
+
+        console.log('success remove ' + file.path);
+      })
       post.img.push(imgData);
     }
 
@@ -193,6 +196,34 @@ exports.newPost = function (req, res) {
 
   } catch (e) {
     res.status(500).send('error ' + e);
+  }
+}
+
+
+exports.newComment = function (req, socket) {
+  var data = JSON.parse(req);
+
+  // if (data == null) {
+  //   console.log("no data sent")
+  //   socketIO.emit
+  //   // res.status(403).send('No data sent!')
+  // }
+
+  try {
+    var comment = new Comment({
+      content: data.content,
+      date: data.date,
+      author: data.author,
+      post: data.postID
+    });
+
+    comment.save(function (err, result) {
+      if(err) console.log(err);
+      socket.broadcast.emit("new comment", JSON.stringify(result));
+    })
+  } catch (e) {
+    console.log("fail to create new comment")
+    // res.status(500).send("error " + e);
   }
 }
 
