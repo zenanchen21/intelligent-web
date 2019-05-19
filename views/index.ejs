@@ -110,49 +110,7 @@
 
         <div class="col-md-3">
             <div>
-<!--                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-lat='53.3816197' data-lng='-1.4820851' data-whatever="@getbootstrap">+ Create Event</button>-->
                 <a class="btn btn-primary" href="/create" role="button">+ Create Event</a>
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">New event</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="eform" onsubmit="submitForm('eform')">
-                                    <div class="form-group">
-                                        <label for="title" class="col-form-label">Event title:</label>
-                                        <input type="text" class="form-control" id="name" name="title" maxlength="64" placeholder="Name to identify the events">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="address" class="col-form-label">Event address</label>
-                                        <input type="text" class="form-control" id="location" name="address" placeholder="A place or a valid address">
-                                    </div>
-                                    <div class="col-md-12 modal_body_map">
-                                        <div class="location-map" id="location-map">
-                                            <div style="width: 600px; height: 400px;" id="map_canvas"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="description" class="col-form-label">Description</label>
-                                        <textarea class="form-control" rows="3" placeholder="More about the event?" name="description"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="date" class="col-form-label">Date</label>
-                                        <input type="datetime-local" name="date">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button class="btn btn-primary" form="eform">Create</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div id="events">
             </div>

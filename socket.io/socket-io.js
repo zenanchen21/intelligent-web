@@ -6,9 +6,18 @@ exports.init = function (io, appX) {
     });
 
     socket.on('send comment', function (com) {
-      socket.broadcast.emit("new comment", com)
+      console.log(com)
+      socket.broadcast.emit("new comment", com);
     });
 
+    socket.on('send post', function (post) {
+      console.log(post)
+      socket.broadcast.emit("new post", post);
+    })
+
+    socket.on('send event', function (event) {
+      socket.broadcast.emit("new event", event);
+    })
 
   });
 };

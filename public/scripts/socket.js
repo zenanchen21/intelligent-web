@@ -28,8 +28,14 @@ $(document).on("submit", "form.collapse", function (event) {
   });
 });
 
-socket.on("new comment", function(comData){
-  addComment(comData);
+socket.on("new comment", addComment);
+
+socket.on("new post", function (posData) {
+  addToResults('posts', posData);
+});
+
+socket.on("new event", function (eveData) {
+  addToResults('events',eveData);
 });
 
 function addComment (data) {

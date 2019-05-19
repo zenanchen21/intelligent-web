@@ -79,8 +79,10 @@ function sendAjaxQuery(url, data) {
             // object for us before returning it
             if(dataR.success){
                 location.href = "/";
+                socket.emit('send event', dataR);
                 storeCachedData(data.get("type"), dataR);
             }else{
+                socket.emit('send post', dataR);
                 addToResults(data.get("type"), dataR);
                 storeCachedData(data.get("type"), dataR);
             }
@@ -213,8 +215,8 @@ function addToResults(type, dataR) {
               "<p class=\"card-body\">" + dataR.description + "</p></a>" ;
         }
     } else{
-        console.log("adding post to page " + (Date.now()-Date.parse(dataR.date)))
         console.log(dataR)
+        console.log("adding post to page " + (Date.now()-Date.parse(dataR.date)))
         if (document.getElementById("posts") != null) {
             const row = document.createElement("div");
             const header = document.createElement("div");
