@@ -11,6 +11,8 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" />
     <script src="/scripts/app.js" ></script>
+    <script src="/scripts/idb.js"></script>
+    <script src="/scripts/database.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 </head>
@@ -26,13 +28,13 @@
             <input type="text" class="form-control" id="name" name="title" maxlength="64" placeholder="Name to identify the events">
         </div>
         <b>Coordinates</b>
-        <form>
+        <div class="form-group">
             <input type="text" name="lat" id="lat" size=12 value="">
             <input type="text" name="lon" id="lon" size=12 value="">
-        </form>
+        </div>
         <b>Event address</b>
         <div id="search">
-            <input type="text" name="addr" value="" id="addr" size="58" />
+            <input type="text" name="address" value="" id="addr" size="58" />
             <button type="button" onclick="addr_search();">Search</button>
             <div id="results"></div>
         </div>
@@ -118,7 +120,7 @@
 
     function addr_search()
     {
-        var inp = document.getElementById("addr");
+        var inp = document.getElementById("address");
         var xmlhttp = new XMLHttpRequest();
         var url = "https://nominatim.openstreetmap.org/search?format=json&limit=3&q=" + inp.value;
         xmlhttp.onreadystatechange = function()

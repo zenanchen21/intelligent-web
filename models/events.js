@@ -9,7 +9,7 @@ var eventSchema = new Schema(
         address:{type: String, required:true},
         location: {
             lat:{type: Number},
-            lng:{type:Number},
+            lon:{type:Number},
         },
         description: {type: String},
         date:{type: Date},

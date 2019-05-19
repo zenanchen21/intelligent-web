@@ -1,4 +1,3 @@
-var PostController = require('../controllers/posts');
 exports.init = function (io, appX) {
   io.on('connection', function (socket) {
     console.log("connected");
@@ -7,8 +6,9 @@ exports.init = function (io, appX) {
     });
 
     socket.on('send comment', function (com) {
-      PostController.newComment(com,socket);
+      socket.broadcast.emit("new comment", com)
     });
+
 
   });
 };

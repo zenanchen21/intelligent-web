@@ -27,6 +27,7 @@ router.post('/',PostController.onloadPost);
 
 router.post('/loadevent',PostController.onloadEvent);
 
+router.post('/newComment', PostController.newComment);
 
 router.get('/maps', function(req, res, next) {
   res.render('maps',{title:'Map Finder'});

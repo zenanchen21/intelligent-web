@@ -18,19 +18,20 @@ function submitForm(formID){
         data.append(formArray[index].name, formArray[index].value);
     }
 
-
-    var file_data = $('input[name="contentImage"]')[0].files;
-    for (var i = 0; i < file_data.length; i++) {
-        data.append("contentImage[]", file_data[i]);
+    if($('input[name="contentImage"]')[0]){
+        var file_data = $('input[name="contentImage"]')[0].files;
+        console.log(file_data)
+        for (var i = 0; i < file_data.length; i++) {
+            data.append("contentImage[]", file_data[i]);
+        }
     }
 
     if (url == "/events")
         data.append("type", "events");
     else {
         data.append("type", "posts");
+        data.append("date", Date.now().toString());
     }
-
-    data.append("date", Date.now().toString());
 
     sendAjaxQuery(url, data);
     event.preventDefault();
@@ -76,8 +77,14 @@ function sendAjaxQuery(url, data) {
             // no need to JSON parse the result, as we are using
             // dataType:json, so JQuery knows it and unpacks the
             // object for us before returning it
-            addToResults(data.get("type"), dataR);
-            storeCachedData(data.get("type"), dataR);
+            if(dataR.success){
+                location.href = "/";
+                storeCachedData(data.get("type"), dataR);
+            }else{
+                addToResults(data.get("type"), dataR);
+                storeCachedData(data.get("type"), dataR);
+            }
+
             if (document.getElementById('offline_div')!=null)
                 document.getElementById('offline_div').style.display='none';
         },
@@ -207,6 +214,7 @@ function addToResults(type, dataR) {
         }
     } else{
         console.log("adding post to page " + (Date.now()-Date.parse(dataR.date)))
+        console.log(dataR)
         if (document.getElementById("posts") != null) {
             const row = document.createElement("div");
             const header = document.createElement("div");
@@ -265,6 +273,10 @@ function addToResults(type, dataR) {
             '<form class="collapse" id="com'+postID+'\">\n' +
               '  <input type="text" name="comment" class="form-control com" placeholder="Write a comment..." aria-label="Write a comment">\n' +
               '</form>';
+            
+            for (var com of dataR.comment) {
+                addComment(com)
+            }
         }
     }
 }

@@ -39,8 +39,8 @@ var server = https.createServer(options,app);
 
 server.listen(port);
 var io = require('socket.io').listen(server);
-var sockey_module = require("../socket.io/socket-io");
-sockey_module.init(io, app);
+var socket_module = require("../socket.io/socket-io");
+socket_module.init(io, app);
 server.on('error', onError);
 server.on('listening', onListening);
 

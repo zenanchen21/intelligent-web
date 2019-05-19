@@ -7,6 +7,7 @@ var fs = require("fs-extra");
 
 
 exports.newEvent = function (req, res) {
+  console.log((req.body));
     var eventData = req.body;
     var currentUser = req.user.id;
     console.log('This is ', currentUser);
@@ -17,9 +18,12 @@ exports.newEvent = function (req, res) {
         var event = new Event({
                 title: eventData.title,
                 address: eventData.address,
+                location: {
+                  lat: eventData.lat,
+                  lon: eventData.lon
+                },
                 description: eventData.description,
                 date:eventData.date,
-                time:eventData.time,
             });
             event.save(function(err, result){
                 if(err){
@@ -32,9 +36,7 @@ exports.newEvent = function (req, res) {
                         user.save();
                         console.log('gg', user);
                     });
-
-                    res.setHeader('Content-Type', 'application/json');
-                    res.send(JSON.stringify(result));
+                    res.send({success:true});
                 }
 
             });
@@ -77,19 +79,19 @@ exports.onloadEvent = function (req, res) {
 exports.onloadPost = function (req, res) {
     var postArray  = [];
     try {
-        Post.find({},).populate('author').exec(function(err,posts){
-            console.log('im here', posts);
+        Post.find()
+          .populate('author')
+          .populate({
+            path: 'comment',
+            populate: { path: 'author', select: 'username' }
+          })
+          .exec(function(err,posts){
 
             if(posts != null){
                 posts.forEach(function(post){
                     postArray.push(post);
-                    console.log(post);
                 });
-                // for(var i = 0, imax = events.length; i<imax; i++) {
-                //     eventArray += events
-                //     console.log('you are here ', eventArray);
-                // }
-                // console.log('you are here', postArray);
+
                 res.setHeader('Content-Type', 'application/json');
                 res.send(JSON.stringify(postArray));
             }else{
@@ -205,26 +207,38 @@ exports.newPost = function (req, res) {
 }
 
 
-exports.newComment = function (req, socket) {
-  var data = JSON.parse(req);
-
-  // if (data == null) {
-  //   console.log("no data sent")
-  //   socketIO.emit
-  //   // res.status(403).send('No data sent!')
-  // }
+exports.newComment = function (req, res) {
+  console.log(req)
+  var data = req.body;
+  if (data == null) {
+    res.status(403).send('No data sent!')
+  }
 
   try {
     var comment = new Comment({
       content: data.content,
       date: data.date,
-      author: data.author,
+      author: req.user._id,
       post: data.postID
     });
 
     comment.save(function (err, result) {
-      if(err) console.log(err);
-      socket.broadcast.emit("new comment", JSON.stringify(result));
+      if(err) console.log(err)
+      // console.log(result)
+      Post
+        .findOne(result.post, function(err, post){
+          post.comment.push(result._id);
+          post.save();
+        });
+      Comment
+        .findOne(result._id)
+        .populate('author', 'username')
+        .exec( function (err, com) {
+          if(err) console.log(err);
+          console.log(com)
+          res.setHeader('Content-Type', 'application/json');
+          res.send(JSON.stringify(com));
+        });
     })
   } catch (e) {
     console.log("fail to create new comment")
