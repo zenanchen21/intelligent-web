@@ -9,7 +9,7 @@ var fs = require("fs-extra");
 exports.newEvent = function (req, res) {
   console.log((req.body));
     var eventData = req.body;
-    var currentUser = req.user.id;
+    var currentUser = req.user;
     console.log('This is ', currentUser);
     if (eventData == null) {
         res.status(403).send('No data sent!')
@@ -24,13 +24,14 @@ exports.newEvent = function (req, res) {
                 },
                 description: eventData.description,
                 date:eventData.date,
+                author:currentUser._id
             });
             event.save(function(err, result){
                 if(err){
                     console.log(err);
                     res.status(403).send('please complete the from');
                 }else{
-                    User.findOne({_id:currentUser},function(err,user){
+                    User.findOne({_id:currentUser._id},function(err,user){
                         var event1 = user.event;
                         event1.push(result._id);
                         user.save();
@@ -246,6 +247,18 @@ exports.newComment = function (req, res) {
   }
 }
 
+
+exports.eventinfo = function(req,res){
+    Event.findById(req.params.id).populate('author').exec(function(err,event){
+        if(err){
+            console.log('Show up a ',err)
+        }else{
+            console.log('here we go', event);
+            res.render('event', { event:event});
+        }
+
+    })
+};
 
 
 

@@ -8,6 +8,7 @@ var initDB= require('../controllers/init');
 var User = require('../models/users');
 
 var Post = require('../models/posts');
+var Event = require('../models/events');
 
 var multer = require('multer');
 var upload = multer({ dest: 'uploads/'})
@@ -45,8 +46,9 @@ router.get('/create', function(req, res, next) {
 router.post('/events', upload.none(), PostController.newEvent);
 
 router.get('/events/:id',function(req,res,next) {
-  res.render('event', { title: 'Express', login_is_correct:false});
+  PostController.eventinfo(req,res);
 });
+
 
 
 router.post("/posts", upload.array("contentImage[]",3), PostController.newPost);

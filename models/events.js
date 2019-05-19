@@ -13,7 +13,7 @@ var eventSchema = new Schema(
         },
         description: {type: String},
         date:{type: Date},
-        comment: [{type: Schema.Types.ObjectId, ref: 'Comment'}]
+        author: {type: Schema.Types.ObjectId, ref: 'User'}
     }
 );
 

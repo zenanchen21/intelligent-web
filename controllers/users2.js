@@ -33,12 +33,12 @@ exports.edituser = function(req, res){
                 return res.send({msg: "Fail to Login"})
 
             }
-            else if (!firsetname||!familyname||!contactnumber){
+            else if (!firsetname||!familyname||!contactnumber||!jobtitle){
                 // res.status(200).send({falied:true});
                 return res.send({notcomplete:true})
 
             }
-
+            user.username = username;
             user.preference.firstname = firsetname;
             user.preference.familyname = familyname;
             user.preference.contactnumber =contactnumber;
@@ -75,6 +75,7 @@ exports.onloadUser = function (req, res) {
         res.status(500).send('this error ' + e);
     }
 };
+
 
 exports.register = function(req,res){
     var userData = req.body;

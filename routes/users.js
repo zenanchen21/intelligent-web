@@ -54,7 +54,7 @@ router.post('/profile/', isLoggedin,function(req, res, next) {
   res.render('profile', { user: req.user });
 });
 
-router.get('/edit',function(req, res, next){
+router.get('/edit',isLoggedin,function(req, res, next){
   res.render('edit', { user: req.user });
 });
 
