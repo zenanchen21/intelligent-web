@@ -96,7 +96,15 @@
         document.getElementById('lat').value = lat;
         document.getElementById('lon').value = lon;
         myMarker.bindPopup("Lat " + lat + "<br />Lon " + lon).openPopup();
+        var addressname = document.getElementById('addd');
+        if(addressname.ull){
+            console.log('hh', addressname.val);
+        }
+
+        $("#addr").val(addressname.val);
+
     }
+
 
     function myFunction(arr)
     {
@@ -107,9 +115,11 @@
         {
             for(i = 0; i < arr.length; i++)
             {
-                out += "<div class='address' title='Show Location and Coordinates' onclick='chooseAddr(" + arr[i].lat + ", " + arr[i].lon + ");return false;'>" + arr[i].display_name + "</div>";
+                out += "<div class='address' id='addd' title='Show Location and Coordinates' onclick='chooseAddr(" + arr[i].lat + ", " + arr[i].lon + ");return false;'>" + arr[i].display_name + "</div>";
+
             }
             document.getElementById('results').innerHTML = out;
+
         }
         else
         {
