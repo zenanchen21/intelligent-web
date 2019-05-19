@@ -28,7 +28,7 @@ exports.newEvent = function (req, res) {
             event.save(function(err, result){
                 if(err){
                     console.log(err);
-                    req.flash('error_msg', 'you log in before posting');
+                    res.status(403).send('please complete the from');
                 }else{
                     User.findOne({_id:currentUser},function(err,user){
                         var event1 = user.event;
@@ -36,7 +36,7 @@ exports.newEvent = function (req, res) {
                         user.save();
                         console.log('gg', user);
                     });
-                    res.send({success:true});
+                    res.status(200).send({success:true});
                 }
 
             });
@@ -242,7 +242,7 @@ exports.newComment = function (req, res) {
     })
   } catch (e) {
     console.log("fail to create new comment")
-    // res.status(500).send("error " + e);
+    res.status(500).send("error " + e);
   }
 }
 

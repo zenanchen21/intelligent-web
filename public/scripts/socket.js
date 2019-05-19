@@ -23,7 +23,9 @@ $(document).on("submit", "form.collapse", function (event) {
     },
     error: function (xhr, status, error) {
       console.log(error)
-      console.log("fail to comment, try again later");
+      if(xhr.status == 500){
+        alert('Log in before you comment it');
+      }
     }
   });
 });

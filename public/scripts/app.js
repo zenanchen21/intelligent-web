@@ -92,7 +92,13 @@ function sendAjaxQuery(url, data) {
         },
         error: function (xhr, status, error) {
             console.log("no response");
-            alert('log in before posting');
+            if(xhr.status == 403){
+                alert('Please complete the form!');
+            }else{
+                alert('Please Log in before posting');
+                window.location.href = 'users/login';
+            }
+
             // addToResults(data.type, data);
             // storeCachedData(data.type,data);
         }

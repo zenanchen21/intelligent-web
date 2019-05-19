@@ -123,6 +123,13 @@ body {
   background-color: #3b5998;
 }
 
+#to_register{
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  padding: 2%;
+}
+
 
 
 

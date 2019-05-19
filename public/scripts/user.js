@@ -129,7 +129,7 @@ function sendregister(){
                 $("#message").html("<div class='alert alert-success alert-dismissible'>" +
                     "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">x</a>" +
                     "<p>You can Log in now</p></div>");
-                window.location =  "/users/profile"
+                window.location.href =  "/users/profile"
             }
 
 
