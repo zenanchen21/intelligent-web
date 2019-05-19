@@ -4,6 +4,7 @@ const passport = require('passport');
 // Load User model
 var userController = require('../controllers/users2');
 var postController = require('../controllers/posts');
+var User = require('../models/users');
 
 
 
@@ -44,7 +45,12 @@ var isLoggedin = function (req, res, next) {
   }
 };
 
-router.get('/profile', isLoggedin,function(req, res, next) {
+router.get('/profile/', isLoggedin,function(req, res, next) {
+  userController.onloadUser(req,res)
+  // res.render('profile', { user: req.user });
+});
+
+router.post('/profile/', isLoggedin,function(req, res, next) {
   res.render('profile', { user: req.user });
 });
 
@@ -52,9 +58,7 @@ router.get('/edit',function(req, res, next){
   res.render('edit', { user: req.user });
 });
 
-router.post('/edit',function(req, res, next){
-
-});
+router.post('/edit',userController.edituser)
 
 router.get('/logout',function(req, res, next) {
   req.logout();

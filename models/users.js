@@ -19,6 +19,12 @@ var userSchema = new Schema(
         password: {type: String, required:[true, 'password can not left blank'],  min:6},
         event: [{type: Schema.Types.ObjectId, ref: 'Event'}],
         post:[{type: Schema.Types.ObjectId, ref: 'Post'}],
+        preference: {
+            firstname:{type:String},
+            familyname:{type:String},
+            jobtitle:{type:String},
+            contactnumber: {type:Number}
+        }
     }
 );
 

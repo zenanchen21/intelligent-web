@@ -28,31 +28,8 @@
     <script src="/scripts/socket.js"></script>
 </head>
 <body onload="initMSocial()">
-<nav class="navbar navbar-light bg-white sticky-top">
-    <a href="#" class="navbar-brand">MSocial</a>
-    <form class="form-inline nav navbar-nav navbar-middle" id="search" onsubmit="searchForm()">
-        <div class="input-group">
-            <input type="text" class="form-control" id="keyWord" name="keyWord" aria-label="Recipient's username" aria-describedby="button-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-outline-primary" form="search" id="button-addon2">
-                    <i class="fa fa-search">Search</i>
-                </button>
-            </div>
-        </div>
-    </form>
-    <ul class="nav navbar-nav navbar-right">
-        Welcome <a href="/users/profile"> <%if(locals.user){%><%=user.username%> </a>
-        <a href="/users/logout">Logout</a>
-        <%}else{%><li class="nav-item active">
-            <a href="/users/register">Sign up</a>
-            <a href="/users/login">Sign in</a>
-        </li>
-        <li class="nav-item">
-        </li><%
-        }%>
-    </ul>
-</nav>
-
+<!--navgationbar in partial file-->
+<% include ./partials/navigationbar.ejs %>
 
 <div class="container-fluid gedf-wrapper">
     <div class="row">

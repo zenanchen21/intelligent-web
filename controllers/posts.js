@@ -19,7 +19,6 @@ exports.newEvent = function (req, res) {
                 address: eventData.address,
                 description: eventData.description,
                 date:eventData.date,
-                time:eventData.time,
             });
             event.save(function(err, result){
                 if(err){

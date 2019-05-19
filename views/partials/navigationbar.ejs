@@ -1,54 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <!-- Bootstrap -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<div class="container">
-    <div class="row clearfix">
-        <div class="col-md-12 column">
-            <nav class="navbar navbar-default" role="navigation">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">MSocial</a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <form class="navbar-form navbar-left" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" />
-                        </div> <button type="submit" class="btn btn-default">Submit</button>
-                    </form>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="/register">Sign up</a>
-                        </li>
-                        <li>
-                            <a href="/signin">Sign in</a>
-                        </li>
-                    </ul>
-                </div>
-
-            </nav>
-
-            <div>
-                <div>
-                    <div>
-                        <div>
-                            <div class="_8kySt _1ZUe4">
-                                <div class="_3BHfs">
-                                    <div class="_3kCD8">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<nav class="navbar navbar-light bg-white sticky-top">
+    <a href="#" class="navbar-brand">MSocial</a>
+    <form class="form-inline nav navbar-nav navbar-middle" id="search" onsubmit="searchForm()">
+        <div class="input-group">
+            <input type="text" class="form-control" id="keyWord" name="keyWord" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary" form="search" id="button-addon2">
+                    <i class="fa fa-search">Search</i>
+                </button>
             </div>
         </div>
-    </div>
-</div>
-</body>
-</html>
+    </form>
+    <ul class="nav navbar-nav navbar-right">
+
+        <a href="/users/profile"> <%if(locals.user){%><%=user.username%> </a>
+        <a href="/users/logout">Logout</a>
+        <%}else{%><li class="nav-item active">
+            <a href="/users/register">Sign up</a>
+            <a href="/users/login">Sign in</a>
+        </li>
+        <li class="nav-item">
+        </li><%
+        }%>
+    </ul>
+</nav>

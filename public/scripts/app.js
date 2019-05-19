@@ -28,9 +28,11 @@ function submitForm(formID){
         data.append("type", "events");
     else {
         data.append("type", "posts");
+        data.append("date", Date.now().toString());
     }
 
-    data.append("date", Date.now().toString());
+
+
 
     sendAjaxQuery(url, data);
     event.preventDefault();
