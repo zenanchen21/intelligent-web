@@ -23,6 +23,10 @@ router.get('/',function(req, res, next){
   res.render('index', {user: req.user});
 });
 
+router.get('/snapselfi',function(req, res, next){
+  res.render('selfi', {user: req.user});
+});
+
 router.post('/',PostController.onloadPost);
 
 router.post('/loadevent',PostController.onloadEvent);

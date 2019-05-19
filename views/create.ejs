@@ -120,7 +120,7 @@
 
     function addr_search()
     {
-        var inp = document.getElementById("address");
+        var inp = document.getElementById("addr");
         var xmlhttp = new XMLHttpRequest();
         var url = "https://nominatim.openstreetmap.org/search?format=json&limit=3&q=" + inp.value;
         xmlhttp.onreadystatechange = function()
