@@ -2,6 +2,8 @@
 <html lang='en' class=''>
 <head>
     <link rel="manifest" href="/manifest.json">
+    <link rel='stylesheet' href='/stylesheets/map.css' />
+    <script src="/scripts/map.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
           crossorigin="anonymous">
@@ -108,7 +110,7 @@
 
         <div class="col-md-3">
             <div>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">+ Create Event</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-lat='53.3816197' data-lng='-1.4820851' data-whatever="@getbootstrap">+ Create Event</button>
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -127,6 +129,11 @@
                                     <div class="form-group">
                                         <label for="address" class="col-form-label">Event address</label>
                                         <input type="text" class="form-control" id="location" name="address" placeholder="A place or a valid address">
+                                    </div>
+                                    <div class="col-md-12 modal_body_map">
+                                        <div class="location-map" id="location-map">
+                                            <div style="width: 600px; height: 400px;" id="map_canvas"></div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="description" class="col-form-label">Description</label>
@@ -152,6 +159,12 @@
         </div>
     </div>
 </div>
-</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFkFzLAzdX9dRinyyWNeoePm65HjHqp94&libraries=places&callback=initMap"
+        async defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="script.js"></script>
+<script src="/scripts/map.js"></script>
 </body>
 </html>
