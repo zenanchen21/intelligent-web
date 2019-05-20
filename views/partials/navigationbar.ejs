@@ -12,37 +12,38 @@
             <li class="nav-item">
                 <a class="nav-link" href="/create">+ Create Event</a>
             </li>
-            <div class="btn">
-                <label class="btn-link" for="snapselfi"><a id ="snapselfi" class="fa fa-camera fa-lg text-white" href="/snapselfi" role="button"></a></label>
+            <div class="btn-group">
+                <button class="btn-link" for="snapselfi"><a id ="snapselfi" class="fa fa-camera fa-lg text-white" href="/snapselfi" role="button"></a></button>
+            </div>
+            <div class="btn-group">
+                <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                    <i class="fa fa-user-o fa-lg text-white"></i>
+                </button>
+                <%if(locals.user){%>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
+                        <a class="dropdown-item" href="/users/profile"><i class="fa fa-user-circle-o"></i>Profile</a>
+                        <a class="dropdown-item" href="/users/logout"><i class="fa fa-sign-out"></i>Log out</a>
+                    </div>
+                <%}else{%>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
+                        <a class="dropdown-item" href="/users/register"><i class="fa fa-user-plus"></i>Register</a>
+                        <a class="dropdown-item" href="/users/login"><i class="fa fa-sign-in"></i>Log in</a>
+                    </div>
+                <%
+                }%>
             </div>
         </ul>
         <form class="form-inline nav navbar-nav navbar-middle" id="search" onsubmit="searchForm()">
             <div class="input-group">
                 <input type="text" class="form-control" id="keyWord" name="keyWord" aria-label="Recipient's username" aria-describedby="button-addon2">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-primary" form="search" id="button-addon2">
-                        <i class="fa fa-search text-white">Search</i>
+                    <button class="btn btn-outline-white" form="search" id="button-addon2">
+                        <i class="fa fa-search ">Search</i>
                     </button>
                 </div>
             </div>
         </form>
     </div>
-    <div class="btn-group">
-        <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-            <i class="fa fa-user-o fa-lg text-white"></i>
-        </button>
-        <%if(locals.user){%>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" href="/users/profile"><i class="fa fa-user-circle-o"></i>Profile</a>
-                <a class="dropdown-item" href="/users/logout"><i class="fa fa-sign-out"></i>Log out</a>
-            </div>
-        <%}else{%>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" href="/users/register"><i class="fa fa-user-plus"></i>Register</a>
-                <a class="dropdown-item" href="/users/login"><i class="fa fa-sign-in"></i>Log in</a>
-            </div>
-        <%
-        }%>
-    </div>
+
 </nav>
