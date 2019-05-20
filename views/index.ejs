@@ -7,11 +7,9 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
           crossorigin="anonymous">
     <link rel='stylesheet' href='/stylesheets/social.css' />
-
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="/scripts/jquery.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
             crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
@@ -21,6 +19,13 @@
     <script src="/scripts/idb.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/scripts/socket.js"></script>
+    <style>
+    @media only screen and (max-width: 600px) {
+    nav.navbar{
+    position: sticky;
+    }
+    }
+    </style>
 </head>
 <body onload="initMSocial()">
 <!--navgationbar in partial file-->
@@ -79,7 +84,7 @@
                         </div>
                         <div class="form-group">
                             <select class="custom-select" id="eventSelector">
-                                <option selected value="null">Which event...</option>
+                                <option selected>Which event...</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary" form="pform">share</button>
@@ -88,15 +93,15 @@
             </div>
 
             <div id="posts"></div>
+            <div class="offline_div" id="offline_div" style="display: none">You are offline</div>
         </div>
 
         <div class="col-md-3">
-            <div class="card-header">
-                <h6>Events List</h6>
+            <div class="card-header bg-primary">
+                <h6 class="heading text-white">Events List</h6>
             </div>
             <div id="events">
             </div>
-
         </div>
     </div>
 </div>

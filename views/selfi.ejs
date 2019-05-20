@@ -2,25 +2,15 @@
 <html>
 <head>
     <% include ./partials/head.ejs %>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-          crossorigin="anonymous">
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" />
-    <script src="/scripts/app.js" ></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/scripts/snapselfi.js" ></script>
-    <!--<script src="/scripts/app.js"></script>-->
 </head>
-
 
 <body onload="snapselfi()" >
 <% include ./partials/navigationbar.ejs %>
     <video id="player" autoplay></video>
     <canvas id='snapshot' width='640' height='480'></canvas>
-    <button id="snap">Snap a Selfi</button>
-    <button onClick="dloadselfi();" type="button">Download</button>
+    <button id="snap" class="btn btn-outline-success">Snap a Selfi</button>
+    <button class="btn btn-primary" onClick="dloadselfi();" type="button">Download</button>
 </body>
 </html>
 

@@ -1,9 +1,11 @@
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+          crossorigin="anonymous">
     <script src="/scripts/user.js"></script>
 </head>
 <body>
@@ -42,9 +44,9 @@
                 </div><!-- /.panel-heading -->
                 <div class="panel-body no-padding rounded">
                     <ul class="list-group no-margin">
-                        <li class="list-group-item"><i class="fa fa-envelope mr-5"></i><%=user.email%></li>
-                        <li class="list-group-item"><i class="fa fa-globe mr-5"></i> www.bootdey.com</li>
-                        <li class="list-group-item"><i class="fa fa-phone mr-5"></i><%=user.preference.contactnumber%></li>
+                        <li class="list-group-item"><i class="fa fa-envelope mr-5"> </i> <%=user.email%></li>
+                        <li class="list-group-item"><i class="fa fa-globe mr-5"> </i> www.bootdey.com</li>
+                        <li class="list-group-item"><i class="fa fa-phone mr-5"> </i><%=user.preference.contactnumber%></li>
                     </ul>
                 </div><!-- /.panel-body -->
             </div><!-- /.panel -->
@@ -63,76 +65,61 @@
 
                 <div class="col-md-6">
                     <% user.post.forEach( post => { %>
-
                     <div class="panel panel-success rounded shadow">
                         <div class="panel-heading no-border">
                             <div class="pull-left half">
                                 <div class="media">
                                     <div class="media-body">
-
+                                        <a class="media-heading block mb-0 h4 text-white"><%=user.username %></a>
                                         <span class="text-white h6">Creat at <%=post.date %></span>
                                     </div>
                                 </div>
                             </div><!-- /.pull-left -->
-
                             <div class="clearfix"></div>
                         </div><!-- /.panel-heading -->
                         <p class="block text-muted"> <%=post.content%></p>
                         <p>
-                            
+
                         </p>
                         <div class="clearfix"></div>
                         <div class="panel-footer">
-                            <ul class="list-group list-group-horizontal">
                                 <li class="list-group-item"><a href="./post/<%=post._id%>">Edit</a></li>
-                                <li class="list-group-item"><a href = '#', id="<%=post._id%>" onclick="delete_post()">Delete</a></li>
-                            </ul>
                         </div><!-- /.panel-footer -->
                     </div><!-- /.panel -->
-
                     <% }) %>
                 </div>
 
                 <div class="col-md-6">
                     <% user.event.forEach( event => { %>
-
-                        <div class="panel panel-success rounded shadow">
-                            <div class="panel-heading no-border">
-                                <div class="pull-left half">
-                                    <div class="media">
-
-                                        <div class="media-body">
-
-                                            <span class="text-white h6">Creat at <%=event.date %></span>
-                                        </div>
+                    <div class="panel panel-success rounded shadow">
+                        <div class="panel-heading no-border">
+                            <div class="pull-left half">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <a href="#" class="media-heading block mb-0 h4 text-white"><%=user.username %></a>
+                                        <span class="text-white h6">Creat at <%=event.date %></span>
                                     </div>
-                                </div><!-- /.pull-left -->
-                                <div class="clearfix"></div>
-                            </div><!-- /.panel-heading -->
-                            <div class="panel-body no-padding">
-                                <div class="inner-all block">
-                                    <h4><%=event.title %></h4>
-                                    <p>
-                                        <%=event.description%>
-                                    </p>
-
-                                    <blockquote class="mb-10">Location: <%=event.address%></blockquote>
-
-
-                                </div><!-- /.inner-all -->
-
-                            </div><!-- /.panel-body -->
-                            <div class="panel-footer no-padding no-border">
-
-                                <div class="line no-margin"></div><!-- /.line -->
-                                <form action="#" class="form-horizontal inner-all">
-                                    <div class="form-group has-feedback no-margin">
-
-                                    </div>
-                                </form><!-- /.form-horizontal -->
-                            </div><!-- /.panel-footer -->
-                        </div><!-- /.panel -->
-
+                                </div>
+                            </div><!-- /.pull-left -->
+                            <div class="clearfix"></div>
+                        </div><!-- /.panel-heading -->
+                        <div class="panel-body no-padding">
+                            <div class="inner-all block">
+                                <h4><%=event.title %></h4>
+                                <p>
+                                    <%=event.description%>
+                                </p>
+                                <blockquote class="mb-10">Location: <%=event.address%></blockquote>
+                            </div><!-- /.inner-all -->
+                        </div><!-- /.panel-body -->
+                        <div class="panel-footer no-padding no-border">
+                            <div class="line no-margin"></div><!-- /.line -->
+                            <form action="#" class="form-horizontal inner-all">
+                                <div class="form-group has-feedback no-margin">
+                                </div>
+                            </form><!-- /.form-horizontal -->
+                        </div><!-- /.panel-footer -->
+                    </div><!-- /.panel -->
                     <% }) %>
 
                 </div>
@@ -140,25 +127,3 @@
         </div>
     </div>
 </div>
-<!--</html>-->
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--<meta charset="UTF-8">-->
-<!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--<meta http-equiv="X-UA-Compatible" content="ie=edge">-->
-<!--<title>Welcome</title>-->
-
-<!--</head>-->
-<!--<body>-->
-<!--<div class="jumbotron jumbotron-fluid primary white">-->
-<!--<div class="container text-center">-->
-<!--<h1 class="display-2">-->
-<!--Welcome, <%= user.username %>-->
-<!--</h1>-->
-<!--<a class="btn secondary white btn-lg" href="/users/edit">Edit</a>-->
-<!--<a class="btn secondary white btn-lg" href="/users/logout">Logout</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
