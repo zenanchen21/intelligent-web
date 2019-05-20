@@ -38,9 +38,6 @@ router.get('/maps', function(req, res, next) {
   res.render('maps',{title:'Map Finder'});
 });
 
-router.get('/elist', function(req, res, next) {
-  res.render('elist',{title:'Event List'});
-});
 
 router.get('/create', function(req, res, next) {
   res.render('create',{title:'Create Event'});
@@ -51,6 +48,14 @@ router.post('/events', upload.none(), PostController.newEvent);
 
 router.get('/events/:id',function(req,res,next) {
   PostController.eventinfo(req,res);
+});
+
+router.get('/all_event',function(req,res,next) {
+  res.render("all_event");
+});
+
+router.post('/all_event',function(req,res,next) {
+  PostController.evenmap(req,res);
 });
 
 

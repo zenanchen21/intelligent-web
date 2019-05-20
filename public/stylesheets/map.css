@@ -2,5 +2,7 @@ html, body { width:100%;padding:0;margin:0;}
 .container { width:95%;max-width:980px;padding:1% 2%;margin:0 auto }
 #lat, #lon { text-align:right }
 #map { width:100%;height:50%;padding:0;margin:0; }
+#map2 { width:100%;height:50%;padding:0;margin:0; }
+#map3  { width:100%;height:50%;padding:0;margin:0; }
 .address { cursor:pointer }
 .address:hover { color:#AA0000;text-decoration:underline }

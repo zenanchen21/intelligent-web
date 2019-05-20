@@ -258,7 +258,7 @@ exports.search = function (keyword, result) {
   Post
     .find({content:{$regex:keyword, $options:'i'}},function (err, post) {
       // if(err) console.log(err);
-      console.log("post: ", post)
+      console.log("post: ", post);
       data.postData = post;
 
       Event.find({ $or: [{ description: {$regex:keyword, $options:'i'} },
@@ -283,9 +283,20 @@ exports.eventinfo = function(req,res){
         if(err){
             console.log('Show up a ',err)
         }else{
-            console.log('here we go', event);
-            res.render('elist', { event:event});
+            res.render('event', { event:event});
         }
+
+    })
+};
+
+exports.evenmap = function(req,res){
+    var eventArray = [];
+    Event.find({},function(err,events){
+        events.forEach(function(event){
+            eventArray.push(event)
+        });
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(eventArray));
 
     })
 };

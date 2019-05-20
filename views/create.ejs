@@ -54,8 +54,8 @@
             <input type="text" class="form-control" id="name" name="title" maxlength="64" placeholder="Name to identify the events">
         </div>
         <div class="form-group">
-            <input hidden type="text" name="lat" id="lat" size=12 value="">
-            <input hidden type="text" name="lon" id="lon" size=12 value="">
+            <input  hidden type="text" name="lat" id="lat" size=12 value="">
+            <input  hidden type="text" name="lon" id="lon" size=12 value="">
         </div>
         <b>Event address</b>
         <div id="search">
@@ -108,7 +108,7 @@
         if(czoom != 18) { map.setView([lat,lon], nzoom); } else { map.setView([lat,lon]); }
         document.getElementById('lat').value = lat;
         document.getElementById('lon').value = lon;
-        myMarker.bindPopup("Lat " + lat + "<br />Lon " + lon).openPopup();
+        // myMarker.bindPopup("Lat " + lat + "<br />Lon " + lon).openPopup();
     });
 
     function chooseAddr(lat1, lng1)
@@ -119,8 +119,8 @@
         lat = lat1.toFixed(8);
         lon = lng1.toFixed(8);
         //pop a pin at map with coordilate
-        // document.getElementById('lat').value = lat;
-        // document.getElementById('lon').value = lon;
+        document.getElementById('lat').value = lat;
+        document.getElementById('lon').value = lon;
         // myMarker.bindPopup("Lat " + lat + "<br />Lon " + lon).openPopup();
 
         var geocodeService = L.esri.Geocoding.geocodeService();

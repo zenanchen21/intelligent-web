@@ -31,7 +31,12 @@ exports.init= function() {
     var event = new Event({
         title: 'hahahahah1',
         address: 'xixixiixix 1',
-        description: 'Im a event'
+        description: 'Im a event',
+        location:{
+            lat:'41.575330',
+            lon:'13.102411'
+        },
+        author: user._id
     });
 
 
@@ -43,7 +48,12 @@ exports.init= function() {
     var event2 = new Event({
         title: 'nihao',
         address: 'nihaoma',
-        description: 'Im a event'
+        description: 'Im a event',
+        location:{
+            lat:'41.575730',
+            lon:'13.002411'
+        },
+        author: user._id
     });
 
 

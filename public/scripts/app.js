@@ -178,6 +178,8 @@ function loadEventData(){
 }
 
 
+
+
 function loadPostData(){
     $.ajax({
         url: "/",

@@ -16,7 +16,7 @@ function edituser(){
             // dataType:json, so JQuery knows it and unpacks the
             // object for us before returning it
             if(dataR.success){
-                alert('preference added')
+                alert('preference added');
                 window.location =  "/users/profile"
             }else if(dataR.notcomplete){
                 $("#message").html("<div class='alert alert-danger alert-dismissible'>" +
