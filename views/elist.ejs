@@ -1,19 +1,14 @@
 
-<!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <% include ./partials/head %>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Event Detail</title>
+    <% include ./partials/head.ejs %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Event</title>
+    <title>Event Detail</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
     <link rel='stylesheet' href='/stylesheets/map.css' />
+
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <!-- Bootstrap -->
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" />
@@ -24,12 +19,13 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
           crossorigin="anonymous">
-
 </head>
 
 <body>
 <% include ./partials/navigationbar.ejs %>
-<!-- Page Content -->
+<header>
+    <h1 align="center">Create New Event</h1>
+</header>
 <div class="container">
 
     <!-- Page Heading/Breadcrumbs -->
@@ -59,7 +55,7 @@
             </div>
             <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
                 <div class="card-body">
-                   Address</div>
+                    Address</div>
             </div>
         </div>
         <div class="card">
@@ -74,8 +70,23 @@
             </div>
         </div>
     </div>
-    <div id="map"></div>
+        <b>Coordinates</b>
+        <div class="form-group">
+            <input type="text" name="lat" id="lat" size=12 value="">
+            <input type="text" name="lon" id="lon" size=12 value="">
+        </div>
+        <b>Event address</b>
+        <div id="search">
+            <input type="text" name="address" value="" id="addr" size="58" />
+            <button type="button" onclick="addr_search();">Search</button>
+            <div id="results"></div>
+        </div>
+        <br />
+        <div id="map"></div>
+
+
 </div>
+
 <script type="text/javascript">
 
     // Sheffield
@@ -168,7 +179,6 @@
 
 </script>
 
+
 </body>
-
-
 </html>
