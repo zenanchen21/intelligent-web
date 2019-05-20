@@ -1,56 +1,43 @@
-
+<html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <!-- Bootstrap -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-          crossorigin="anonymous">
+    <% include ./partials/head.ejs %>
+    <style>
+        @media only screen and (max-width: 600px) {
+            nav.navbar{
+                position: sticky;
+            }
+        }
+    </style>
     <script src="/scripts/user.js"></script>
 </head>
 <body>
 <% include ./partials/flashs %>
+<% include ./partials/navigationbar.ejs %>
 <div class="container bootstrap snippets">
     <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-4">
-            <div class="panel rounded shadow">
-                <div class="panel-body">
-                    <div class="inner-all">
-                        <ul class="list-unstyled">
-                            <li class="text-center">
-                                <h4 class="text-capitalize"><%=user.username%></h4>
-                                <p class="text-muted text-capitalize">Job: <%=user.preference.jobtitle%></p>
-                            </li>
-                            <li><br></li>
-                            <li>
-                                <div class="btn-group-vertical btn-block">
-                                    <a href="/users/edit" class="btn btn-default"><i class="fa fa-cog pull-right"></i>Edit profile</a>
-                                    <a href="/users/logout" class="btn btn-default"><i class="fa fa-sign-out pull-right"></i>Logout</a>
-                                </div>
-                            </li>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="test">
+                    <div class="card-body">
+                        <div class="h4 text-capitalize"><%=user.username%></div>
+                        <div class="h7 text-muted">Job Title: <%=user.preference.jobtitle%></div>
+                        <div class="h7">Test</div>
+                    </div>
+                    <div class="panel-body no-padding rounded">
+                        <ul class="list-group no-margin">
+                            <li class="list-group-item"><i class="fa fa-envelope mr-5"></i><%=user.email%></li>
+                            <li class="list-group-item"><i class="fa fa-globe mr-5"></i> www.bootdey.com</li>
+                            <li class="list-group-item"><i class="fa fa-phone mr-5"></i><%=user.preference.contactnumber%></li>
                         </ul>
-                    </div>
-                </div>
-            </div><!-- /.panel -->
-
-            <div class="panel panel-theme rounded shadow">
-                <div class="panel-heading">
-                    <div class="pull-left">
-                        <h3 class="panel-title">Contact</h3>
-                    </div>
-                    <div class="pull-right">
-                    </div>
-                    <div class="clearfix"></div>
-                </div><!-- /.panel-heading -->
-                <div class="panel-body no-padding rounded">
-                    <ul class="list-group no-margin">
-                        <li class="list-group-item"><i class="fa fa-envelope mr-5"> </i> <%=user.email%></li>
-                        <li class="list-group-item"><i class="fa fa-globe mr-5"> </i> www.bootdey.com</li>
-                        <li class="list-group-item"><i class="fa fa-phone mr-5"> </i><%=user.preference.contactnumber%></li>
+                    </div><!-- /.panel-body -->
+                    <ul class="list-unstyled list-group-item-primary">
+                        <div class="btn-group-vertical btn-block">
+                            <a href="/users/edit" class="btn btn-default"><i class="fa fa-cog pull-right"></i>Edit profile</a>
+                            <a href="/users/logout" class="btn btn-default"><i class="fa fa-sign-out pull-right"></i>Logout</a>
+                        </div>
                     </ul>
-                </div><!-- /.panel-body -->
-            </div><!-- /.panel -->
-
+                </div>
+            </div>
         </div>
         <div class="col-lg-9 col-md-9 col-sm-8">
 
@@ -71,13 +58,13 @@
                                 <div class="media">
                                     <div class="media-body">
                                         <a class="media-heading block mb-0 h4 text-white"><%=user.username %></a>
-                                        <span class="text-white h6">Creat at <%=post.date %></span>
+                                        <span class="text-white h6">Create at <%=post.date %></span>
                                     </div>
                                 </div>
                             </div><!-- /.pull-left -->
                             <div class="clearfix"></div>
                         </div><!-- /.panel-heading -->
-                        <p class="block text-muted"> <%=post.content%></p>
+                        <p class="font-weight-normal"> <%=post.content%></p>
                         <p>
 
                         </p>
@@ -97,7 +84,7 @@
                                 <div class="media">
                                     <div class="media-body">
                                         <a href="#" class="media-heading block mb-0 h4 text-white"><%=user.username %></a>
-                                        <span class="text-white h6">Creat at <%=event.date %></span>
+                                        <span class="text-white h6">Create at <%=event.date %></span>
                                     </div>
                                 </div>
                             </div><!-- /.pull-left -->
