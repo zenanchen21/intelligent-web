@@ -1,8 +1,23 @@
 <html>
 <head>
-    <% include ./partials/head.ejs %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Event</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
     <link rel='stylesheet' href='/stylesheets/map.css' />
+
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" />
+    <script src="/scripts/app.js" ></script>
+    <script src="/scripts/idb.js"></script>
+    <script src="/scripts/database.js"></script>
+    <script type="scripts/map_create.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+          crossorigin="anonymous">
     <!-- Load Leaflet from CDN -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
@@ -10,6 +25,8 @@
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
             integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
             crossorigin=""></script>
+
+
     <!-- Load Esri Leaflet from CDN -->
     <script src="https://unpkg.com/esri-leaflet@2.2.4/dist/esri-leaflet.js"
             integrity="sha512-tyPum7h2h36X52O2gz+Pe8z/3l+Y9S1yEUscbVs5r5aEY5dFmP1WWRY/WLLElnFHa+k1JBQZSCDGwEAnm2IxAQ=="
@@ -22,11 +39,7 @@
             integrity="sha512-uK5jVwR81KVTGe8KpJa1QIN4n60TsSV8+DPbL5wWlYQvb0/nYNgSOg9dZG6ViQhwx/gaMszuWllTemL+K+IXjg=="
             crossorigin=""></script>
 </head>
-<style>
-    body {
-        padding: 70px;
-    }
-</style>
+
 <body>
 <% include ./partials/navigationbar.ejs %>
 <header>
@@ -39,12 +52,12 @@
             <input type="text" class="form-control" id="name" name="title" maxlength="64" placeholder="Name to identify the events">
         </div>
         <div class="form-group">
-            <input  hidden type="text" name="lat" id="lat" size=12 value="">
-            <input  hidden type="text" name="lon" id="lon" size=12 value="">
+            <input hidden type="text" name="lat" id="lat" size=12 value="">
+            <input hidden type="text" name="lon" id="lon" size=12 value="">
         </div>
         <b>Event address</b>
         <div id="search">
-            <input type="text" class="form-control" name="address" value="" id="addr" size="58" />
+            <input type="text" name="address" value="" id="addr" size="58" />
             <button type="button" onclick="addr_search();">Search</button>
             <div id="results"></div>
         </div>
@@ -62,26 +75,22 @@
             <button class="btn btn-primary" form="eform">Create</button>
         </div>
     </form>
+
 </div>
 
 <script type="text/javascript">
     // Sheffield
     var startlat = 53.3816197;
     var startlon = -1.4820851;
-
     var options = {
         center: [startlat, startlon],
         zoom: 9
     }
-
     document.getElementById('lat').value = startlat;
     document.getElementById('lon').value = startlon;
-
     var map = L.map('map', options);
     var nzoom = 12;
-
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: 'OSM'}).addTo(map);
-
     var myMarker = L.marker([startlat, startlon], {title: "Coordinates", alt: "Coordinates", draggable: true}).addTo(map).on('dragend', function() {
         var lat = myMarker.getLatLng().lat.toFixed(8);
         var lon = myMarker.getLatLng().lng.toFixed(8);
@@ -91,10 +100,9 @@
         if(czoom != 18) { map.setView([lat,lon], nzoom); } else { map.setView([lat,lon]); }
         document.getElementById('lat').value = lat;
         document.getElementById('lon').value = lon;
-        // myMarker.bindPopup("Lat " + lat + "<br />Lon " + lon).openPopup();
+        myMarker.bindPopup("Lat " + lat + "<br />Lon " + lon).openPopup();
     });
-
-    function chooseAddr(lat1, lng1, name)
+    function chooseAddr(lat1, lng1)
     {
         myMarker.closePopup();
         map.setView([lat1, lng1],18);
@@ -102,12 +110,10 @@
         lat = lat1.toFixed(8);
         lon = lng1.toFixed(8);
         //pop a pin at map with coordilate
-        document.getElementById('lat').value = lat;
-        document.getElementById('lon').value = lon;
+        // document.getElementById('lat').value = lat;
+        // document.getElementById('lon').value = lon;
         // myMarker.bindPopup("Lat " + lat + "<br />Lon " + lon).openPopup();
-
         var geocodeService = L.esri.Geocoding.geocodeService();
-
         geocodeService.reverse().latlng([lat,  lon])
             .run(function(error, result, response){
                 // callback is called with error, result, and raw response.
@@ -117,31 +123,24 @@
                 //auto fill the address when cloick on address
                 $("#addr").val(result.address.Match_addr);
             });
-
     }
-
     function myFunction(arr)
     {
         var out = "<br />";
         var i;
-
         if(arr.length > 0)
         {
             for(i = 0; i < arr.length; i++)
             {
-                out += "<div class='address' id='addd' title='Show Location and Coordinates' onclick='chooseAddr(" + arr[i].lat + ", " + arr[i].lon + ", "+arr[i].display_name+")'>" + arr[i].display_name + "</div>";
-
+                out += "<div class='address' id='addd' title='Show Location and Coordinates' onclick='chooseAddr(" + arr[i].lat + ", " + arr[i].lon + ");return false;'>" + arr[i].display_name + "</div>";
             }
             document.getElementById('results').innerHTML = out;
-
         }
         else
         {
             document.getElementById('results').innerHTML = "Sorry, no results...";
         }
-
     }
-
     function addr_search()
     {
         var inp = document.getElementById("addr");
@@ -158,7 +157,6 @@
         xmlhttp.open("GET", url, true);
         xmlhttp.send();
     }
-
 </script>
 
 </body>
