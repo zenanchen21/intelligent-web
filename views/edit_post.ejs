@@ -1,0 +1,42 @@
+<!-- This snippet uses Font Awesome 5 Free as a dependency. You can download it at fontawesome.io! -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" />
+    <script src="/scripts/app.js" ></script>
+    <script src="/scripts/app.js"></script>
+    <script src="/scripts/database.js"></script>
+    <script src="/scripts/idb.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/scripts/socket.js"></script>
+    <script src="/scripts/user.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!--<script src="/scripts/app.js"></script>-->
+</head>
+
+<body id="signin-page">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <div id="message"></div>
+                    <div id="message"></div>
+                    <form method="Post", action="/users/post/<%=post._id%>">
+                        <div class="form-label-group">
+                            <input type="text" id="content" class="form-control" value="<%=post.content%>" name="content">
+                            <label for="name2">Content: </label>
+                        </div>
+
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" value="Submit">Edit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>>
+</body>
+</html>

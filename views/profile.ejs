@@ -1,8 +1,9 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <!-- Bootstrap -->
+
+
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
     <script src="/scripts/user.js"></script>
 </head>
 <body>
@@ -68,7 +69,7 @@
                             <div class="pull-left half">
                                 <div class="media">
                                     <div class="media-body">
-                                        <a class="media-heading block mb-0 h4 text-white"><%=user.username %></a>
+
                                         <span class="text-white h6">Creat at <%=post.date %></span>
                                     </div>
                                 </div>
@@ -82,9 +83,10 @@
                         </p>
                         <div class="clearfix"></div>
                         <div class="panel-footer">
-                            <form action="#" class="form-horizontal">
-
-                            </form>
+                            <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item"><a href="./post/<%=post._id%>">Edit</a></li>
+                                <li class="list-group-item"><a href = '#', id="<%=post._id%>" onclick="delete_post()">Delete</a></li>
+                            </ul>
                         </div><!-- /.panel-footer -->
                     </div><!-- /.panel -->
 
@@ -100,7 +102,7 @@
                                     <div class="media">
 
                                         <div class="media-body">
-                                            <a href="#" class="media-heading block mb-0 h4 text-white"><%=user.username %></a>
+
                                             <span class="text-white h6">Creat at <%=event.date %></span>
                                         </div>
                                     </div>
@@ -116,9 +118,7 @@
 
                                     <blockquote class="mb-10">Location: <%=event.address%></blockquote>
 
-                                    <img data-no-retina="" src="http://lorempixel.com/340/210/nature/1/" alt="..." width="100">
-                                    <img data-no-retina="" src="http://lorempixel.com/340/210/nature/2/" alt="..." width="100">
-                                    <img data-no-retina="" src="http://lorempixel.com/340/210/nature/3/" alt="..." width="100">
+
                                 </div><!-- /.inner-all -->
 
                             </div><!-- /.panel-body -->

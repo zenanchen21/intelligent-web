@@ -26,7 +26,7 @@ function loadEventMap(){
                 // titleArray.push(title);
                 // titleArray.push(add);
                 marker = new L.Marker(new L.latLng(loc), {title: title} );//set property searched
-                marker.bindPopup('title: '+ title );
+                marker.bindPopup('title: '+ title + '<br>' + add);
                 markersLayer.addLayer(marker);
             }
         },

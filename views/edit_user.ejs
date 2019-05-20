@@ -24,25 +24,25 @@
             <div class="card card-signin my-5">
                 <div class="card-body">
                     <div id="message"></div>
-                <form onsubmit="edituser()">
+                <form onsubmit="edit_user()">
                     <div class="form-label-group">
-                        <input type="text" id="name" class="form-control" placeholder="<%=user.preference.firstname%>" name="first_name">
+                        <input type="text" id="name" class="form-control" value="<%=user.preference.firstname%>" name="first_name">
                         <label for="name">First Name</label>
                     </div>
                     <div class="form-label-group">
-                        <input type="text" id="name2" class="form-control" placeholder="<%=user.preference.familyname%>" name="family_name">
+                        <input type="text" id="name2" class="form-control" value="<%=user.preference.familyname%>" name="family_name">
                         <label for="name2">Family Name:</label>
                     </div>
                     <div class="form-label-group">
-                        <input id="username" class="form-control" placeholder="<%=user.username%>" name="user_name">
+                        <input id="username" class="form-control" value="<%=user.username%>" name="user_name">
                         <label for="username">Username:</label>
                     </div>
                     <div class="form-label-group">
-                        <input id="jobtitle" class="form-control" placeholder="<%=user.preference.jobtitle%>" name="job_title">
+                        <input id="jobtitle" class="form-control" value="<%=user.preference.jobtitle%>" name="job_title">
                         <label for="jobtitle">Job Title:</label>
                     </div>
                     <div class="form-label-group">
-                        <input type="number" class="form-control" id="contactnumber" placeholder="<%=user.preference.contactnumber%>" name="contact_number">
+                        <input type="number" class="form-control" id="contactnumber" value="<%=user.preference.contactnumber%>" name="contact_number">
                         <label for="contactnumber">Contact Number:</label>
                     </div>
                     <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" value="Submit">Edit</button>

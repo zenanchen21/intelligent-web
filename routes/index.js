@@ -55,7 +55,7 @@ router.get('/all_event',function(req,res,next) {
 });
 
 router.post('/all_event',function(req,res,next) {
-  PostController.evenmap(req,res);
+  PostController.eventmap(req,res);
 });
 
 

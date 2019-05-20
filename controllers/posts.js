@@ -289,7 +289,7 @@ exports.eventinfo = function(req,res){
     })
 };
 
-exports.evenmap = function(req,res){
+exports.eventmap = function(req,res){
     var eventArray = [];
     Event.find({},function(err,events){
         events.forEach(function(event){
@@ -300,6 +300,7 @@ exports.evenmap = function(req,res){
 
     })
 };
+
 
 
 

@@ -5,6 +5,7 @@ const passport = require('passport');
 var userController = require('../controllers/users2');
 var postController = require('../controllers/posts');
 var User = require('../models/users');
+var Post =require('../models/posts')
 
 
 
@@ -55,10 +56,23 @@ router.post('/profile/', isLoggedin,function(req, res, next) {
 });
 
 router.get('/edit',isLoggedin,function(req, res, next){
-  res.render('edit', { user: req.user });
+  res.render('edit_user', { user: req.user });
 });
 
-router.post('/edit',userController.edituser)
+router.get('/post/:id',isLoggedin,function(req, res, next){
+  Post.findById(req.params.id,function(err,post){
+    res.render('edit_post',{post:post})
+  })
+});
+
+router.post('/post/:id',isLoggedin,function(req, res, next){
+  userController.edit_post(req,res);
+});
+
+router.post('/edit',userController.edit_user)
+
+
+// router.post('/delete',userController.delete_post());
 
 router.get('/logout',function(req, res, next) {
   req.logout();

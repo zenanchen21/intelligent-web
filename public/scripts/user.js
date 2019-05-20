@@ -1,4 +1,4 @@
-function edituser(){
+function edit_user(){
     var formArray = $("form").serializeArray();
     var data={};
     for(index in formArray){
@@ -40,6 +40,67 @@ function edituser(){
     });
     event.preventDefault();
 }
+
+
+function delete_post(){
+            const id = $target.attr('id');
+            $.ajax({
+                type:'DELETE',
+                url: '/users/profile/'+id,
+                success: function(response){
+                    alert('Deleting Article');
+                    window.location.href='/';
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            });
+}
+
+function edit_post(){
+    var formArray = $("form").serializeArray();
+    var data={};
+    for(index in formArray){
+        data[formArray[index].name]=formArray[index].value;
+    }
+
+    $.ajax({
+        url: 'users/post',
+        data: data,
+        dataType: 'json',
+        contentType: 'application/json',
+        type: 'POST',
+        success: function (dataR) {
+            // no need to JSON parse the result, as we are using
+            // dataType:json, so JQuery knows it and unpacks the
+            // object for us before returning it
+            if(dataR.success){
+                alert('content updated');
+                window.location =  "/users/profile"
+            }else if(dataR.notcomplete){
+                $("#message").html("<div class='alert alert-danger alert-dismissible'>" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">x</a>" +
+                    "<p>Please complete the From.</p></div>");
+            }else{
+                $("#message").html("<div class='alert alert-danger alert-dismissible'>" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">x</a>" +
+                    "<p>Something wrong</p></div>");
+                console/log('what is wrong')
+            }
+
+
+
+            // in order to have the object printed by alert
+            // we need to JSON stringify the object
+
+        },
+        error: function (xhr, status, error) {
+            alert('Error: ' + error.message);
+        }
+    });
+    event.preventDefault();
+}
+
 
 function loadUser(){
     $.ajax({
