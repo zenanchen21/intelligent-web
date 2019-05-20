@@ -81,23 +81,29 @@ self.addEventListener('activate', function (e) {
  *      from there (e.g. showing the cached data)
  * all the other pages are searched for in the cache. If not found, they are returned
  */
-// self.addEventListener('fetch', function(event) {
-//     event.respondWith(
-//         fetch(event.request).catch(function() {
-//             return caches.match(event.request);
-//         })
-//     );
-// });
+
 self.addEventListener('fetch', function(event) {
-    event.respondWith(
-      caches.open(cacheName).then(function(cache) {
-          return cache.match(event.request).then(function(response) {
-              var fetchPromise = fetch(event.request).then(function(networkResponse) {
-                  cache.put(event.request, networkResponse.clone());
-                  return networkResponse;
+    console.log('[Service Worker] Fetch', event.request.url);
+    var dataUrl = '/posts';
+    if (event.request.url.indexOf(dataUrl) > -1) {
+        console.log("request: ", event.request)
+        return fetch(event.request).then(function (response) {
+            return response;
+
+        }).catch(function (e) {
+            console.log("service worker error 1: " + e.message);
+        })
+    }else {
+        event.respondWith(
+          caches.open(cacheName).then(function (cache) {
+              return cache.match(event.request).then(function (response) {
+                  var fetchPromise = fetch(event.request).then(function (networkResponse) {
+                      cache.put(event.request, networkResponse.clone());
+                      return networkResponse;
+                  })
+                  return response || fetchPromise;
               })
-              return response || fetchPromise;
           })
-      })
-    );
+        );
+    }
 });

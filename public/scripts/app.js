@@ -134,9 +134,13 @@ function initMSocial() {
  */
 function loadData(){
     //load event and post data with ajax
-    loadEventData();
-    loadPostData();
-    if(!online) //if not online get data from indexed db
+    document.getElementById("posts").innerHTML = "";
+    document.getElementById("events").innerHTML = "";
+    document.getElementById('eventSelector').innerHTML = "<option selected>Which event...</option>\n";
+    if(navigator.onLine) {
+        loadEventData();
+        loadPostData();
+    }else
         getAllData();
 }
 
@@ -295,9 +299,7 @@ function addToResults(type, dataR) {
 window.addEventListener('offline', function(e) {
     // Queue up events for server.
     console.log("You are offline");
-    online = false;
-    showOfflineWarning();
-
+        showOfflineWarning();
 }, false);
 
 /**

@@ -54,11 +54,11 @@ function storeCachedData(type, dataObject) {
         }).then(function () {
             console.log('added item to the store! ' + JSON.stringify(dataObject));
         }).catch(function (error) {
-            localStorage.setItem(type, JSON.stringify(dataObject));
+            localStorage.setItem('type', JSON.stringify(dataObject));
         });
 
     }
-    else localStorage.setItem(type, JSON.stringify(dataObject));
+    else localStorage.setItem('type', JSON.stringify(dataObject));
 }
 
 /**
@@ -81,8 +81,11 @@ function getAllData () {
                     addToResults('posts', posts[index]);
             });
             data.events.then(function (events) {
-                for(index in events)
+                for(index in events) {
                     addToResults('events', events[index]);
+                    addEventOption(events[index]);
+                }
+
             });
         });
     }

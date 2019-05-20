@@ -49,6 +49,7 @@ exports.newEvent = function (req, res) {
 };
 
 exports.onloadEvent = function (req, res) {
+  console.log(req);
     var eventArray  = [];
     try {
         Event.find({},function(err,events){
@@ -255,7 +256,7 @@ exports.eventinfo = function(req,res){
             console.log('Show up a ',err)
         }else{
             console.log('here we go', event);
-            res.render('elist', { event:event});
+            res.render('event', { event:event});
         }
 
     })
