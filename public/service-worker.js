@@ -16,6 +16,10 @@ var dataCacheName = 'socialData-v1';
 var cacheName = 'socialPWA-step-8-1';
 var filesToCache = [
     '/',
+    '/create',
+    '/users/profile',
+    '/users/login',
+    '/users/register',
     '/scripts/app.js',
     '/stylesheets/inline.css',
     '/stylesheets/bootstrap.min.css',
@@ -24,8 +28,8 @@ var filesToCache = [
     '/stylesheets/social.css',
     '/scripts/bootstrap.min.js',
     '/scripts/jquery.min.js',
-    '/scripts/database.js',
-    '/scripts/idb.js'
+    '/scripts/idb.js',
+    '/scripts/database.js'
 ];
 
 
@@ -81,10 +85,23 @@ self.addEventListener('activate', function (e) {
  *      from there (e.g. showing the cached data)
  * all the other pages are searched for in the cache. If not found, they are returned
  */
+// self.addEventListener('fetch', function(event) {
+//     event.respondWith(
+//         fetch(event.request).catch(function() {
+//             return caches.match(event.request);
+//         })
+//     );
+// });
 self.addEventListener('fetch', function(event) {
     event.respondWith(
-        fetch(event.request).catch(function() {
-            return caches.match(event.request);
-        })
+      caches.open(cacheName).then(function(cache) {
+          return cache.match(event.request).then(function(response) {
+              var fetchPromise = fetch(event.request).then(function(networkResponse) {
+                  cache.put(event.request, networkResponse.clone());
+                  return networkResponse;
+              })
+              return response || fetchPromise;
+          })
+      })
     );
 });

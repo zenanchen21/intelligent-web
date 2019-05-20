@@ -1,5 +1,8 @@
 var socket = io();
 
+/**
+ * handler for collapsible comment form
+ */
 $(document).on("submit", "form.collapse", function (event) {
   event.preventDefault();
   var form = this;
@@ -16,6 +19,7 @@ $(document).on("submit", "form.collapse", function (event) {
     dataType: 'json',
     type: 'POST',
     success: function (data) {
+      //tell server to broadcast the data
       socket.emit('send comment', data);
       addComment(data);
       form[0].value = '';
@@ -25,21 +29,26 @@ $(document).on("submit", "form.collapse", function (event) {
       console.log(error)
       if(xhr.status == 500){
         alert('Log in before you comment it');
+        window.location.href = 'users/login'; //redirect to login page
       }
     }
   });
 });
 
+//if received a new comment add to page
 socket.on("new comment", addComment);
 
+//add new post to page
 socket.on("new post", function (posData) {
   addToResults('posts', posData);
 });
 
+//add new event to page
 socket.on("new event", function (eveData) {
   addToResults('events', eveData);
 });
 
+//add to database
 socket.on("search result", function (data) {
   document.getElementById("posts").innerHTML = '';
   document.getElementById("events").innerHTML= '';
@@ -62,11 +71,16 @@ socket.on("search result", function (data) {
   }
 })
 
+/**
+ * add comment under the post
+ * @param data: comment
+ */
 function addComment (data) {
   var footer = document.getElementById("footer"+data.post);
   var div = document.getElementById("coms"+data.post);
   var row = document.createElement('div');
   var timDiff = timeDiff(Date.now(), Date.parse(data.date));
+  var hideclass = 'hide'+data.post
 
 
   row.id = 'c'+data._id;
@@ -91,24 +105,19 @@ function addComment (data) {
       anchor.id = "a"+data.post;
       anchor.classList.add('list-group-item','d-flex', 'justify-content-between', 'align-items-center');
       anchor.setAttribute('data-toggle','collapse');
+      anchor.setAttribute('data-target', 'div.collapse.'+hideclass);
     }
     div.insertBefore(anchor,div.childNodes[2]);
 
     anchor.innerHTML = '<h6>Load more...</h6>\n'+
       '<span class="badge badge-primary badge-pill">'+(div.childNodes.length-3)+'</span>\n'
 
-    var tar = anchor.getAttribute('data-target');
     for(var i=3; i<div.childNodes.length; i++){
       var hideEle = div.childNodes[i];
       if (!hideEle.classList.contains('collapse')){
-        hideEle.classList.add('collapse');
+        hideEle.classList.add('collapse', hideclass);
       }
-      if(tar && !tar.includes(hideEle.id))
-        tar += ",#"+hideEle.id;
-      else
-        tar = '#'+hideEle.id;
     }
-    anchor.setAttribute('data-target', tar);
     $(anchor).on('click', function (e) {
       div.appendChild(anchor);
     })

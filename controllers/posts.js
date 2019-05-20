@@ -107,47 +107,6 @@ exports.onloadPost = function (req, res) {
 };
 
 
-/*
-* TODO
-* it shows error onece it have been called,
-* but it works fine if we use the function in route/index directly
-* */
-
-// exports.login = function (req, res) {
-//     var userData = req.body;
-//     console.log(userData.eml);
-//     console.log(userData.psw);
-//     console.log(userData);
-//     if (userData == null) {
-//         res.status(403).send('No data sent!')
-//     }
-//     try {
-//         User.findOne({email:userData.eml},function(err,data){
-//             if(data){
-//                 if(data.password ==userData.psw){
-//                     res.render('index', { title: 'Express', login_is_correct:true});
-//                     console.log('password correct');
-//                 }else{
-//                     res.render('signin', { title: 'Express', login_is_correct:false});
-//                     console.log('wrong pssword');
-//                 }
-//             }else{
-//                 res.render('signin', { title: 'Express', login_is_correct:false});
-//                 console.log("user is not exit");
-//             }
-//         })
-//     } catch(e){
-//         res.status(500).send('error ' + e);
-//     }
-// }
-
-// exports.loadData = function (req, res) {
-//   Event.find({}, function (err, events) {
-//     if(err) console.log(err);
-//     res.send(events);
-//   })
-// }
-
 exports.newPost = function (req, res) {
   var postData = req.body;
   var postImages = req.files;
@@ -267,9 +226,10 @@ exports.search = function (keyword, result) {
   };
 
   Post
-    .find({content:{$regex:keyword, $options:'i'}},function (err, post) {
+    .find({$or:[{"author.username":{$regex:keyword,$options: "i"}},
+    {content:{$regex:keyword, $options:'i'}}]},function (err, post) {
       // if(err) console.log(err);
-      console.log("post: ", post);
+      console.log("post: ", post)
       data.postData = post;
 
       Event.find({ $or: [{ description: {$regex:keyword, $options:'i'} },
@@ -294,7 +254,8 @@ exports.eventinfo = function(req,res){
         if(err){
             console.log('Show up a ',err)
         }else{
-            res.render('event', { event:event});
+            console.log('here we go', event);
+            res.render('elist', { event:event});
         }
 
     })

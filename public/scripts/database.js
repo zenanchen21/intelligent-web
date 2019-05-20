@@ -12,6 +12,7 @@
 
 var dbPromise;
 
+//define db and store name
 const APP_DB_NAME= 'db_app_1';
 const STORY_STORE_NAME= 'store_stories';
 const EVENT_STORE_NAME= 'store_events';
@@ -33,12 +34,11 @@ function initDatabase(){
     });
 }
 /**
- * it saves the forecasts for a city in localStorage
- * @param type
- * @param eventObject
+ * store data to indexDB
+ * @param type of object
+ * @param dataObject
  */
-function storeCachedData(type, eventObject) {
-    console.log('inserting: '+JSON.stringify(eventObject));
+function storeCachedData(type, dataObject) {
     if (dbPromise) {
         dbPromise.then(async db => {
             var tx, store;
@@ -49,19 +49,22 @@ function storeCachedData(type, eventObject) {
                 tx = db.transaction(STORY_STORE_NAME, 'readwrite');
                 store = tx.objectStore(STORY_STORE_NAME);
             }
-            await store.put(eventObject);
+            await store.put(dataObject);
             return tx.complete;
         }).then(function () {
-            console.log('added item to the store! ' + JSON.stringify(eventObject));
+            console.log('added item to the store! ' + JSON.stringify(dataObject));
         }).catch(function (error) {
-            localStorage.setItem(type, JSON.stringify(eventObject));
+            localStorage.setItem(type, JSON.stringify(dataObject));
         });
 
     }
-    else localStorage.setItem(type, JSON.stringify(eventObject));
+    else localStorage.setItem(type, JSON.stringify(dataObject));
 }
 
-
+/**
+ * add all event and post stored in index db
+ * to the index page
+ */
 function getAllData () {
     if (dbPromise) {
         dbPromise.then(function (db) {
@@ -102,7 +105,8 @@ function searchIndexDB (keyword) {
             data.posts.then(function (posts) {
                 document.getElementById("posts").innerHTML = "";
                 for(index in posts) {
-                    if(posts[index].author == keyword) {
+                    if(posts[index].author.username.includes(keyword)
+                      ||posts[index].content.includes(keyword)) {
                         addToResults('posts', posts[index]);
                     }
                 }
@@ -110,7 +114,8 @@ function searchIndexDB (keyword) {
             data.events.then(function (events) {
                 document.getElementById("events").innerHTML = "";
                 for(index in events)
-                    if(events[index].name == keyword) {
+                    if(events[index].title.includes(keyword) ||
+                    events[index].content.includes(keyword)) {
                         addToResults('events', events[index]);
                     }
             })
