@@ -29,7 +29,7 @@ function snapselfi(){
             .catch(errocb);
         //draw image to canvas when click
         snap.addEventListener("click",function(){
-            context.drawImage(video_element,0,0,320,240);
+            context.drawImage(video_element,0,0,640,480);
         });
     }else{
         console.log('someerror');

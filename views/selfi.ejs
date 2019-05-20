@@ -7,10 +7,16 @@
 
 <body onload="snapselfi()" >
 <% include ./partials/navigationbar.ejs %>
-    <video id="player" autoplay></video>
-    <canvas id='snapshot' width='640' height='480'></canvas>
-    <button id="snap" class="btn btn-outline-success">Snap a Selfi</button>
-    <button class="btn btn-primary" onClick="dloadselfi();" type="button">Download</button>
+<div class="container-fluid gedf-wrapper">
+    <div class="row">
+        <div class="col-md-3">
+            <video id="player" autoplay></video>
+            <canvas id='snapshot' width='640' height='480'></canvas>
+            <button id="snap" class="btn btn-outline-success">Snap a Selfi</button>
+            <button class="btn btn-primary" onClick="dloadselfi()" type="button">Download</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
 
