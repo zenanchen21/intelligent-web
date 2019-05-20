@@ -58,19 +58,19 @@
             <% user.post.forEach( post => { %>
 
             <div class="panel panel-primary rounded shadow">
-                <div class="panel-heading panel-dangerr">
+                <div class="panel-heading panel-danger">
                     <div class="pull-left half">
                         <div class="media">
                             <div class="media-body">
                                 <a class="media-heading block mb-0 h4 text-white"><%=user.username %></a>
-                                <span class="text-white h6">Create at <%=post.date %></span>
+                                <span class="text-black h6">Created at <%=post.date %></span>
                             </div>
                         </div>
                     </div><!-- /.pull-left -->
 
                     <div class="clearfix"></div>
                 </div><!-- /.panel-heading -->
-                <p class="block text-muted"> <%=post.content%></p>
+                <p class="font-weight-normal"> Post Info: <%=post.content%></p>
                 <p>
 
                 </p>
@@ -85,7 +85,7 @@
             <% }) %>
         </div>
         <div class="col-md-3">
-            <div class="card-header">
+            <div class="card-header" style="background-color:#90caf9">
             <% user.event.forEach( event => { %>
 
             <div class="panel panel-success rounded shadow">
@@ -95,7 +95,7 @@
 
                             <div class="media-body">
                                 <a href="#" class="media-heading block mb-0 h4 text-white"><%=user.username %></a>
-                                <span class="text-white h6">Create at <%=event.date %></span>
+                                <span class="text-white h6">Created <%=event.date %></span>
                             </div>
                         </div>
                     </div><!-- /.pull-left -->
@@ -103,9 +103,9 @@
                 </div><!-- /.panel-heading -->
                 <div class="panel-body no-padding">
                     <div class="inner-all block">
-                        <h4><%=event.title %></h4>
+                        <h4>Event Name: <%=event.title %></h4>
                         <p>
-                            <%=event.description%>
+                            Description: <%=event.description%>
                         </p>
 
                         <blockquote class="mb-10">Location: <%=event.address%></blockquote>
