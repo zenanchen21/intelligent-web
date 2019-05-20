@@ -180,7 +180,7 @@ exports.edit_post = function(req, res){
                 }else{
                     // res.setHeader('Content-Type', 'application/json');
                     // res.send(JSON.stringify(result));
-                    req.flash('success_msg', 'You Edit your post');
+                    req.flash('success_msg', 'You edited your post');
                     res.redirect('/users/profile');
                 }
 
