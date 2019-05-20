@@ -115,7 +115,7 @@
         // myMarker.bindPopup("Lat " + lat + "<br />Lon " + lon).openPopup();
     });
 
-    function chooseAddr(lat1, lng1)
+    function chooseAddr(lat1, lng1, name)
     {
         myMarker.closePopup();
         map.setView([lat1, lng1],18);
@@ -139,8 +139,6 @@
                 $("#addr").val(result.address.Match_addr);
             });
 
-
-
     }
 
 
@@ -153,7 +151,7 @@
         {
             for(i = 0; i < arr.length; i++)
             {
-                out += "<div class='address' id='addd' title='Show Location and Coordinates' onclick='chooseAddr(" + arr[i].lat + ", " + arr[i].lon + ");return false;'>" + arr[i].display_name + "</div>";
+                out += "<div class='address' id='addd' title='Show Location and Coordinates' onclick='chooseAddr(" + arr[i].lat + ", " + arr[i].lon + ", "+arr[i].display_name+")'>" + arr[i].display_name + "</div>";
 
             }
             document.getElementById('results').innerHTML = out;

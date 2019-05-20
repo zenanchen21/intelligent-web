@@ -18,8 +18,13 @@ function submitForm(formID){
         data.append(formArray[index].name, formArray[index].value);
     }
 
-    data.append('event', $('#eventSelector').val());
+    var selectorVal = $('#eventSelector').val();
+
+    if(selectorVal != 'Which event...')
+        data.append('event', $('#eventSelector').val());
+
     if($('input[name="contentImage"]')[0]){
+        document.getElementById('postIm').innerHTML = '';
         var file_data = $('input[name="contentImage"]')[0].files;
         console.log(file_data)
         for (var i = 0; i < file_data.length; i++) {
@@ -37,18 +42,6 @@ function submitForm(formID){
     sendAjaxQuery(url, data);
     $('#'+formID).trigger("reset");
     event.preventDefault();
-    // hideModal();
-}
-
-/**
- * close the create event modal
- */
-function hideModal() {
-    $("#exampleModal").removeClass("in");
-    $(".modal-backdrop").remove();
-    $('body').removeClass('modal-open');
-    $('body').css('padding-right', '');
-    $('#exampleModal').hide();
 }
 
 /**
@@ -139,7 +132,7 @@ function initMSocial() {
 function loadData(){
     // var eventList=JSON.parse(localStorage.getItem('events'));
     // var storyList=JSON.parse(localStorage.getItem('posts'));
-    // getAllData();
+    getAllData();
     loadEventData();
     loadPostData();
     // retrieveAllPostsData(storyList);
@@ -236,6 +229,10 @@ function addToResults(type, dataR) {
             const footer = document.createElement("div");
             const tim = timeDiff(Date.now(),Date.parse(dataR.date))
             const postID = dataR._id;
+            var eventTitle = '';
+            if(dataR.event){
+                eventTitle = "For event: "+dataR.event.title;
+            }
 
 
             row.appendChild(header);
@@ -255,17 +252,8 @@ function addToResults(type, dataR) {
               '<img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="" crossorigin="anonymous"></div>' +
               '<div class="ml-2">' +
               '<div class="h5 m-0">'+dataR.author.username+'</div>' +
-              '</div></div><div>' +
-              '<div class="dropdown">' +
-              '<button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
-              '<i class="fa fa-ellipsis-h"></i>' +
-              '</button>' +
-              '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">'+
-              '<div class="h6 dropdown-header">Configuration</div>' +
-              '<a class="dropdown-item" href="#">Save</a>' +
-              '<a class="dropdown-item" href="#">Hide</a>' +
-              '<a class="dropdown-item" href="#">Report</a>' +
-              '</div> </div> </div> </div>';
+              '</div></div><span>'+eventTitle+'</span></div>';
+
 
             body.innerHTML = '<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>'+tim+'</div>' +
             '<p class="card-text">'+ dataR.content+'</p> </div>';
@@ -307,6 +295,7 @@ window.addEventListener('offline', function(e) {
     // Queue up events for server.
     console.log("You are offline");
     showOfflineWarning();
+
 }, false);
 
 /**
