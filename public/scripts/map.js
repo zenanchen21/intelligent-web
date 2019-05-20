@@ -32,7 +32,7 @@ function loadEventMap(){
         },
         // the request to the server has failed. Let's show the cached data
         error: function (xhr, status, error) {
-            console.log('fuck', error);
+            console.log('err', error);
         }
     });
 }

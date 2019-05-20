@@ -18,8 +18,6 @@ exports.init= function() {
 
 
     user.save(function (err, results) {
-        // console.log(results);
-        // console.log(err);
         console.log('_id', results._id);
     });
 
@@ -61,8 +59,6 @@ exports.init= function() {
         // console.log(results);
         // console.log(err);
     });
-
-
 
 
     // uncomment if you need to drop the database

@@ -25,9 +25,7 @@ exports.edit_user = function(req, res){
             var familyname = userData.family_name.trim();
             var contactnumber= userData.contact_number.trim();
             var jobtitle = userData.job_title.trim();
-            // var psw = userData.psw.trim();
-            // var psw2 = userData.psw2.trim();
-            // console.log('pas2 = ',psw2);
+
 
             if(!username){
                 // res.status(200).send({falied:true});

@@ -20,13 +20,5 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 db.dropDatabase();
 
-//  MORE GENERAL WAY WOULD BE TO CALL:
-// try {
-//     var connection = mongoose.createConnection(mongoDB);
-//     console.log("connection to mongodb worked!");
-// }catch (e) {
-// console.log('error in db connection: ' +e.message)
-// }
-//
-// WHICH WOULD ALLOW MULTIPLE CONNECTIONS
+
 

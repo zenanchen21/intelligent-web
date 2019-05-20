@@ -85,7 +85,6 @@ function edit_post(){
                 $("#message").html("<div class='alert alert-danger alert-dismissible'>" +
                     "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">x</a>" +
                     "<p>Something wrong</p></div>");
-                console/log('what is wrong')
             }
 
 
@@ -118,7 +117,7 @@ function loadUser(){
         },
         // the request to the server has failed. Let's show the cached data
         error: function (xhr, status, error) {
-            console.log('fuck', error);
+            console.log('err', error);
         }
     });
 }
@@ -153,15 +152,7 @@ function addToPgae(dataR) {
 
 
 function sendregister(){
-    // let email =$("email").val();
-    // let psw = $("psw").val();
-    // let psw2 = $("psw2").val();
-    // let username =$("username").val();
-    // if(psw != psw2) {
-    //     console.log('cuowu',psw,psw)
-    //     alert("sorry, password doesn't match to the username.");
-    //     return;
-    // }
+
     var formArray = $("#register").serializeArray();
     var data={};
     for(index in formArray){
@@ -192,12 +183,8 @@ function sendregister(){
                     "<p>You can Log in now</p></div>");
                 window.location.href =  "/users/profile"
             }
-
-
-
             // in order to have the object printed by alert
             // we need to JSON stringify the object
-
         },
         error: function (xhr, status, error) {
             alert('Error: ' + error.message);

@@ -63,10 +63,6 @@ exports.onloadEvent = function (req, res) {
             // console.log('im here', eventArray);
             res.setHeader('Content-Type', 'application/json');
             res.send(JSON.stringify(eventArray));
-            // for(var i = 0, imax = events.length; i<imax; i++) {
-            //     eventArray += events
-            //     console.log('you are here ', eventArray);
-            // }
         }else{
             console.log('post is ', err);
         }
