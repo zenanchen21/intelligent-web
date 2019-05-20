@@ -1,3 +1,5 @@
+var online  = true;
+
 /**
  * post and event form on submit function
  * @param formID
@@ -51,12 +53,12 @@ function searchForm(){
     var keyWord = document.getElementById("keyWord").value;
     socket.emit('search', keyWord)
 
-    // searchIndexDB(keyWord);
+    searchIndexDB(keyWord);
     event.preventDefault();
 }
 
 /**
- * ajax sending multipart
+ * ajax sending multipart form
  * @param url
  * @param data
  */
@@ -126,26 +128,21 @@ function initMSocial() {
 }
 
 /**
- * given the list of events created by the user, it will retrieve all teh data from
- * the server (or failing that) from the database
+ * when page load
+ * retrieve event and post from mongodb
+ * or from indexed db if offline
  */
 function loadData(){
-    // var eventList=JSON.parse(localStorage.getItem('events'));
-    // var storyList=JSON.parse(localStorage.getItem('posts'));
-    getAllData();
+    //load event and post data with ajax
     loadEventData();
     loadPostData();
-    // retrieveAllPostsData(storyList);
-    // retrieveAllEventsData(eventList);
+    if(!online) //if not online get data from indexed db
+        getAllData();
 }
 
 
 /**
- * given one event and a date, it queries the server via Ajax to get the latest
- * weather forecast for that event
  * if the request to the server fails, it shows the data stored in the database
- * @param event
- * @param date
  */
 function loadEventData(){
     $.ajax({
@@ -170,9 +167,9 @@ function loadEventData(){
     });
 }
 
-
-
-
+/**
+ * load post from mongodb
+ */
 function loadPostData(){
     $.ajax({
         url: "/",
@@ -207,16 +204,21 @@ function addToResults(type, dataR) {
     if(type == "events") {
         if (document.getElementById("events") != null) {
             const row = document.createElement('div');
+            //formatting date of the event
+            const date = new Date(dataR.date);
+            const formatted_date = date.getDate() +
+              "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+            const formatted_time = date.getHours() + ":" + date.getMinutes()
             // appending a new row
             document.getElementById("events").prepend(row);
             // formatting the row by applying css classes
             row.classList.add('card');
             row.classList.add('gedf-card');
-            // the following is far from ideal. we should really create divs using javascript
-            // rather than assigning innerHTML
+
             row.innerHTML = "<a href='/events/" +dataR._id + "\'><div class=\"card-body\">" +
-              "<h5 class=\"card-title\">" + dataR.title + "</h5></a>" +
-              "<h6 class=\"card-subtitle mb-2 text-muted\">" + dataR.address + "      " + dataR.date + "</h6></div>"+
+              "<h5 class=\"card-title\">" + dataR.title + "</h5></a><br/>" +
+              "<div class='flex flex-row justify-content-between'> <h6 class=\"card-subtitle mb-2 text-muted\">" + formatted_date +
+              "</h6><h6 class=\"card-subtitle mb-2 text-muted\">" + formatted_time + "</h6></div></div>"+
               "<p class=\"card-body\">" + dataR.description + "</p>" ;
         }
     } else{
@@ -269,9 +271,7 @@ function addToResults(type, dataR) {
             }
 
             footer.id = "footer"+postID;
-            footer.innerHTML = '<a href="#'+postID+'\" class="card-link"><i class="fa fa-gittip"></i> Like</a>' +
-            '<a href="#com'+postID+'\" data-toggle="collapse" class="card-link" aria-expanded="false"><i class="fa fa-comment"></i> Comment</a>' +
-              '<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>'+
+            footer.innerHTML = '<a href="#com'+postID+'\" data-toggle="collapse" class="card-link" aria-expanded="false"><i class="fa fa-comment"></i> Comment</a>' +
             '<form class="collapse" id="com'+postID+'\">\n' +
               '<div class="input-group mb-3">\n' +
               '  <input type="text" name="comment" class="form-control com" placeholder="Write a comment..." aria-label="Write a comment">\n' +
@@ -287,6 +287,7 @@ function addToResults(type, dataR) {
     }
 }
 
+
 /**
  * When the client gets off-line, it shows an off line warning to the user
  * so that it is clear that the data is stale
@@ -294,6 +295,7 @@ function addToResults(type, dataR) {
 window.addEventListener('offline', function(e) {
     // Queue up events for server.
     console.log("You are offline");
+    online = false;
     showOfflineWarning();
 
 }, false);
@@ -304,22 +306,32 @@ window.addEventListener('offline', function(e) {
 window.addEventListener('online', function(e) {
     // Resync data with server.
     console.log("You are online");
+    online = true;
     hideOfflineWarning();
     loadData();
 }, false);
 
-
+/**
+ * show offline warning while offline
+ */
 function showOfflineWarning(){
     if (document.getElementById('offline_div')!=null)
         document.getElementById('offline_div').style.display='block';
 }
 
+/**
+ * hide the offline warning when back online
+ */
 function hideOfflineWarning(){
     if (document.getElementById('offline_div')!=null)
         document.getElementById('offline_div').style.display='none';
 }
 
-
+/**
+ *
+ * @param url
+ * @param data
+ */
 function sendLoginInfo(url, data) {
     $.ajax({
         url: url ,
@@ -343,26 +355,30 @@ function sendLoginInfo(url, data) {
     });
 }
 
-
+/**
+ * singin form submit event handler
+ * @param url
+ */
 function onSubmit(url) {
-    // var eml = $("#eml").val();
-    // var psw = $("#psw").val();
-    // var loginData={'email': eml, 'password':psw};
     event.preventDefault();
-    console.log('login info snet')
     var loginData = $("form").serialize();
     sendLoginInfo(url, loginData);
-    console.log('login info snet')
-
 }
 
-
+/**
+ * check
+ * @param isLoginCorrect
+ */
 function checkForErrors(isLoginCorrect){
     if (!isLoginCorrect){
         alert('login or password is incorrect');
     }
 }
 
+/**
+ * read image input and show a preview
+ * @param input: multiple file input
+ */
 function readURL(input) {
     if (input.files.length > 0) {
         const imagesDiv = document.getElementById('postIm');
@@ -386,6 +402,12 @@ function readURL(input) {
     }
 }
 
+/**
+ * difference between date1 and date 2
+ * @param date1
+ * @param date2
+ * @returns {string}
+ */
 function timeDiff(date1, date2) {
     var timdiff = '';
     var diffMs = (date1 - date2); // milliseconds diff
@@ -406,6 +428,10 @@ function timeDiff(date1, date2) {
     return timdiff;
 }
 
+/**
+ * Add event title to the event selector of post form
+ * @param event
+ */
 function addEventOption(event) {
     var selector = document.getElementById("eventSelector");
     var option = document.createElement("option");
