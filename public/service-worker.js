@@ -16,9 +16,6 @@ var dataCacheName = 'socialData-v1';
 var cacheName = 'socialPWA-step-8-1';
 var filesToCache = [
     '/',
-    '/create',
-    '/users/profile',
-    '/users/edit',
     '/scripts/app.js',
     '/stylesheets/inline.css',
     '/stylesheets/bootstrap.min.css',
