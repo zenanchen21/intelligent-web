@@ -37,8 +37,30 @@ socket.on("new post", function (posData) {
 });
 
 socket.on("new event", function (eveData) {
-  addToResults('events',eveData);
+  addToResults('events', eveData);
 });
+
+socket.on("search result", function (data) {
+  document.getElementById("posts").innerHTML = '';
+  document.getElementById("events").innerHTML= '';
+
+  if(data.postData){
+    var posts = data.postData;
+    if(posts.length > 0) {
+      for (var post of posts) {
+        addToResults('posts', post);
+      }
+    }
+  }
+  if (data.eventData) {
+    var events = data.eventData;
+    if(events.length > 0) {
+      for (var event of events) {
+        addToResults('events', event);
+      }
+    }
+  }
+})
 
 function addComment (data) {
   var footer = document.getElementById("footer"+data.post);
@@ -81,11 +103,14 @@ function addComment (data) {
       if (!hideEle.classList.contains('collapse')){
         hideEle.classList.add('collapse');
       }
-      if(tar)
+      if(tar && !tar.includes(hideEle.id))
         tar += ",#"+hideEle.id;
       else
         tar = '#'+hideEle.id;
     }
     anchor.setAttribute('data-target', tar);
+    $(anchor).on('click', function (e) {
+      div.appendChild(anchor);
+    })
   }
 }

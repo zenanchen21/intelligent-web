@@ -18,6 +18,7 @@ function submitForm(formID){
         data.append(formArray[index].name, formArray[index].value);
     }
 
+    data.append('event', $('#eventSelector').val());
     if($('input[name="contentImage"]')[0]){
         var file_data = $('input[name="contentImage"]')[0].files;
         console.log(file_data)
@@ -34,8 +35,9 @@ function submitForm(formID){
     }
 
     sendAjaxQuery(url, data);
+    $('#'+formID).trigger("reset");
     event.preventDefault();
-    hideModal();
+    // hideModal();
 }
 
 /**
@@ -54,7 +56,9 @@ function hideModal() {
  */
 function searchForm(){
     var keyWord = document.getElementById("keyWord").value;
-    searchIndexDB(keyWord);
+    socket.emit('search', keyWord)
+
+    // searchIndexDB(keyWord);
     event.preventDefault();
 }
 
@@ -78,8 +82,7 @@ function sendAjaxQuery(url, data) {
             // dataType:json, so JQuery knows it and unpacks the
             // object for us before returning it
             if(dataR.success){
-                location.href = "/";
-                socket.emit('send event', dataR);
+                window.location.href = '/';
                 storeCachedData(data.get("type"), dataR);
             }else{
                 socket.emit('send post', dataR);
@@ -162,6 +165,7 @@ function loadEventData(){
             // object for us before returning it
             dataR.forEach(function(event){
                 addToResults('events', event);
+                addEventOption(event)
                 storeCachedData('events', event);
             });
 
@@ -279,7 +283,11 @@ function addToResults(type, dataR) {
             '<a href="#com'+postID+'\" data-toggle="collapse" class="card-link" aria-expanded="false"><i class="fa fa-comment"></i> Comment</a>' +
               '<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>'+
             '<form class="collapse" id="com'+postID+'\">\n' +
+              '<div class="input-group mb-3">\n' +
               '  <input type="text" name="comment" class="form-control com" placeholder="Write a comment..." aria-label="Write a comment">\n' +
+              '<div class="input-group-prepend">\n' +
+              '    <button class="btn btn-outline-secondary">Comment</button>\n' +
+              '  </div></div>'
               '</form>';
             
             for (var com of dataR.comment) {
@@ -405,4 +413,12 @@ function timeDiff(date1, date2) {
     }
     timdiff +=  diffSecs+" seconds ago";
     return timdiff;
+}
+
+function addEventOption(event) {
+    var selector = document.getElementById("eventSelector");
+    var option = document.createElement("option");
+    option.value = event._id;
+    option.text = event.title;
+    selector.appendChild(option);
 }

@@ -15,8 +15,7 @@ var postSchema = new Schema(
         },
         comment: [{type: Schema.Types.ObjectId, ref: 'Comment'}],
         author: {type: Schema.Types.ObjectId, ref: 'User'},
-        // author: {type: Schema.Types.ObjectId, ref: 'User'},
-      //    likes: [],
+        event: {type: Schema.Types.ObjectId, ref: 'Event'}
     }
 );
 

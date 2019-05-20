@@ -37,7 +37,7 @@ exports.newEvent = function (req, res) {
                         user.save();
                         console.log('gg', user);
                     });
-                    res.status(200).send({success:true});
+                    res.status(200).send({data:result, success:true});
                 }
 
             });
@@ -163,8 +163,8 @@ exports.newPost = function (req, res) {
       address: postData.address,
       location: postData.location,
       comment: postData.comment,
-        author:currentUser._id
-      // author: postData.author
+      author:currentUser._id,
+      event: postData.event
     });
 
     //images
@@ -245,6 +245,36 @@ exports.newComment = function (req, res) {
     console.log("fail to create new comment")
     res.status(500).send("error " + e);
   }
+}
+
+exports.search = function (keyword, result) {
+  console.log(keyword);
+  if (!keyword) return;
+  var data = {
+    postData: [],
+    eventData: []
+  };
+
+  Post
+    .find({content:{$regex:keyword, $options:'i'}},function (err, post) {
+      // if(err) console.log(err);
+      console.log("post: ", post)
+      data.postData = post;
+
+      Event.find({ $or: [{ description: {$regex:keyword, $options:'i'} },
+            { title: {$regex:keyword, $options:'i'}}] },
+        function (err, event) {
+          if (err) console.log(event);
+          console.log("event: ", event);
+          data.eventData = event;
+          result(data);
+        })
+    })
+    .populate('author', 'username')
+    .populate({
+      path: 'comment',
+      populate: { path: 'author', populate: "username" }
+    })
 }
 
 
