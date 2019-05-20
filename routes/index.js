@@ -38,6 +38,10 @@ router.get('/maps', function(req, res, next) {
   res.render('maps',{title:'Map Finder'});
 });
 
+router.get('/elist', function(req, res, next) {
+  res.render('elist',{title:'Event List'});
+});
+
 router.get('/create', function(req, res, next) {
   res.render('create',{title:'Create Event'});
 });
