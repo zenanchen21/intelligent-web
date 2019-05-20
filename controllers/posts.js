@@ -284,7 +284,7 @@ exports.eventinfo = function(req,res){
             console.log('Show up a ',err)
         }else{
             console.log('here we go', event);
-            res.render('event', { event:event});
+            res.render('elist', { event:event});
         }
 
     })
