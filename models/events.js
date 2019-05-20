@@ -13,7 +13,8 @@ var eventSchema = new Schema(
         },
         description: {type: String},
         date:{type: Date},
-        author: {type: Schema.Types.ObjectId, ref: 'User'}
+        author: {type: Schema.Types.ObjectId, ref: 'User'},
+        posts: [{type:Schema.Types.ObjectId, ref: 'Post'}]
     }
 );
 

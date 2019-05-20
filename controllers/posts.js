@@ -86,6 +86,7 @@ exports.onloadPost = function (req, res) {
             path: 'comment',
             populate: { path: 'author', select: 'username' }
           })
+          .populate('event', 'title')
           .exec(function(err,posts){
 
             if(posts != null){
@@ -163,9 +164,11 @@ exports.newPost = function (req, res) {
       address: postData.address,
       location: postData.location,
       comment: postData.comment,
-      author:currentUser._id,
-      event: postData.event
+      author: currentUser._id,
     });
+    if(postData.event)
+      post.event = postData.event;
+
 
     //images
     for(var file of postImages){
@@ -192,7 +195,15 @@ exports.newPost = function (req, res) {
               user.save();
               console.log('gg', user);
           });
-          Post.findOne({_id:result._id}).populate('author').exec(function(err,reslt){
+          if(result.event){
+            Event.findOne({_id:result.event}, function (err, event) {
+              event.posts.push(result._id);
+              event.save();
+            })
+          }
+          Post.findOne({_id:result._id})
+            .populate('author')
+            .populate('event', 'title').exec(function(err,reslt){
              console.log('username = ', reslt);
               res.setHeader('Content-Type', 'application/json');
               res.send(JSON.stringify(reslt));

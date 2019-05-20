@@ -23,11 +23,12 @@ function initDatabase(){
     dbPromise = idb.openDb(APP_DB_NAME, 1, function (upgradeDb) {
         if (!upgradeDb.objectStoreNames.contains(STORY_STORE_NAME)) {
             var storyOS = upgradeDb.createObjectStore(STORY_STORE_NAME, {keyPath: 'id', autoIncrement: true});
-            storyOS.createIndex('author', 'author', {unique: false, multiEntry: true});
+            storyOS.createIndex('id', '_id', {unique: true, multiEntry: false});
+            storyOS.createIndex('author', 'author.username', {unique: false, multiEntry:true})
         }
         if(!upgradeDb.objectStoreNames.contains(EVENT_STORE_NAME)) {
             var eventOS = upgradeDb.createObjectStore(EVENT_STORE_NAME, {keyPath: 'id', autoIncrement: true});
-            eventOS.createIndex('title', 'title', {unique: false, multiEntry: true});
+            eventOS.createIndex('id', '_id', {unique: true, multiEntry: false});
         }
     });
 }
