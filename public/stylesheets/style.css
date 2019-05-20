@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding: 70px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: lightblue !important;
 }
@@ -7,6 +7,13 @@ body {
 :root {
   --input-padding-x: 1.5rem;
   --input-padding-y: .75rem;
+}
+
+/* If the screen size is 600px wide or less, hide the element */
+@media only screen and (max-width: 600px) {
+  hide-card {
+    display: none;
+  }
 }
 
 #register-page{
