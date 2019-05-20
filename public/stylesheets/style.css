@@ -1,19 +1,8 @@
-body {
-  padding: 70px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: lightblue !important;
-}
+
 
 :root {
   --input-padding-x: 1.5rem;
   --input-padding-y: .75rem;
-}
-
-/* If the screen size is 600px wide or less, hide the element */
-@media only screen and (max-width: 600px) {
-  hide-card {
-    display: none;
-  }
 }
 
 #register-page{
@@ -26,6 +15,12 @@ body {
   border-radius: 1rem;
   box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
   overflow: hidden;
+}
+
+@media only screen and (min-width: 600px) {
+  .col-sm-9 col-md-7 col-lg-5 mx-auto {
+    width: 100%;
+  }
 }
 
 .card-signin .card-title {
